@@ -1,0 +1,149 @@
+
+.orange{
+    background-color:#ffb366 !important;
+}
+
+.green{
+    background-color:#85e085 !important;
+}
+.red{
+    background-color:#ff6666 !important;
+}
+
+.hideDel a.btn.btn-danger.btn-rounded.waves-effect.vmdelete{
+    display: none !important;
+
+}
+
+.sorting_3{
+    text-align: right !important;
+}
+
+.hlbold{
+    font-weight: bold;
+}
+
+@media print
+{
+html, body { height: auto; }
+.dt-print-table, .dt-print-table thead, .dt-print-table th, .dt-print-table tr {border: 0 none !important;}
+}
+
+th.text-center.align-middle.tright.sorting_disabled{
+    text-align: center !important;
+}
+
+td.tright{
+    text-align-last: right;
+    vertical-align: baseline;
+}
+
+td.tleft{
+    text-align-last: left;
+    vertical-align: baseline;
+}
+
+
+
+
+
+
+/* .modal-backdrop {
+    z-index: -1;
+} */
+
+/* datatables */
+
+/* .table-responsive {
+    table-layout: fixed;
+    text-overflow: ellipsis;
+}
+
+.table-responsive td{
+    text-overflow: ellipsis;
+} */
+
+/* .table-responsive {
+    table-layout: fixed;
+    width: 100% !important;
+  }
+  .table-responsive td,
+  .table-responsive th{
+    width: auto !important;
+    white-space: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  } */
+
+/* move x in select2  */
+
+
+
+
+/* .container {
+    width: 100%;
+    margin: 0 auto;
+} */
+ /* table {
+    width: 80%;
+    margin: 0 auto;
+}
+td {
+    width: 50%;
+} */
+
+
+.btgroup .form-check-input input, .form-check-label label {
+    padding-left: 40px!important;
+}
+
+.select2-selection__clear {
+    position: absolute;
+    top: 0;
+    left: -15px;
+    height: 100%;
+    padding: 0 12px;
+}
+.select2-selection__rendered{
+    position: relative;
+    left: 10px;
+}
+
+/* .modal {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .modal-backdrop {
+    display: none;
+  } */
+  .verticalLine {
+    border-left: thick solid #ff0000;
+  }
+
+  .outer {
+    margin-top: 8px;
+    text-align: left;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .inner {
+    display: flex;
+    padding: 0;
+  }
+
+  .content{
+    padding: 40px 0;
+  }
+
+  .filter-wrapper{
+    padding: 30px 0;
+  }
+
+  .filter-checkbox{
+    margin-left: 30px
+  }
+  .filter-checkbox:first-child{
+    margin-left:0
+  }
