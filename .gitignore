@@ -1,4 +1,4 @@
 .env
 /vendor
-/bootstrap
 /public/storage
+/storage/*.key
