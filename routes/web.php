@@ -13,6 +13,7 @@ use App\Http\Controllers\grantController;
 use App\Http\Controllers\bske2023Controller;
 use App\Http\Controllers\nle2022Controller;
 use App\Http\Controllers\rvManagmentController;
+use App\Http\Controllers\rvrecordsController;
 use App\Http\Controllers\setdrpdwnController;
 use Illuminate\Support\Facades\Route;
 
@@ -54,11 +55,14 @@ Route::middleware(['auth','role:admin'])->controller(adminController::class)->gr
     Route::post('/allusers/performance/fetch-encoder', 'fetchEncoder')->name('allusers/performance/fetch-encoder');
     Route::post('/allusers/performance/fetch-brgy', 'fetchBrgyEncoder')->name('allusers/performance/fetch-brgy');
     Route::post('/allusers/performance/fetch-monthyear', 'fetchMonthYear')->name('allusers/performance/fetch-monthyear');
-    route::get('dashboard/recordsadmin', 'recordsadmin')->name('admin.recordsadmin');
 
+
+});
+
+Route::middleware('auth')->controller(rvrecordsController::class)->group(function(){
+    route::get('/dashboard/recordsadmin', 'recordsadmin')->name('admin.recordsadmin');
     route::post('/dashboard/selmuncit', 'selectmuncit')->name('admin.selectmuncit');
     route::post('/dashboard/selBrgy', 'selectBrgy')->name('admin.selectBrgy');
-
 });
 
 Route::middleware(['auth','role:supervisor'])->controller(supervisorController::class)->group(function () {
@@ -153,6 +157,8 @@ Route::middleware('auth')->controller(rvManagmentController::class)->group(funct
 Route::middleware('auth')->controller(setdrpdwnController::class)->group(function(){
     route::get('/setdrpdwn', 'index')->name('setdrpdwn.index');
 });
+
+
 
 
 

@@ -84,40 +84,29 @@ class adminController extends Controller
         return view('dashboard.admin',compact('users','totalRV','totalCV','totalHL','totalMA','dist1','dist2'));
     }
 
-    public function selectmuncit(Request $request){
+    public function getMuncit(Request $request){
+        $muncitval = $request->sendmuncit;
+        $CVSummary = d1nle2023::select(
+            DB::raw('IFNULL(Barangay, "TOTAL") as Barangay'),
+            DB::raw('count(*) as RV'),
+            DB::raw('count(distinct(HL), case when survey_stat = 1 then HL end) as HL'),
+            DB::raw('(count(case when survey_stat = 1 then survey_stat end) - count(distinct(HL), case when survey_stat = 1 then HL end ))  as Members'),
+            DB::raw('count(case when survey_stat = 1 and man_add = 1 then survey_stat end)  as MA'),
+            DB::raw('count(case when survey_stat = 1 then Name end) as CV'),)
+        ->where([['municipality','=', $muncitval]])
+        ->groupBy(DB::raw('Barangay with rollup'))
+        ->get();
 
-        $distval = $request->distval;
-        $search = $request->search;
-        $dataSelMuncit = d1nle2023::select('Municipality','District')->where([
-                ['Municipality','like','%'.$search.'%'],
-                ['District','=',$distval]])
-            ->orderBy('Municipality','asc')
-            ->pluck('Municipality','Municipality');
-                // dd($dataSelMuncit);
-        return response()->json(['items'=>$dataSelMuncit]);
+        // Return JSON response
+        return response()->json(['data' => $CVSummary]);
     }
 
-    public function selectBrgy(Request $request){
-        $distval = $request->distval;
-        $munval = $request->munval;
-        $search = $request->search;
-        $dataSelBarangay = d1nle2023::where([
-                ['Barangay','like','%'.$search.'%'],
-                ['District','=',$distval],
-                ['Municipality','=',$munval]])
-            ->orderBy('Barangay','asc')
-            ->pluck('Barangay','Barangay');
-        return response()->json(['items'=>$dataSelBarangay]);
-    }
+    public function recordsadmin(Request $request){
 
-    public function userShow(Request $request){
-        return view('auth.user-reg');
-    }
+        $dist = $request->input('dist');
+        $munc = $request->input('munc');
 
-    public function recordsadmin(Request $request)
-    {
-        $muncit = Auth::user()->muncit;
-        $tbname = Auth::user()->tbname;
+        dd($dist, $munc);
 
         $voters = d1nle2023::all();
 
@@ -140,6 +129,10 @@ class adminController extends Controller
 
         return view('forms.recordsadmin');
 
+    }
+
+    public function userShow(Request $request){
+        return view('auth.user-reg');
     }
 
     public function registerUser(Request $request)

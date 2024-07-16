@@ -227,7 +227,7 @@
                         className: 'btn btn-success waves-effect waves-light',
                             messageTop: function () {
                                 muncit = $('#grantMuncit').val();
-                                console.log(muncit);
+                                // console.log(muncit);
                             return '<h1 style="text-align:center;">HOUSELEADER SUMMARY</h1><h2 style="text-align:center;">'+muncit+'</h2>';
                         }
                 }

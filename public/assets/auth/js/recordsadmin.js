@@ -1,4 +1,3 @@
-
 $(document).ready(function(e) {
 
     $.ajaxSetup({
@@ -27,44 +26,37 @@ $(document).ready(function(e) {
         "hideMethod": "fadeOut"
     }
 
-    var table = $('#calbcity2025').DataTable({
+    var table = $('#d1records').DataTable({
         "lengthMenu": [10, 15,30, 50, 100],
         "ordering": true,
-        "order": [[10,'asc'],[3,'asc'],[2,'asc'],[7,'asc'],[8,'asc']],
+        "order": [[11,'asc'],[12,'asc'],[2,'asc'],[1,'asc'],[3,'asc']],
         "autoWidth" : true,
         "pageLength": 10,
         "processing": true,
         "serverSide": true,
-        "ajax": encoderDataIndex,
+        "ajax": adminDataIndex,
         "columns":[
-            { "data": "checkbox", 'targets': 0, 'checkboxes': {'selectRow': true} }, //0
-            { "data": "id" }, //1
-            { "data": "Name" , className:"tleft"}, //2
-            { "data": "Barangay" }, //3
-            { "data": "Precinct_no" }, //4
-            { "data": "PL" }, //5
-            { "data": "HL" }, //6
-            { "data": "purok_rv"}, //7
-            // { "data": "qrcode_id" ,orderable: false,
-            //     searchable: false,
-            //     render: function(data, type, full, meta) {
-            //         console.log(data);
-            //         // return '<img src="' + "{{ route('generate.qrcode', ':id') }}".replace(':id', data) + '" alt="QR Code" class="img-thumbnail" />';
-            //         return '<img src="' + "{{ QrCode::size(300)->generate("+ data +")}}" +'" alt="QR Code" class="img-thumbnail" />';
-            //     }
-            //  }, //8
-            { "data": "sqn"},
-            { "data": "action", orderable:false, searchable: false, className:"tright"}, //9
-            { "data": "survey_stat" }, //10
-            { "data": "man_add"}, //11
-            { "data": "Municipality" }, //12
+            {"data": "id",
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;}}, //0
+            { "data": "Name" , className:"tleft"}, //1
+            { "data": "Barangay" , className:"tleft" }, //2
+            { "data": "Precinct_no", className:"tleft"}, //3
+            { "data": "PL" }, //4
+            { "data": "HL" }, //5
+            { "data": "purok_rv"}, //6
+            { "data": "sqn"}, //7
+            { "data": "action", orderable:false, searchable: false, className:"tright"}, //8
+            { "data": "survey_stat" }, //9
+            { "data": "man_add"}, //10
+            { "data": "District"}, //11
+            { "data": "Municipality"} //12
         ],
         "columnDefs": [
             {"className": "align-middle", "targets": "_all"},
             {"className": "text-center", "targets": [7,8,9]},
-            {"targets": [0], "visible": true, "bSortable": false, "width": '5%'},
-            {"targets": [7,8,], "width": '5%'},
-            {"targets": [1,10,11,12,5], "visible": false, "searchable": true },
+            {"targets": [3,7], "width": '5%'},
+            {"targets": [9,10,11,12], "visible": false, "searchable": true },
         ],
         "rowCallback": function( row, data, index ) {
 
