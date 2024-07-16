@@ -5,6 +5,12 @@ $(document).ready(function() {
             }
         });
 
+    $('#birthday').datepicker({
+        todayBtn: true, // Show today button
+        todayHighlight: true, // Highlight today's date
+        autoclose: true, // Close the Datepicker when a date is selected
+    });
+
     toastr.options = {
         "closeButton": true,
         "debug": false,
@@ -22,6 +28,9 @@ $(document).ready(function() {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
         }
+
+
+
 
         var tbuser =  $('.tbUser').DataTable({
             ajax: dashboardAdminView,
@@ -202,4 +211,5 @@ $(document).ready(function() {
             });
 
         });
+
 });

@@ -78,8 +78,6 @@ class encoderController extends Controller
 
     public function fetchBrgy(Request $request){
         $muncit = Auth::user()->muncit;
-        // $tbname = Auth::user()->tbname;
-
         $search = $request->search;
         $databrgy = d1nle2023::where([
                 ['Barangay','like','%'.$search.'%'],

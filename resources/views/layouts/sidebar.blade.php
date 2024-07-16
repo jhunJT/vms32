@@ -15,7 +15,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-app">
                             <a href="{{ route('allusers.show') }}" class="dropdown-item " >Users</a>
-                            <a href="{{ route('allusers/performance') }}" class="dropdown-item " >Encoder Performance</a>
+                            {{-- <a href="{{ route('allusers/performance') }}" class="dropdown-item " >Encoder Performance</a> --}}
 
                             {{-- <a href="" class="dropdown-item">Settings</a> --}}
 
@@ -24,10 +24,11 @@
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button">
-                            <i class="ri-stack-line me-2"></i>District <div class="arrow-down"></div>
+                            <i class="ri-stack-line me-2"></i>Data <div class="arrow-down"></div>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-components">
-                            <div class="dropdown">
+                            <a class="dropdown-item " href="{{ route('admin.recordsadmin') }}" role="button">District Data</a>
+                            {{-- <div class="dropdown">
                                 <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-form"
                                     role="button">District I <div class="arrow-down"></div>
                                 </a>
@@ -67,7 +68,7 @@
                                     <a href="javascript:void(0);" class="dropdown-item">Zumarraga</a>
 
                                 </div>
-                            </div>
+                            </div> --}}
 
                         </div>
                     </li>
@@ -161,7 +162,7 @@
                         <div class="dropdown-menu" aria-labelledby="topnav-components">
                             <div class="dropdown">
                                 <a href="{{ URL('/supervisor/user/show') }}" class="dropdown-item " >Users</a>
-                                {{-- <a href="{{ route('allusers/performance') }}" class="dropdown-item " >Encoder Performance</a> --}}
+                                {{-- <a href="{{ route('setdrpdwn.index') }}" class="dropdown-item " >Set Dropdowns</a> --}}
                             </div>
                         </div>
                     </li>

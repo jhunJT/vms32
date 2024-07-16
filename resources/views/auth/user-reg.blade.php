@@ -142,7 +142,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label class="form-label">Birth Date</label>
+                                        <label class="form-label">Date</label>
                                         <div class="input-group" id="datepicker2">
                                             <input type="text" class="form-control" placeholder="dd M, yyyy" name="birthday" id="birthday"
                                                 data-date-format="dd M, yyyy" data-date-container='#datepicker2' data-provide="datepicker"
