@@ -1,16 +1,16 @@
 <?php return array (
   'app' => 
   array (
-    'name' => 'VMS3.2',
+    'name' => 'VMS32',
     'env' => 'local',
     'debug' => true,
-    'url' => 'localhost',
+    'url' => 'http://localhost',
     'asset_url' => NULL,
     'timezone' => 'Asia/Manila',
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:2KSqOQ2sQQHKBLoj7coYfNlwVIdF3GMsbdZCfQyvUM8=',
+    'key' => 'base64:QQ7Hmz+iq5mycg00I7Nf4lsQabn6TnyxACAoqIn61mA=',
     'cipher' => 'AES-256-CBC',
     'maintenance' => 
     array (
@@ -198,8 +198,8 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'D:\\MAMP\\htdocs\\vms3.2\\storage\\framework/cache/data',
-        'lock_path' => 'D:\\MAMP\\htdocs\\vms3.2\\storage\\framework/cache/data',
+        'path' => 'C:\\MAMP\\htdocs\\vms32\\vms32\\storage\\framework/cache/data',
+        'lock_path' => 'C:\\MAMP\\htdocs\\vms32\\vms32\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -432,14 +432,14 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\MAMP\\htdocs\\vms3.2\\storage\\app',
+        'root' => 'C:\\MAMP\\htdocs\\vms32\\vms32\\storage\\app',
         'throw' => false,
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\MAMP\\htdocs\\vms3.2\\storage\\app/public',
-        'url' => 'localhost/storage',
+        'root' => 'C:\\MAMP\\htdocs\\vms32\\vms32\\storage\\app/public',
+        'url' => 'http://localhost/storage',
         'visibility' => 'public',
         'throw' => false,
       ),
@@ -458,7 +458,7 @@
     ),
     'links' => 
     array (
-      'D:\\MAMP\\htdocs\\vms3.2\\public\\storage' => 'D:\\MAMP\\htdocs\\vms3.2\\storage\\app/public',
+      'C:\\MAMP\\htdocs\\vms32\\vms32\\public\\storage' => 'C:\\MAMP\\htdocs\\vms32\\vms32\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -499,14 +499,14 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'D:\\MAMP\\htdocs\\vms3.2\\storage\\logs/laravel.log',
+        'path' => 'C:\\MAMP\\htdocs\\vms32\\vms32\\storage\\logs/laravel.log',
         'level' => 'debug',
         'replace_placeholders' => true,
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'D:\\MAMP\\htdocs\\vms3.2\\storage\\logs/laravel.log',
+        'path' => 'C:\\MAMP\\htdocs\\vms32\\vms32\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
         'replace_placeholders' => true,
@@ -571,7 +571,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'D:\\MAMP\\htdocs\\vms3.2\\storage\\logs/laravel.log',
+        'path' => 'C:\\MAMP\\htdocs\\vms32\\vms32\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -640,14 +640,14 @@
     'from' => 
     array (
       'address' => 'hello@example.com',
-      'name' => 'VMS3.2',
+      'name' => 'VMS32',
     ),
     'markdown' => 
     array (
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'D:\\MAMP\\htdocs\\vms3.2\\resources\\views/vendor/mail',
+        0 => 'C:\\MAMP\\htdocs\\vms32\\vms32\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -719,7 +719,7 @@
       2 => '127.0.0.1',
       3 => '127.0.0.1:8000',
       4 => '::1',
-      5 => '',
+      5 => 'localhost',
     ),
     'guard' => 
     array (
@@ -760,7 +760,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'D:\\MAMP\\htdocs\\vms3.2\\storage\\framework/sessions',
+    'files' => 'C:\\MAMP\\htdocs\\vms32\\vms32\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -781,9 +781,9 @@
   array (
     'paths' => 
     array (
-      0 => 'D:\\MAMP\\htdocs\\vms3.2\\resources\\views',
+      0 => 'C:\\MAMP\\htdocs\\vms32\\vms32\\resources\\views',
     ),
-    'compiled' => 'D:\\MAMP\\htdocs\\vms3.2\\storage\\framework\\views',
+    'compiled' => 'C:\\MAMP\\htdocs\\vms32\\vms32\\storage\\framework\\views',
   ),
   'pulse' => 
   array (
@@ -865,7 +865,7 @@
       ),
       'Laravel\\Pulse\\Recorders\\Servers' => 
       array (
-        'server_name' => 'jhuney',
+        'server_name' => 'tdserver',
         'directories' => 
         array (
           0 => '/',
@@ -939,7 +939,7 @@
   'livewire' => 
   array (
     'class_namespace' => 'App\\Livewire',
-    'view_path' => 'D:\\MAMP\\htdocs\\vms3.2\\resources\\views/livewire',
+    'view_path' => 'C:\\MAMP\\htdocs\\vms32\\vms32\\resources\\views/livewire',
     'layout' => 'components.layouts.app',
     'lazy_placeholder' => NULL,
     'temporary_file_upload' => 
@@ -1065,7 +1065,7 @@
     array (
     ),
     'enable_runnable_solutions' => NULL,
-    'remote_sites_path' => 'D:\\MAMP\\htdocs\\vms3.2',
+    'remote_sites_path' => 'C:\\MAMP\\htdocs\\vms32\\vms32',
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
     'settings_file_path' => '',
