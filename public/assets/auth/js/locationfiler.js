@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var muncitList = [
         {District: 'District I', muncit:'ALMAGRO',code:'000101', long:'11.916663', lat:'124.2833322' ,tbname:'almagro'},
-        {District: 'District I', muncit:'CALBAYOG CITY',code:'000201', long:'12.07028972', lat:'124.5403862' ,tbname:''},
+        {District: 'District I', muncit:'CITY OF CALBAYOG',code:'000201', long:'12.07028972', lat:'124.5403862' ,tbname:''},
         {District: 'District I', muncit:'GANDARA',code:'000301', long:'12.0166666', lat:'124.8166634' ,tbname:''},
         {District: 'District I', muncit:'MATUGUINAO',code:'000401', long:'12.1499994', lat:'124.8833298' ,tbname:''},
         {District: 'District I', muncit:'PAGSANGHAN',code:'000501', long:'11.9666628', lat:'124.7999968' ,tbname:''},

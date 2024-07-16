@@ -135,7 +135,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-components">
                             <div class="dropdown">
-                                <a href="{{ route('dashboard.encoder') }}" class="dropdown-item">Santa Margarita</a>
+                                <a href="{{ route('dashboard.encoder') }}" class="dropdown-item">{{ Auth::User()->muncit }}</a>
                             </div>
                         </div>
                     </li>
@@ -171,7 +171,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-components">
                             <div class="dropdown">
-                                <a href="{{ route('dashboard.supervisor.dataview') }}" class="dropdown-item">Santa Margarita</a>
+                                <a href="{{ route('dashboard.supervisor.dataview') }}" class="dropdown-item">{{ Auth::User()->muncit }}</a>
                             </div>
                         </div>
                     </li>

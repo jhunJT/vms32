@@ -62,18 +62,23 @@ class supervisorController extends Controller
             ->groupBy(DB::raw('Barangay with rollup'))
             ->get();
 
-        $totalRV = d1nle2023::where([
-            ['district','=', $district],
-            ['municipality','=', $muncit],
-            ['man_add','=', 0],])->count();
+        $totalRV = DB::table('d1nle2023s')->where([
+            ['district','=',$district],
+            ['municipality','=',$muncit],
+            ['man_add','=',0]])->count();
+
+        // dd($totalRV, $district, $muncit );
+
         $totalCV = d1nle2023::where([
             ['district','=', $district],
             ['municipality','=', $muncit],
             ['survey_stat','=', 1]])->count();
+
         $totalHL = d1nle2023::where([
             ['district','=', $district],
             ['municipality','=', $muncit],
             ['survey_stat','=', 1]])->distinct('HL')->count('HL');
+
         $totalMA = d1nle2023::where([
             ['district','=', $district],
             ['municipality','=', $muncit],

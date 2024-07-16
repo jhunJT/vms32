@@ -918,6 +918,7 @@ $(document).ready(function(e) {
                     method:'GET',
                     data:{ hlbrgyssss:hlbrgyssss},
                     success: function(response){
+                        $('.modal-title').html('Add House Leader');
                         $('#h_id').val(response);
                         $('#seqNum').val(Number(response)+1);
                     },

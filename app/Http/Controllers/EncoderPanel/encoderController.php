@@ -178,9 +178,9 @@ class encoderController extends Controller
     public function saveHl(Request $request){
         $muncit = Auth::user()->muncit;
         $tbname = Auth::user()->tbname;
+
         $request->validate([
             'hl_brgy' => 'required',
-            'hlnamemodal' => 'required',
         ]);
 
         $ifExsist = DB::table('houseleaders')->where("houseleader", $request->hlnamemodal)->exists();
@@ -203,20 +203,23 @@ class encoderController extends Controller
             'survey_stat' => '1',
             'purok_rv' => $request->hlPurok,
             'sqn' => $request->seqNum,
+            'sethl' => '1',
         ]);
 
         $vupdate = d1nle2023::find($request->hlId);
-        if(! $vupdate){
-            abort(404);
-        }
 
         $vupdate->update([
-            'HL' => $request->hlnamemodal, //
-            'hlids' => $request->hlId, //
+            'HL' => $request->hlnamemodal,
+            'hlids' => $request->hlId,
             'survey_stat' => '1',
             'purok_rv' => $request->hlPurok,
             'sqn' => $request->seqNum,
+            'sethl' => '1',
         ]);
+
+        if(! $vupdate){
+            abort(404);
+        }
 
         return response()->json([
             'success' => 'House Leader Added!'
@@ -378,7 +381,7 @@ class encoderController extends Controller
                 'barangay' => 'required',
                 'muncit' => 'required',
                 'hl' => 'required',
-                'pl' => 'required',
+                // 'pl' => 'required',
             ]);
 
             if($gcheck == true){
@@ -393,7 +396,7 @@ class encoderController extends Controller
                 'barangay' => 'required',
                 'muncit' => 'required',
                 'hl' => 'required',
-                'pl' => 'required',
+                // 'pl' => 'required',
             ]);
 
             d1nle2023::create($newVoter);
