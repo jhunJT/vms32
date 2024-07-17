@@ -26,16 +26,37 @@
                                 <div><hr style="height:2px;border-width:0;color:gray;background-color:gray"></div>
 
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="mb-1 ">
-                                            <div class="input-group gap-2">
-                                                <select class="form-control " style="width: 15%;"  tabindex="-1" aria-hidden="true" name="selDist" id="selDist">
-                                                    <option selected disabled></option>
-                                                    <option value="District I">District I</option>
-                                                    <option value="District II">District II</option>
-                                                </select>
-                                                <select class="form-control" style="width: 30%;" id="selMuncit"  tabindex="-1" aria-hidden="true" name="selMuncit"></select>
-                                                <select class="form-control " style="width: 30%;" id="selBrgy"   tabindex="-1" aria-hidden="true" name="selBrgy"></select>
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="card-title">
+                                                    <h4>Select Filters</h4>
+                                                </div>
+
+                                                    <div class="input-group gap-2">
+                                                        <select class="form-control " style="width: 100%;"  tabindex="-1" aria-hidden="true" name="selDist" id="selDist">
+                                                            <option selected disabled></option>
+                                                            <option value="District I">District I</option>
+                                                            <option value="District II">District II</option>
+                                                        </select>
+                                                        <select class="form-control" style="width: 100%;" id="selMuncit"  tabindex="-1" aria-hidden="true" name="selMuncit"></select>
+                                                        <select class="form-control " style="width: 100%;" id="selBrgy"   tabindex="-1" aria-hidden="true" name="selBrgy"></select>
+                                                        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                                                            <input type="checkbox" class="btn-check  filter-checkbox" id="btncheck1" value="1" autocomplete="off">
+                                                            <label class="btn btn-success " for="btncheck1"> S </label>
+                                                            <input type="checkbox" class="btn-check filter-checkbox" id="btncheck2" value="0" autocomplete="off">
+                                                            <label class="btn btn-danger" for="btncheck2"> U </label>
+                                                            <input type="checkbox" class="btn-check filter-checkboxManual" id="btncheck3" value="1" autocomplete="off">
+                                                            <label class="btn btn-primary" for="btncheck3"> M </label>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="card-title"><h4>Summary</h4></div>
                                             </div>
                                         </div>
                                     </div>
@@ -398,6 +419,16 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+{{-- <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Colored with scrolling</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <p>Try scrolling the rest of the page to see this option in action.</p>
+    </div>
+</div> --}}
 
 <script>
     var adminDataIndex = "{{ route('admin.recordsadmin') }}";

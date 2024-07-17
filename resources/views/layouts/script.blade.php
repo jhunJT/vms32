@@ -11,8 +11,8 @@
 <script src="{{ asset('assets/auth/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 
 <!-- apexcharts -->
-<script src="{{ asset('assets/auth/libs/apexcharts/apexcharts.min.js') }}"></script>
-<script src="{{ asset('assets/auth/js/pages/apexcharts.init.js') }}"></script>
+{{-- <script src="{{ asset('assets/auth/libs/apexcharts/apexcharts.min.js') }}"></script>
+<script src="{{ asset('assets/auth/js/pages/apexcharts.init.js') }}"></script> --}}
 
 <script src="{{ asset('assets/auth/libs/leaflet/leaflet.js') }}"></script>
 

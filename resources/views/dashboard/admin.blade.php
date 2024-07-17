@@ -282,8 +282,7 @@
 </script>
 
 <script src="{{ asset('assets/auth/js/admin.js') }}"></script>
-{{-- <script src="{{ asset('assets/auth/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('assets/auth/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script> --}}
+
 
 @include('layouts.script')
 @include('layouts.footer')

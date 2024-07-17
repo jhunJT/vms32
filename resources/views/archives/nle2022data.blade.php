@@ -69,6 +69,8 @@
             </div> <!-- end row -->
         </div>
     </div>
+    <script src="{{ asset('assets/auth/libs/apexcharts/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('assets/auth/js/pages/apexcharts.init.js') }}"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {

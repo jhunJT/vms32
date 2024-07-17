@@ -135,6 +135,60 @@ $(document).ready(function(e) {
         }
     });
 
+    $('#selDist').on('change', function(){
+        $('#selMuncit, #selBrgy').val('').trigger('change');
+    });
+
+    $('#selMuncit').on('change', function(){
+        $('#selBrgy').val('').trigger('change');
+    });
+
+    $(document).on('change','#selDist', function(){
+        var selectDist = []
+        $.each($('#selDist'), function(i,elem){
+            selectDist.push($(this).val())
+        })
+        table.column(11).search(selectDist).draw();
+    });
+
+    $(document).on('change','#selMuncit', function(){
+        var selectMuncit = []
+        $.each($('#selMuncit'), function(i,elem){
+            selectMuncit.push($(this).val())
+        })
+        table.column(12).search(selectMuncit).draw();
+    });
+
+    $(document).on('change','#selBrgy', function(){
+        var selectBrgy = []
+        $.each($('#selBrgy'), function(i,elem){
+            selectBrgy.push($(this).val())
+        })
+        table.column(2).search(selectBrgy).draw();
+    });
+
+    $('.filter-checkbox').on('change', function(){
+        var searchTerms = []
+        $.each($('.filter-checkbox'), function(i,elem){
+            if($(elem).prop('checked')){
+            searchTerms.push($(this).val() )
+            }
+        })
+        table.column(9).search(searchTerms, true, false, true).draw();
+    });
+
+    $('.filter-checkboxManual').on('change', function(){
+        var searchTerms = []
+        $.each($('.filter-checkboxManual'), function(i,elem){
+            if($(elem).prop('checked')){
+            searchTerms.push($(this).val() )
+            }
+        })
+        table.column(10).search(searchTerms,true).draw();
+    });
+
+
+
 
     $('.cvsumm').on('click', function(){
 
@@ -209,7 +263,6 @@ $(document).ready(function(e) {
         $('#cvsumm').dataTable().fnDestroy();
     });
 
-
     $('.hlsumm').on('click',function(){
 
         var hlsummary = $('#hlsumm').dataTable({
@@ -275,35 +328,6 @@ $(document).ready(function(e) {
 
     $('#hlsumm-modal-lg').on('hidden.bs.modal', function () {
         $('#hlsumm').dataTable().fnDestroy();
-    });
-
-    $('.filter-checkbox').on('change', function(){
-        var searchTerms = []
-        $.each($('.filter-checkbox'), function(i,elem){
-            if($(elem).prop('checked')){
-            searchTerms.push($(this).val() )
-            }
-        })
-        table.column(10).search(searchTerms, true, false, true).draw();
-        // console.log(searchTerms);
-    });
-
-    $('.filter-checkboxManual').on('change', function(){
-        var searchTerms = []
-        $.each($('.filter-checkboxManual'), function(i,elem){
-            if($(elem).prop('checked')){
-            searchTerms.push($(this).val() )
-            }
-        })
-        table.column(11).search(searchTerms,true).draw();
-    });
-
-    $(document).on('change','#filterMuncit', function(){
-        var selectMuncit = []
-        $.each($('#filterMuncit'), function(i,elem){
-            selectMuncit.push($(this).val())
-        })
-        table.column(12).search(selectMuncit).draw();
     });
 
     $('#brgySelect').on('change', function(){
@@ -627,8 +651,6 @@ $(document).ready(function(e) {
         }
     });
 
-
-
     $('#hlBrgy').select2({
         // placeholder: "Select Barangay",
         readonly: true,
@@ -835,10 +857,6 @@ $(document).ready(function(e) {
     });
 
 
-    $('#filterMuncit').on('change', function(){
-        $('#houseleaderSelect, #purokLeader, #filterBrgy').val('').trigger('change');
-    });
-
     $('#houseleaderSelect').on('change', function(){
         $('#setPurok, #seqno').val('');
         var selectedData = $(this).select2('data')[0];
@@ -1025,7 +1043,6 @@ $(document).ready(function(e) {
         });
 
     });
-
 
     $('#mbPL').on('click', function(){
 

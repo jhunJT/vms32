@@ -4,3 +4,5 @@
 /storage/*.key
 database/Dump20240716.sql
 bootstrap/cache/routes-v7.php
+bootstrap/cache/config.php
+

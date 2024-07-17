@@ -29,26 +29,25 @@ $(document).ready(function() {
         "hideMethod": "fadeOut"
         }
 
-
-
-
         var tbuser =  $('.tbUser').DataTable({
+            // ordering: true,
+            // order: [[7,'desc'],[3,'asc'],[4,'asc'],[1,'asc']],
             ajax: dashboardAdminView,
             columns: [
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
-                {data: 'email', name: 'email'},
-                {data: 'district', name: 'district'},
-                {data: 'muncit', name: 'muncit'},
-                {data: 'contno', name: 'contno'},
-                {data: 'role', name: 'role' },
-                {data: 'online_status', name: 'online_status' },
-                {data: 'last_seen_minutes_ago', name: 'last_seen_minutes_ago' },
-                {data: 'action', name: 'action', orderable: false, searchable: false, class:'text-center'},
+                {data: 'id', name: 'id'}, //0
+                {data: 'name', name: 'name'}, //1
+                {data: 'email', name: 'email'}, //2
+                {data: 'district', name: 'district'}, //3
+                {data: 'muncit', name: 'muncit'}, //4
+                {data: 'contno', name: 'contno'}, //5
+                {data: 'role', name: 'role' }, //6
+                {data: 'online_status', name: 'online_status' }, //7
+                {data: 'last_seen_minutes_ago', name: 'last_seen_minutes_ago' }, //8
+                {data: 'action', name: 'action', orderable: false, searchable: false, class:'text-center'}, //9
             ],
             columnDefs: [
                 {className: 'align-middle', targets: '_all'},
-                {className: 'dt-center', targets: '-1'},
+                {className: 'dt-center', targets: [1]},
                 {className: 'btn btn-success btn-rounded waves-effect waves-light', targets: '7'}
             ]
 

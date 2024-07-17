@@ -46,8 +46,14 @@ class adminController extends Controller
                 })
 
                 ->rawColumns(['action','online_status','last_seen_minutes_ago'])
-                ->make(true);
-            }
+                ->order(function ($query){
+                    if(request()->has('online_status')){
+                        $query->orderBy('online_status', 'desc');
+                    }
+                })
+                ->toJson();
+                // ->make(true);
+        }
 
         $totalRV = d1nle2023::where([
             ['man_add','=', 0]])->count();
@@ -101,38 +107,12 @@ class adminController extends Controller
         return response()->json(['data' => $CVSummary]);
     }
 
-    public function recordsadmin(Request $request){
-
-        $dist = $request->input('dist');
-        $munc = $request->input('munc');
-
-        dd($dist, $munc);
-
-        $voters = d1nle2023::all();
-
-        if($request->ajax()){
-            return DataTables::of($voters)
-                ->addColumn('action', function($row){
-                   return '
-                       <a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
-                       class="btn btn-danger btn-rounded waves-effect vmdelete"><i class="mdi mdi-account-remove"></i></a>
-
-                       <a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
-                       class="btn btn-info btn-rounded waves-effect gview" ><i class="mdi mdi-gift"></i></a>
-
-                       <a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
-                       class="btn btn-primary btn-rounded waves-effect vedit " ><i class="mdi mdi-account-edit"></i></a>';
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-           }
-
-        return view('forms.recordsadmin');
-
+    public function userShow(){
+        return view('auth.user-reg');
     }
 
-    public function userShow(Request $request){
-        return view('auth.user-reg');
+    public function uselogs(){
+        return view('auth.userlogs');
     }
 
     public function registerUser(Request $request)

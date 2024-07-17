@@ -56,9 +56,6 @@
                                     <div class="col-md-12">
                                         <div class="mb-1 ">
                                             <div class="input-group gap-2">
-                                                {{-- <select class="form-control " style="width: 15%;"  tabindex="-1" aria-hidden="true" name="filterMuncit" id="filterMuncit">
-                                                    <option value="" selected>{{ Auth::User()->muncit }}</option>
-                                                </select> --}}
                                                 <select class="form-control " style="width: 15%;"  tabindex="-1" aria-hidden="true" name="filterBrgy" id="filterBrgy"></select>
                                                 <select class="form-control purokLeader" style="width: 30%;" id="purokLeader"  tabindex="-1" aria-hidden="true" name="purokLeader"></select>
                                                 <select class="form-control " style="width: 30%;" id="houseleaderSelect"   tabindex="-1" aria-hidden="true" name="houseleaderSelect"></select>

@@ -326,7 +326,6 @@ $(document).ready(function() {
         ]
     });
 
-
     $('.viewSummary').on('click', function(){
         var sendmuncit = $(this).data('muncit'); // Get value of data-muncit attribute
 

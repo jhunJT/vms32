@@ -33,16 +33,16 @@
                             <table id="tbUser" class="table table-striped table-bordered tbUser" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">ID</th>
-                                        <th class="text-center">Name</th>
-                                        <th class="text-center">Username</th>
-                                        <th class="text-center">District</th>
-                                        <th class="text-center">Municipality/City</th>
-                                        <th class="text-center">Contact No</th>
-                                        <th class="text-center">Level</th>
-                                        <th class="text-center">Status</th>
-                                        <th class="text-center">Status2</th>
-                                        <th class="text-center">Action</th>
+                                        <th >ID</th>
+                                        <th >Name</th>
+                                        <th >Username</th>
+                                        <th >District</th>
+                                        <th >Municipality/City</th>
+                                        <th >Contact No</th>
+                                        <th >Level</th>
+                                        <th >Status</th>
+                                        <th >Status2</th>
+                                        <th >Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>

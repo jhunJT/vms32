@@ -52,7 +52,6 @@ class encoderController extends Controller
     }
 
     public function profileedit($id){
-
         $users = User::find($id);
         if(! $users){
             abort(404);

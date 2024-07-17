@@ -15,6 +15,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-app">
                             <a href="{{ route('allusers.show') }}" class="dropdown-item " >Users</a>
+                            <a href="{{ route('allusers.userlogs') }}" class="dropdown-item " >Users Logs</a>
                             {{-- <a href="{{ route('allusers/performance') }}" class="dropdown-item " >Encoder Performance</a> --}}
 
                             {{-- <a href="" class="dropdown-item">Settings</a> --}}

@@ -14,6 +14,7 @@ use App\Http\Controllers\bske2023Controller;
 use App\Http\Controllers\nle2022Controller;
 use App\Http\Controllers\rvManagmentController;
 use App\Http\Controllers\rvrecordsController;
+use App\Http\Controllers\userlogsController;
 use App\Http\Controllers\setdrpdwnController;
 use Illuminate\Support\Facades\Route;
 
@@ -51,19 +52,23 @@ Route::middleware(['auth','role:admin'])->controller(adminController::class)->gr
     Route::post('/allusers/store', 'registerUser')->name('allusers.store');
     Route::get('/allusers//edit/{id}', 'userEdit')->name('allusers.edit');
     Route::get('/allusers/delete/{id}', 'userDelete')->name('allusers.delete');
+
     Route::get('/allusers/performance', 'performanceView')->name('allusers/performance');
     Route::post('/allusers/performance/fetch-encoder', 'fetchEncoder')->name('allusers/performance/fetch-encoder');
     Route::post('/allusers/performance/fetch-brgy', 'fetchBrgyEncoder')->name('allusers/performance/fetch-brgy');
     Route::post('/allusers/performance/fetch-monthyear', 'fetchMonthYear')->name('allusers/performance/fetch-monthyear');
-
-
 });
 
-Route::middleware('auth')->controller(rvrecordsController::class)->group(function(){
+Route::middleware(['auth','role:admin'])->controller(rvrecordsController::class)->group(function(){
     route::get('/dashboard/recordsadmin', 'recordsadmin')->name('admin.recordsadmin');
     route::post('/dashboard/selmuncit', 'selectmuncit')->name('admin.selectmuncit');
     route::post('/dashboard/selBrgy', 'selectBrgy')->name('admin.selectBrgy');
 });
+
+Route::middleware('auth')->controller(userlogsController::class)->group(function(){
+    Route::get('/allusers/userlogs', 'userlogs')->name('allusers.userlogs');
+});
+
 
 Route::middleware(['auth','role:supervisor'])->controller(supervisorController::class)->group(function () {
     route::get('dashboard/supervisor', 'index')->name('dashboard.supervisor');
