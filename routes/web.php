@@ -15,6 +15,7 @@ use App\Http\Controllers\nle2022Controller;
 use App\Http\Controllers\rvManagmentController;
 use App\Http\Controllers\rvrecordsController;
 use App\Http\Controllers\userlogsController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\setdrpdwnController;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +58,16 @@ Route::middleware(['auth','role:admin'])->controller(adminController::class)->gr
     Route::post('/allusers/performance/fetch-encoder', 'fetchEncoder')->name('allusers/performance/fetch-encoder');
     Route::post('/allusers/performance/fetch-brgy', 'fetchBrgyEncoder')->name('allusers/performance/fetch-brgy');
     Route::post('/allusers/performance/fetch-monthyear', 'fetchMonthYear')->name('allusers/performance/fetch-monthyear');
+
+});
+
+Route::post('/users/{id}/block', [UserController::class, 'blockUser'])->name('users.block');
+
+Route::group(['middleware' => ['auth', 'check.status']], function () {
+    Route::get('/dashboard/admin', [adminController::class, 'index']);
+    Route::get('/dashboard/supervisor', [supervisorController::class, 'index']);
+    Route::get('/dashboard/encoder', [encoderController::class, 'index']);
+
 });
 
 Route::middleware(['auth','role:admin'])->controller(rvrecordsController::class)->group(function(){
@@ -71,7 +82,7 @@ Route::middleware('auth')->controller(userlogsController::class)->group(function
 
 
 Route::middleware(['auth','role:supervisor'])->controller(supervisorController::class)->group(function () {
-    route::get('dashboard/supervisor', 'index')->name('dashboard.supervisor');
+    route::get('/dashboard/supervisor', 'index')->name('dashboard.supervisor');
     Route::get('/supervisor/user/show', 'userShow')->name('supervisor.show');
     Route::post('/supervisor/user/store', 'registerUser')->name('supervisor.store');
     Route::get('/supervisor/user/edit/{id}', 'userEdit')->name('supervisor.edit');
@@ -80,6 +91,9 @@ Route::middleware(['auth','role:supervisor'])->controller(supervisorController::
     Route::get('/dashboard/supervisor/profile/edit/{id}', 'profileedit')->name('supervisor.profile');
     Route::post('/dashboard/supervisor/profile/update', 'profileupdate')->name('supervisor.updateuser');
     Route::post('/dashboard/supervisor/profile/change-password', 'changePassword')->name('supervisor.changepassword.post');
+
+    Route::get('/supervisor/users/performance', 'performanceView')->name('supervisor.performance');
+
 });
 
 Route::middleware('auth')->controller(encoderController::class)->group(function () {
@@ -162,8 +176,6 @@ Route::middleware('auth')->controller(rvManagmentController::class)->group(funct
 Route::middleware('auth')->controller(setdrpdwnController::class)->group(function(){
     route::get('/setdrpdwn', 'index')->name('setdrpdwn.index');
 });
-
-
 
 
 

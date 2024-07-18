@@ -298,10 +298,12 @@ $(document).ready(function() {
     });
 
     $('#dist1').DataTable({
-        "dom": 'frtip'
+        "dom": 'frtip',
+        "autoWidth" : true
     });
 
     $('#dist2').DataTable({
+
         "dom": 'frtip',
         "pageLength": 10,
         "order": [[0, 'asc']],

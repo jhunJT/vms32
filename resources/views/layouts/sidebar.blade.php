@@ -4,7 +4,7 @@
 
             <div class="collapse navbar-collapse" id="topnav-menu-content">
                 <ul class="navbar-nav">
-                @if(Auth::user()->role == 'admin' && Auth::user()->status == 'Active')
+                @if(Auth::user()->role == 'admin')
                     <li class="nav-item">
                         <a class="nav-link" href="{{ URL('/dashboard') }}"><i class="ri-dashboard-line me-2"></i> Dashboard</a>
                     </li>
@@ -130,7 +130,7 @@
                         </div>
                     </li>
 
-                @elseif (Auth::user()->role == 'encoder' && Auth::user()->status == 'Active')
+                @elseif (Auth::user()->role == 'encoder')
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button">
                             <i class="ri-stack-line me-2"></i>Municipality<div class="arrow-down"></div>
@@ -152,7 +152,7 @@
                             </div>
                         </div>
                     </li>
-                @elseif (Auth::user()->role == 'supervisor' && Auth::user()->status == 'Active')
+                @elseif (Auth::user()->role == 'supervisor')
                     <li class="nav-item">
                         <a class="nav-link" href="{{ URL('/dashboard/supervisor') }}"><i class="ri-dashboard-line me-2"></i> Dashboard</a>
                     </li>
@@ -163,6 +163,7 @@
                         <div class="dropdown-menu" aria-labelledby="topnav-components">
                             <div class="dropdown">
                                 <a href="{{ URL('/supervisor/user/show') }}" class="dropdown-item " >Users</a>
+                                {{-- <a href="{{ route('supervisor.performance') }}" class="dropdown-item " >Encoder Performance</a> --}}
                                 {{-- <a href="{{ route('setdrpdwn.index') }}" class="dropdown-item " >Set Dropdowns</a> --}}
                             </div>
                         </div>

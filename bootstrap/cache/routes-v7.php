@@ -83,7 +83,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::1i4lWWrkOjQQYimT',
+            '_route' => 'generated::Tj8aTQtMxasaYx4g',
           ),
           1 => NULL,
           2 => 
@@ -103,7 +103,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::AATyVl53aw4aVmyI',
+            '_route' => 'generated::josAHvoyfMFtxMk5',
           ),
           1 => NULL,
           2 => 
@@ -200,7 +200,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::eo91JGYVeLbk2ZSA',
+            '_route' => 'generated::TkxGeXfOdel4I0qh',
           ),
           1 => NULL,
           2 => 
@@ -220,7 +220,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::p80p8YCd35b2u7vV',
+            '_route' => 'generated::8BZhwmm66Pz7vGDd',
           ),
           1 => NULL,
           2 => 
@@ -329,7 +329,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::ND6WpxPbLoiCiZKv',
+            '_route' => 'generated::XhF7DTxWeLE7sG6O',
           ),
           1 => NULL,
           2 => 
@@ -365,7 +365,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::D7lGkH7hfSUch5eR',
+            '_route' => 'generated::AfDPXQGMLp0NuTL8',
           ),
           1 => NULL,
           2 => 
@@ -495,7 +495,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::HJpNbyRNjFTmQY50',
+            '_route' => 'generated::WVr0wZGMX5sYR9Fw',
           ),
           1 => NULL,
           2 => 
@@ -552,7 +552,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'dashboard.admin',
+            '_route' => 'generated::iTTjz4tfjWmPfGzf',
           ),
           1 => NULL,
           2 => 
@@ -701,6 +701,46 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
+      '/dashboard/supervisor' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'dashboard.supervisor',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/dashboard/encoder' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'dashboard.encoder',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
       '/dashboard/recordsadmin' => 
       array (
         0 => 
@@ -766,26 +806,6 @@ app('router')->setCompiledRoutes(
           0 => 
           array (
             '_route' => 'allusers.userlogs',
-          ),
-          1 => NULL,
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
-      '/dashboard/supervisor' => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'dashboard.supervisor',
           ),
           1 => NULL,
           2 => 
@@ -896,13 +916,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      '/dashboard/encoder' => 
+      '/supervisor/users/performance' => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'dashboard.encoder',
+            '_route' => 'supervisor.performance',
           ),
           1 => NULL,
           2 => 
@@ -1729,7 +1749,7 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/livewire/preview\\-file/([^/]++)(*:39)|/r(?|eset\\-password/([^/]++)(*:74)|v/manage/([^/]++)(*:98))|/verify\\-email/([^/]++)/([^/]++)(*:138)|/d(?|ashboard/(?|admin/profile/edit/([^/]++)(*:190)|supervisor/profile/edit/([^/]++)(*:230)|encoder/(?|edit/([^/]++)(*:262)|vmdelete/([^/]++)(*:287)|profile/(?|edit/([^/]++)(*:319)|view/([^/]++)(*:340))))|istrict/grants/grants/edit/([^/]++)(*:386))|/allusers/(?|/edit/([^/]++)(*:422)|delete/([^/]++)(*:445))|/supervisor/user/(?|edit/([^/]++)(*:487)|delete/([^/]++)(*:510))|/generate\\-qrcode/([^/]++)(*:545)|/usermanagement/(?|edit/([^/]++)(*:585)|delete/([^/]++)(*:608)))/?$}sDu',
+      0 => '{^(?|/livewire/preview\\-file/([^/]++)(*:39)|/r(?|eset\\-password/([^/]++)(*:74)|v/manage/([^/]++)(*:98))|/verify\\-email/([^/]++)/([^/]++)(*:138)|/d(?|ashboard/(?|admin/profile/edit/([^/]++)(*:190)|supervisor/profile/edit/([^/]++)(*:230)|encoder/(?|edit/([^/]++)(*:262)|vmdelete/([^/]++)(*:287)|profile/(?|edit/([^/]++)(*:319)|view/([^/]++)(*:340))))|istrict/grants/grants/edit/([^/]++)(*:386))|/allusers/(?|/edit/([^/]++)(*:422)|delete/([^/]++)(*:445))|/user(?|s/([^/]++)/block(*:478)|management/(?|edit/([^/]++)(*:513)|delete/([^/]++)(*:536)))|/supervisor/user/(?|edit/([^/]++)(*:579)|delete/([^/]++)(*:602))|/generate\\-qrcode/([^/]++)(*:637))/?$}sDu',
     ),
     3 => 
     array (
@@ -2033,13 +2053,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      487 => 
+      478 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'supervisor.edit',
+            '_route' => 'users.block',
           ),
           1 => 
           array (
@@ -2047,62 +2067,15 @@ app('router')->setCompiledRoutes(
           ),
           2 => 
           array (
-            'GET' => 0,
-            'HEAD' => 1,
+            'POST' => 0,
           ),
           3 => NULL,
           4 => false,
-          5 => true,
+          5 => false,
           6 => NULL,
         ),
       ),
-      510 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'supervisor.delete',
-          ),
-          1 => 
-          array (
-            0 => 'id',
-          ),
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-      ),
-      545 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'generate.qrcode',
-          ),
-          1 => 
-          array (
-            0 => 'id',
-          ),
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-      ),
-      585 => 
+      513 => 
       array (
         0 => 
         array (
@@ -2125,13 +2098,82 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      608 => 
+      536 => 
       array (
         0 => 
         array (
           0 => 
           array (
             '_route' => 'usermanagement.delete',
+          ),
+          1 => 
+          array (
+            0 => 'id',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      579 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'supervisor.edit',
+          ),
+          1 => 
+          array (
+            0 => 'id',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      602 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'supervisor.delete',
+          ),
+          1 => 
+          array (
+            0 => 'id',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      637 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'generate.qrcode',
           ),
           1 => 
           array (
@@ -2179,9 +2221,9 @@ app('router')->setCompiledRoutes(
           0 => 'web',
           1 => 'Laravel\\Pulse\\Http\\Middleware\\Authorize',
         ),
-        'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:160:"function (\\Laravel\\Pulse\\Pulse $pulse, \\Illuminate\\View\\Factory $view) {
+        'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:158:"function (\\Laravel\\Pulse\\Pulse $pulse, \\Illuminate\\View\\Factory $view) {
                         return $view->make(\'pulse::dashboard\');
-                    }";s:5:"scope";s:34:"Laravel\\Pulse\\PulseServiceProvider";s:4:"this";N;s:4:"self";s:32:"00000000000007660000000000000000";}}',
+                    }";s:5:"scope";s:34:"Laravel\\Pulse\\PulseServiceProvider";s:4:"this";N;s:4:"self";s:32:"00000000000007670000000000000000";}}',
         'namespace' => NULL,
         'prefix' => 'pulse',
         'where' => 
@@ -2271,7 +2313,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::1i4lWWrkOjQQYimT' => 
+    'generated::Tj8aTQtMxasaYx4g' => 
     array (
       'methods' => 
       array (
@@ -2283,7 +2325,7 @@ app('router')->setCompiledRoutes(
       array (
         'uses' => 'Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@returnJavaScriptAsFile',
         'controller' => 'Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@returnJavaScriptAsFile',
-        'as' => 'generated::1i4lWWrkOjQQYimT',
+        'as' => 'generated::Tj8aTQtMxasaYx4g',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2299,7 +2341,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::AATyVl53aw4aVmyI' => 
+    'generated::josAHvoyfMFtxMk5' => 
     array (
       'methods' => 
       array (
@@ -2311,7 +2353,7 @@ app('router')->setCompiledRoutes(
       array (
         'uses' => 'Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@maps',
         'controller' => 'Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@maps',
-        'as' => 'generated::AATyVl53aw4aVmyI',
+        'as' => 'generated::josAHvoyfMFtxMk5',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2491,7 +2533,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::eo91JGYVeLbk2ZSA' => 
+    'generated::TkxGeXfOdel4I0qh' => 
     array (
       'methods' => 
       array (
@@ -2506,15 +2548,15 @@ app('router')->setCompiledRoutes(
           0 => 'api',
           1 => 'auth:sanctum',
         ),
-        'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:79:"function (\\Illuminate\\Http\\Request $request) {
+        'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:77:"function (\\Illuminate\\Http\\Request $request) {
     return $request->user();
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000008340000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000008350000000000000000";}}',
         'namespace' => NULL,
         'prefix' => 'api',
         'where' => 
         array (
         ),
-        'as' => 'generated::eo91JGYVeLbk2ZSA',
+        'as' => 'generated::TkxGeXfOdel4I0qh',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2530,7 +2572,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::p80p8YCd35b2u7vV' => 
+    'generated::8BZhwmm66Pz7vGDd' => 
     array (
       'methods' => 
       array (
@@ -2546,13 +2588,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:47:"function () {
     return \\view(\'auth.login\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000008360000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000008370000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::p80p8YCd35b2u7vV',
+        'as' => 'generated::8BZhwmm66Pz7vGDd',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2757,7 +2799,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::ND6WpxPbLoiCiZKv' => 
+    'generated::XhF7DTxWeLE7sG6O' => 
     array (
       'methods' => 
       array (
@@ -2778,7 +2820,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::ND6WpxPbLoiCiZKv',
+        'as' => 'generated::XhF7DTxWeLE7sG6O',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2832,7 +2874,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::D7lGkH7hfSUch5eR' => 
+    'generated::AfDPXQGMLp0NuTL8' => 
     array (
       'methods' => 
       array (
@@ -2853,7 +2895,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::D7lGkH7hfSUch5eR',
+        'as' => 'generated::AfDPXQGMLp0NuTL8',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3173,7 +3215,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::HJpNbyRNjFTmQY50' => 
+    'generated::WVr0wZGMX5sYR9Fw' => 
     array (
       'methods' => 
       array (
@@ -3194,7 +3236,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::HJpNbyRNjFTmQY50',
+        'as' => 'generated::WVr0wZGMX5sYR9Fw',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3284,7 +3326,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'dashboard.admin' => 
+    'generated::iTTjz4tfjWmPfGzf' => 
     array (
       'methods' => 
       array (
@@ -3298,7 +3340,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'auth',
-          2 => 'role:admin',
+          2 => 'check.status',
         ),
         'uses' => 'App\\Http\\Controllers\\AdminPanel\\adminController@index',
         'controller' => 'App\\Http\\Controllers\\AdminPanel\\adminController@index',
@@ -3307,7 +3349,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'dashboard.admin',
+        'as' => 'generated::iTTjz4tfjWmPfGzf',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3708,6 +3750,119 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
+    'users.block' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'users/{id}/block',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\UserController@blockUser',
+        'controller' => 'App\\Http\\Controllers\\UserController@blockUser',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'users.block',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'dashboard.supervisor' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'dashboard/supervisor',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'role:supervisor',
+        ),
+        'uses' => 'App\\Http\\Controllers\\SupervisorPanel\\supervisorController@index',
+        'controller' => 'App\\Http\\Controllers\\SupervisorPanel\\supervisorController@index',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'dashboard.supervisor',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'dashboard.encoder' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'dashboard/encoder',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\EncoderPanel\\encoderController@index',
+        'controller' => 'App\\Http\\Controllers\\EncoderPanel\\encoderController@index',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'dashboard.encoder',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
     'admin.recordsadmin' => 
     array (
       'methods' => 
@@ -3846,45 +4001,6 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'allusers.userlogs',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
-    'dashboard.supervisor' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'dashboard/supervisor',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'auth',
-          2 => 'role:supervisor',
-        ),
-        'uses' => 'App\\Http\\Controllers\\SupervisorPanel\\supervisorController@index',
-        'controller' => 'App\\Http\\Controllers\\SupervisorPanel\\supervisorController@index',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'dashboard.supervisor',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4209,29 +4325,30 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'dashboard.encoder' => 
+    'supervisor.performance' => 
     array (
       'methods' => 
       array (
         0 => 'GET',
         1 => 'HEAD',
       ),
-      'uri' => 'dashboard/encoder',
+      'uri' => 'supervisor/users/performance',
       'action' => 
       array (
         'middleware' => 
         array (
           0 => 'web',
           1 => 'auth',
+          2 => 'role:supervisor',
         ),
-        'uses' => 'App\\Http\\Controllers\\EncoderPanel\\encoderController@index',
-        'controller' => 'App\\Http\\Controllers\\EncoderPanel\\encoderController@index',
+        'uses' => 'App\\Http\\Controllers\\SupervisorPanel\\supervisorController@performanceView',
+        'controller' => 'App\\Http\\Controllers\\SupervisorPanel\\supervisorController@performanceView',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'dashboard.encoder',
+        'as' => 'supervisor.performance',
       ),
       'fallback' => false,
       'defaults' => 

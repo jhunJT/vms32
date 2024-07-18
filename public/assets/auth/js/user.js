@@ -83,6 +83,7 @@ $(document).ready(function() {
                     $('#birthday').val(data.birthday);
                     $('#district').val(data.district).change();
                     $('#muncit').val(data.muncit).change();
+                    $('#ustatus').val(data.status).change();
                     $('#contno').val(data.contno);
                     $('#tbname').val(data.tbname);
                     $('#error').html('');

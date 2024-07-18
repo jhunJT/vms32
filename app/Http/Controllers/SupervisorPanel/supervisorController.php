@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use App\Models\d1nle2023;
+use Illuminate\Support\Facades\Cache;
 
 class supervisorController extends Controller
 {
@@ -18,38 +19,6 @@ class supervisorController extends Controller
 
         $muncit = Auth::user()->muncit;
         $district = Auth::user()->district;
-
-        // $users =[];
-        // if($request->ajax()) {
-        //     $users = User::where([
-        //             ['district','=',$district],
-        //             ['muncit','=',$muncit]
-        //         ]);
-
-        //     foreach ($users as $user) {
-        //         $user->online_status = Cache::has('user-is-online-' . $user->id) ? '<span class="btn btn-success btn-rounded waves-effect waves-light">Online</span>' : '<span class="btn btn-danger btn-rounded waves-effect waves-light">Offline</span>';
-        //         $user->last_seen_minutes_ago = $user->last_seen ? Carbon::parse($user->last_seen)->diffForHumans() : 'Never'; // Calculate
-        //     }
-
-        //     return DataTables::of($users)
-        //         ->addIndexColumn()
-        //         ->addColumn('action', function ($row) {
-        //             $btn = '<a style="padding-left:4px;" href="javascript:void(0)" type="button" data-id="'.$row->id.'" class="waves-effect userEdit"><i class="ri-user-follow-fill lg" style="font-size: 30px;"></i></a>';
-        //             $btn .= '<a style="padding-left:4px;" href="javascript:void(0)" type="button" data-id="'.$row->id.'"  data-name="'.$row->name.'"class="waves-effect userDelete"><i class="ri-user-unfollow-line" style="font-size: 30px;color:Tomato;"></i></a>';
-        //         return $btn;
-
-        //     })
-        //         ->addColumn('online_status', function($user) {
-        //         return $user->online_status;
-        //     })
-
-        //     ->addColumn('last_seen_minutes_ago', function($user) {
-        //         return $user->last_seen_minutes_ago;
-        //     })
-
-        //     ->rawColumns(['action','online_status','last_seen_minutes_ago'])
-        //     ->make(true);
-        // }
 
         $CVSummary = d1nle2023::select(
                 DB::raw('IFNULL(Barangay, "TOTAL") as Barangay'),
@@ -257,7 +226,26 @@ class supervisorController extends Controller
         return response()->json([
             'success'=>'Record deleted successfully.'
         ],200);
+    }
 
+    public function performanceView(Request $request){
 
+        $muncit = Auth::user()->muncit;
+        $district = Auth::user()->district;
+
+        $encoders = DB::table('users')
+            ->select('users.name as name','d1nle2023s.District as district','d1nle2023s.Municipality as muncit','d1nle2023s.Barangay as brgy',
+                DB::raw(DB::raw('concat(MONTHNAME(d1nle2023s.userlogs), " ",YEAR(d1nle2023s.userlogs)) as monthyear')),
+                DB::raw('count(d1nle2023s.userid) as encoded'))
+            ->join('d1nle2023s','d1nle2023s.userid','=','users.id')
+            ->where([['d1nle2023s.district','=', $district],['d1nle2023s.municipality','=', $muncit]])
+            // ->groupBy(DB::raw('name with rollup','brgy'))
+            ->groupBy(['name','brgy','monthyear','district','Municipality'])
+            ->get();
+        if($request->ajax()){
+                return DataTables::of( $encoders)
+                ->make(true);
+            }
+        return view('forms.supervisor-users');
     }
 }

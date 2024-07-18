@@ -154,7 +154,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <div class="mb-3">
                                         <label for="district" class="form-label">District</label>
                                         <select class="form-select" id="district" name="district" required>
@@ -182,7 +182,7 @@
                                     <input type="hidden" name="u_lat" id="u_lat">
                                     <input type="hidden" name="u_long" id="u_long">
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="contno" class="form-label">Contact No</label>
                                         <input type="text" class="form-control" id="contno"
@@ -190,6 +190,17 @@
                                         <div class="invalid-feedback">
                                             Please provide a valid Contact No.
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label for="ustatus" class="form-label">Status</label>
+                                        <select class="form-select" id="ustatus" name="ustatus" required>
+                                            <option selected disabled value="">Choose...</option>
+                                            <option value="Active">Active</option>
+                                            <option value="Block">Blocked</option>
+
+                                        </select>
                                     </div>
                                 </div>
                                 </div>

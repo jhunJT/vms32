@@ -53,7 +53,7 @@
                                 {{-- id="selection-datatable" --}}
                                 <thead>
                                     <tr>
-                                        <th class="text-center">ID</th>
+                                        {{-- <th class="text-center">ID</th> --}}
                                         <th class="text-center">Name</th>
                                         <th class="text-center">Municipality</th>
                                         <th class="text-center">Barangay</th>
@@ -268,9 +268,9 @@
             "lengthMenu": [10, 15,30, 50, 100],
             "pageLength": 10,
             "processing": false,
-            "ajax": "{{ route('allusers/performance') }}",
+            "ajax": "{{ route('supervisor.performance') }}",
             "columns":[
-                { "data": "id" }, //0
+                // { "data": "id" }, //0
                 { "data": "name" }, //1
                 { "data": "muncit" }, //2
                 { "data": "brgy" }, //3
@@ -283,7 +283,8 @@
                     {"className": "dt-center", "targets": [0,4]},
                     {"targets": [5], "visible": false, "bSortable": false }
                     // {"targets": [10,11], "visible": false, "searchable": true },
-                ],
+                ]
+                ,
             "footerCallback": function (row, data, start, end, display) {
                 let api = this.api();
                 // Remove the formatting to get integer data for summation
@@ -320,7 +321,7 @@
 
                     // api.column(4).footer().innerHTML = pageTotal + ' ( $' + total + ' total)';
                 }
-            });
+        });
 
             $('#filterEncoder').select2({
                 placeholder: "Select Encoder",
@@ -434,7 +435,7 @@
                     }
                 });
 
-        });
+    });
     </script>
 
     @include('layouts.script')

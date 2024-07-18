@@ -67,7 +67,7 @@ class adminController extends Controller
 
         $dist1 = d1nle2023::select(
             DB::raw('IFNULL(Municipality, "TOTAL") as Municipality'),
-            DB::raw('count(*) as RV'),
+            DB::raw('count(case when man_add <> 1 then id end) as RV'),
             DB::raw('count(distinct(HL), case when survey_stat = 1 then HL end) as HL'),
             DB::raw('(count(case when survey_stat = 1 then survey_stat end) - count(distinct(HL), case when survey_stat = 1 then HL end ))  as Members'),
             DB::raw('count(case when survey_stat = 1 and man_add = 1 then survey_stat end)  as MA'),
@@ -115,8 +115,7 @@ class adminController extends Controller
         return view('auth.userlogs');
     }
 
-    public function registerUser(Request $request)
-    {
+    public function registerUser(Request $request){
 
         $dt = Carbon::now();
         $todayDate = $dt->toDayDateTimeString();
@@ -152,6 +151,7 @@ class adminController extends Controller
                 'muncit' => $request->muncit,
                 'contno' => $request->contno,
                 'role' => $request->level,
+                'status' => $request->ustatus,
                 'tbname' => $request->tbname,
                 'ulat' => $request->u_lat,
                 'ulong' => $request->u_long
@@ -162,9 +162,7 @@ class adminController extends Controller
         return response()->json(['success' => 'Record saved!']);
     }
 
-    public function userEdit($id)
-    {
-        // dd('delete');
+    public function userEdit($id){
         $users = User::find($id);
         if(! $users){
             abort(404);
@@ -172,8 +170,7 @@ class adminController extends Controller
         return response()->json($users);
     }
 
-    public function userDelete(Request $request)
-    {
+    public function userDelete(Request $request){
         $dt = Carbon::now();
         $todayDate = $dt->toDayDateTimeString();
 
@@ -195,8 +192,7 @@ class adminController extends Controller
 
     }
 
-    public function performanceView(Request $request)
-    {
+    public function performanceView(Request $request){
 
         $encoders = DB::table('users')
             ->select('users.name as name','d1nle2023s.District as district','d1nle2023s.Municipality as muncit','d1nle2023s.Barangay as brgy',
@@ -215,7 +211,6 @@ class adminController extends Controller
     }
 
     public function fetchEncoder(Request $request){
-
         $search = $request->search;
         $dataEncoder = DB::table('users')
             ->join('stamargaritas','users.id','=','stamargaritas.userid')
