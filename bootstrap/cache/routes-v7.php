@@ -83,7 +83,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::Tj8aTQtMxasaYx4g',
+            '_route' => 'generated::EpUFWbII3rQUyxoe',
           ),
           1 => NULL,
           2 => 
@@ -103,7 +103,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::josAHvoyfMFtxMk5',
+            '_route' => 'generated::m9bpvu5N36WC66Vy',
           ),
           1 => NULL,
           2 => 
@@ -200,7 +200,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::TkxGeXfOdel4I0qh',
+            '_route' => 'generated::ziyxP6Q2jmBqJEuB',
           ),
           1 => NULL,
           2 => 
@@ -220,7 +220,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::8BZhwmm66Pz7vGDd',
+            '_route' => 'generated::phGo8y01STfPma1w',
           ),
           1 => NULL,
           2 => 
@@ -329,7 +329,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::XhF7DTxWeLE7sG6O',
+            '_route' => 'generated::wcVFoL4LsnRHAFEO',
           ),
           1 => NULL,
           2 => 
@@ -365,7 +365,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::AfDPXQGMLp0NuTL8',
+            '_route' => 'generated::3tsIPNFGIeasEIAd',
           ),
           1 => NULL,
           2 => 
@@ -495,7 +495,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::WVr0wZGMX5sYR9Fw',
+            '_route' => 'generated::Uiqvf3FBh5anCohp',
           ),
           1 => NULL,
           2 => 
@@ -552,7 +552,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::iTTjz4tfjWmPfGzf',
+            '_route' => 'dashboard.admin',
           ),
           1 => NULL,
           2 => 
@@ -701,46 +701,6 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      '/dashboard/supervisor' => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'dashboard.supervisor',
-          ),
-          1 => NULL,
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
-      '/dashboard/encoder' => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'dashboard.encoder',
-          ),
-          1 => NULL,
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
       '/dashboard/recordsadmin' => 
       array (
         0 => 
@@ -806,6 +766,26 @@ app('router')->setCompiledRoutes(
           0 => 
           array (
             '_route' => 'allusers.userlogs',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/dashboard/supervisor' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'dashboard.supervisor',
           ),
           1 => NULL,
           2 => 
@@ -923,6 +903,26 @@ app('router')->setCompiledRoutes(
           0 => 
           array (
             '_route' => 'supervisor.performance',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/dashboard/encoder' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'dashboard.encoder',
           ),
           1 => NULL,
           2 => 
@@ -1749,7 +1749,7 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/livewire/preview\\-file/([^/]++)(*:39)|/r(?|eset\\-password/([^/]++)(*:74)|v/manage/([^/]++)(*:98))|/verify\\-email/([^/]++)/([^/]++)(*:138)|/d(?|ashboard/(?|admin/profile/edit/([^/]++)(*:190)|supervisor/profile/edit/([^/]++)(*:230)|encoder/(?|edit/([^/]++)(*:262)|vmdelete/([^/]++)(*:287)|profile/(?|edit/([^/]++)(*:319)|view/([^/]++)(*:340))))|istrict/grants/grants/edit/([^/]++)(*:386))|/allusers/(?|/edit/([^/]++)(*:422)|delete/([^/]++)(*:445))|/user(?|s/([^/]++)/block(*:478)|management/(?|edit/([^/]++)(*:513)|delete/([^/]++)(*:536)))|/supervisor/user/(?|edit/([^/]++)(*:579)|delete/([^/]++)(*:602))|/generate\\-qrcode/([^/]++)(*:637))/?$}sDu',
+      0 => '{^(?|/livewire/preview\\-file/([^/]++)(*:39)|/r(?|eset\\-password/([^/]++)(*:74)|v/manage/([^/]++)(*:98))|/verify\\-email/([^/]++)/([^/]++)(*:138)|/d(?|ashboard/(?|admin/profile/edit/([^/]++)(*:190)|supervisor/profile/edit/([^/]++)(*:230)|encoder/(?|edit/([^/]++)(*:262)|vmdelete/([^/]++)(*:287)|profile/(?|edit/([^/]++)(*:319)|view/([^/]++)(*:340))))|istrict/grants/grants/edit/([^/]++)(*:386))|/allusers/(?|/edit/([^/]++)(*:422)|delete/([^/]++)(*:445))|/supervisor/user/(?|edit/([^/]++)(*:487)|delete/([^/]++)(*:510))|/generate\\-qrcode/([^/]++)(*:545)|/usermanagement/(?|edit/([^/]++)(*:585)|delete/([^/]++)(*:608)))/?$}sDu',
     ),
     3 => 
     array (
@@ -2053,75 +2053,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      478 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'users.block',
-          ),
-          1 => 
-          array (
-            0 => 'id',
-          ),
-          2 => 
-          array (
-            'POST' => 0,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
-      513 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'usermanagement.edit',
-          ),
-          1 => 
-          array (
-            0 => 'id',
-          ),
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-      ),
-      536 => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'usermanagement.delete',
-          ),
-          1 => 
-          array (
-            0 => 'id',
-          ),
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-      ),
-      579 => 
+      487 => 
       array (
         0 => 
         array (
@@ -2144,7 +2076,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      602 => 
+      510 => 
       array (
         0 => 
         array (
@@ -2167,13 +2099,59 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      637 => 
+      545 => 
       array (
         0 => 
         array (
           0 => 
           array (
             '_route' => 'generate.qrcode',
+          ),
+          1 => 
+          array (
+            0 => 'id',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      585 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'usermanagement.edit',
+          ),
+          1 => 
+          array (
+            0 => 'id',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      608 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'usermanagement.delete',
           ),
           1 => 
           array (
@@ -2313,7 +2291,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::Tj8aTQtMxasaYx4g' => 
+    'generated::EpUFWbII3rQUyxoe' => 
     array (
       'methods' => 
       array (
@@ -2325,7 +2303,7 @@ app('router')->setCompiledRoutes(
       array (
         'uses' => 'Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@returnJavaScriptAsFile',
         'controller' => 'Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@returnJavaScriptAsFile',
-        'as' => 'generated::Tj8aTQtMxasaYx4g',
+        'as' => 'generated::EpUFWbII3rQUyxoe',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2341,7 +2319,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::josAHvoyfMFtxMk5' => 
+    'generated::m9bpvu5N36WC66Vy' => 
     array (
       'methods' => 
       array (
@@ -2353,7 +2331,7 @@ app('router')->setCompiledRoutes(
       array (
         'uses' => 'Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@maps',
         'controller' => 'Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@maps',
-        'as' => 'generated::josAHvoyfMFtxMk5',
+        'as' => 'generated::m9bpvu5N36WC66Vy',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2533,7 +2511,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::TkxGeXfOdel4I0qh' => 
+    'generated::ziyxP6Q2jmBqJEuB' => 
     array (
       'methods' => 
       array (
@@ -2556,7 +2534,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::TkxGeXfOdel4I0qh',
+        'as' => 'generated::ziyxP6Q2jmBqJEuB',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2572,7 +2550,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::8BZhwmm66Pz7vGDd' => 
+    'generated::phGo8y01STfPma1w' => 
     array (
       'methods' => 
       array (
@@ -2594,7 +2572,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::8BZhwmm66Pz7vGDd',
+        'as' => 'generated::phGo8y01STfPma1w',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2799,7 +2777,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::XhF7DTxWeLE7sG6O' => 
+    'generated::wcVFoL4LsnRHAFEO' => 
     array (
       'methods' => 
       array (
@@ -2820,7 +2798,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::XhF7DTxWeLE7sG6O',
+        'as' => 'generated::wcVFoL4LsnRHAFEO',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2874,7 +2852,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::AfDPXQGMLp0NuTL8' => 
+    'generated::3tsIPNFGIeasEIAd' => 
     array (
       'methods' => 
       array (
@@ -2895,7 +2873,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::AfDPXQGMLp0NuTL8',
+        'as' => 'generated::3tsIPNFGIeasEIAd',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3215,7 +3193,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::WVr0wZGMX5sYR9Fw' => 
+    'generated::Uiqvf3FBh5anCohp' => 
     array (
       'methods' => 
       array (
@@ -3236,7 +3214,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::WVr0wZGMX5sYR9Fw',
+        'as' => 'generated::Uiqvf3FBh5anCohp',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3326,7 +3304,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::iTTjz4tfjWmPfGzf' => 
+    'dashboard.admin' => 
     array (
       'methods' => 
       array (
@@ -3340,7 +3318,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
           1 => 'auth',
-          2 => 'check.status',
+          2 => 'role:admin',
         ),
         'uses' => 'App\\Http\\Controllers\\AdminPanel\\adminController@index',
         'controller' => 'App\\Http\\Controllers\\AdminPanel\\adminController@index',
@@ -3349,7 +3327,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::iTTjz4tfjWmPfGzf',
+        'as' => 'dashboard.admin',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3750,119 +3728,6 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'users.block' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'users/{id}/block',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-        ),
-        'uses' => 'App\\Http\\Controllers\\UserController@blockUser',
-        'controller' => 'App\\Http\\Controllers\\UserController@blockUser',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'users.block',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
-    'dashboard.supervisor' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'dashboard/supervisor',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'auth',
-          2 => 'role:supervisor',
-        ),
-        'uses' => 'App\\Http\\Controllers\\SupervisorPanel\\supervisorController@index',
-        'controller' => 'App\\Http\\Controllers\\SupervisorPanel\\supervisorController@index',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'dashboard.supervisor',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
-    'dashboard.encoder' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'dashboard/encoder',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'auth',
-        ),
-        'uses' => 'App\\Http\\Controllers\\EncoderPanel\\encoderController@index',
-        'controller' => 'App\\Http\\Controllers\\EncoderPanel\\encoderController@index',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'dashboard.encoder',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
     'admin.recordsadmin' => 
     array (
       'methods' => 
@@ -4001,6 +3866,45 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'allusers.userlogs',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'dashboard.supervisor' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'dashboard/supervisor',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'role:supervisor',
+        ),
+        'uses' => 'App\\Http\\Controllers\\SupervisorPanel\\supervisorController@index',
+        'controller' => 'App\\Http\\Controllers\\SupervisorPanel\\supervisorController@index',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'dashboard.supervisor',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4349,6 +4253,44 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'supervisor.performance',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'dashboard.encoder' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'dashboard/encoder',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+        ),
+        'uses' => 'App\\Http\\Controllers\\EncoderPanel\\encoderController@index',
+        'controller' => 'App\\Http\\Controllers\\EncoderPanel\\encoderController@index',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'dashboard.encoder',
       ),
       'fallback' => false,
       'defaults' => 

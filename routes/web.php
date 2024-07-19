@@ -61,14 +61,14 @@ Route::middleware(['auth','role:admin'])->controller(adminController::class)->gr
 
 });
 
-Route::post('/users/{id}/block', [UserController::class, 'blockUser'])->name('users.block');
+// Route::post('/users/{id}/block', [UserController::class, 'blockUser'])->name('users.block');
 
-Route::group(['middleware' => ['auth', 'check.status']], function () {
-    Route::get('/dashboard/admin', [adminController::class, 'index']);
-    Route::get('/dashboard/supervisor', [supervisorController::class, 'index']);
-    Route::get('/dashboard/encoder', [encoderController::class, 'index']);
+// Route::group(['middleware' => ['auth', 'check.status']], function () {
+//     Route::get('/dashboard/admin', [adminController::class, 'index']);
+//     Route::get('/dashboard/supervisor', [supervisorController::class, 'index']);
+//     Route::get('/dashboard/encoder', [encoderController::class, 'index']);
 
-});
+// });
 
 Route::middleware(['auth','role:admin'])->controller(rvrecordsController::class)->group(function(){
     route::get('/dashboard/recordsadmin', 'recordsadmin')->name('admin.recordsadmin');
