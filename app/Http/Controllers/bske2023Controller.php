@@ -11,21 +11,60 @@ use Illuminate\Http\Request;
 class bske2023Controller extends Controller
 {
     public function index(Request $request){
-        $results = bske2023::all();
+        $results = bske2023::select(
+            'id',
+            'municipality',
+            'fullname',
+            'barangay',
+            'position',
+            'party',
+            'vobtained',
+            DB::raw('
+                CASE
+                    WHEN position = "PUNONG BARANGAY" THEN 1
+                    WHEN position = "MEMBER, SANGGUNIANG BARANGAY" THEN
+                        CASE
+                            WHEN rank <= 7 THEN 1
+                            ELSE rank
+                        END
+                    ELSE rank
+                END AS rank'
+            )
+        )
+        ->whereRaw('
+            CASE
+                WHEN position = "PUNONG BARANGAY" AND rank = 1 THEN 1
+                WHEN position = "MEMBER, SANGGUNIANG BARANGAY" AND rank <= 7 THEN 1
+                ELSE 0
+            END = 1'
+        )
+        ->get();
+
 
         if($request->ajax()){
             return DataTables::of($results)
                 ->addColumn('action', function($row){
-                   return '<a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
-                       class="btn btn-primary btn-rounded waves-effect gview" ><i class="mdi mdi-gift"></i></a>
+                   return
+                        // '<a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
+                        //     class="btn btn-primary btn-rounded waves-effect gview" ><i class="mdi mdi-gift"></i></a>';
 
-                       <a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
+                       '<a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
                        class="btn btn-primary btn-rounded waves-effect vedit " ><i class="mdi mdi-account-edit"></i></a>';
                 })
                ->rawColumns(['action'])
                ->make(true);
            }
         return view('archives.bske2023');
+    }
+
+    public function updtparty(Request $request){
+        // dd($request->selectedPartyVal, $request->selectedRowId);
+
+        bske2023::updateOrCreate(
+            ['id' => $request->selectedRowId ],
+            ['party' => $request->selectedPartyVal,]
+        );
+        return response()->json(['success' => 'Record Updated!']);
     }
 
     public function fetchmuncitss(Request $request){

@@ -701,8 +701,8 @@ $(document).ready(function(e) {
         var text = selectedData.text;
         $('#hlId').val(id);
         $('#hlnamemodal').val(text);
-        console.log('Selected ID:', id);
-        console.log('Selected Text:', text);
+        // console.log('Selected ID:', id);
+        // console.log('Selected Text:', text);
     });
 
     $('.plss').select2({

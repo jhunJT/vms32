@@ -9,31 +9,41 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                              <div class="mb-1 ">
                                                 <div class="input-group gap-2">
                                                     <select class="form-control " style="width: 100%;"  tabindex="-1" aria-hidden="true" name="filterMuncit" id="filterMuncit"></select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="mb-1 ">
                                                <div class="input-group gap-2">
                                                    <select class="form-control " style="width: 100%;"  tabindex="-1" aria-hidden="true" name="filterBrgy" id="filterBrgy"></select>
                                                </div>
                                            </div>
                                        </div>
-                                       <div class="col-md-4">
-                                        <div class="mb-1 ">
-                                           <div class="input-group gap-2">
-                                               <select class="form-control " style="width: 100%;"  tabindex="-1" aria-hidden="true" name="filterPos" id="filterPos"></select>
-                                           </div>
-                                       </div>
-                                   </div>
+                                       <div class="col-md-3">
+                                            <div class="mb-1 ">
+                                                <div class="input-group gap-2">
+                                                    <select class="form-control " style="width: 100%;"  tabindex="-1" aria-hidden="true" name="filterPos" id="filterPos"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mb-1 ">
+                                                <div class="input-group gap-2">
+                                                    <select class="form-control " style="width: 100%;"  tabindex="-1" aria-hidden="true" name="filterParty" id="filterParty">
+                                                        <option selected disabled>Filter Party</option>
+                                                        <option value="PULA">PULA</option>
+                                                        <option value="DULAW">DULAW</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
                             <table id="bske2023tbl" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                 <tr>
@@ -42,12 +52,9 @@
                                     <th style="width:15rem;">Fullname</th>
                                     <th>Barangay</th>
                                     <th>Position</th>
-                                    {{-- <th>Rank</th> --}}
-                                    <th>Nickname</th>
                                     <th>Votes</th>
-                                    {{-- <th>Party</th> --}}
-                                    {{-- <th>Remarks</th> --}}
-                                    <th class="text-center">Action</th>
+                                    <th>Party</th>
+                                    <th hidden class="text-center">Action</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -64,11 +71,12 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            }); //initalize csrf
+            });
+
             var bske2023 = $('#bske2023tbl').DataTable({
-                "order": [[ 1, 'asc' ], [ 3, 'asc' ], [2, 'asc' ],[4, 'asc']],
+                "order": [[ 1, 'asc' ], [ 3, 'asc' ], [4, 'desc' ]],
                 "ordering": true ,
-                "pageLength": 15,
+                "pageLength": 10,
                 "dom": 'Bfrtip',
                 "processing": true,
                 "serverSide": true,
@@ -79,55 +87,104 @@
                     { "data": "fullname" },
                     { "data": "barangay" },
                     { "data": "position" },
-                    // { "data": "rank"},
-                    { "data": "nickname" },
                     { "data": "vobtained" },
-                    // { "data": "party" },
-                    // { "data": "remarks" },
+                    { "data": "party",
+                        "defaultContent": '',
+                        "render": function (data, type, row, meta) {
+                            if (type === 'display') {
+                                var selectOptions = '<select class="form-select btnParty">';
+                                selectOptions += '<option selected>NONE</option>';
+                                selectOptions += '<option value="PULA">PULA</option>';
+                                selectOptions += '<option value="DULAW">DULAW</option>';
+                                selectOptions += '</select>';
+
+                                if (data) {
+                                    // If data is available, select the appropriate option
+                                    return selectOptions.replace('value="' + data + '"', 'value="' + data + '" selected');
+                                } else {
+                                    // If data is blank, default to the first option (NONE)
+                                    return selectOptions;
+                                }
+                            } else {
+                                // For non-display type or when data is not available
+                                return data;
+                            }
+                        }
+                    },
                     { "data": "action", orderable:false, searchable: false}
                 ],
                 "columnDefs": [
-                    { "searchable": true, "visible": false,"targets": [1],}
+                    { "searchable": true, "visible": false,"targets": [1,7]},
                     ],
-
-                // "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                //      $('td:eq(0)', nRow).html(iDisplayIndexFull +1);
-                // },
                 "buttons": [
                     {
-                        text: 'excel',
+                        text: 'EXCEL',
                         extend: 'excelHtml5',
-                        title: 'HOUSELEADER SUMMARY',
+                        title: 'BSKE 2023 RESULT SUMMARY',
                         className: 'btn btn-success waves-effect waves-light',
                         exportOptions: {
                             columns: ':visible:not(.not-export-col)'
                         }
                     },
                     {
-                        text: 'print',
+                        text: 'PRINT',
                         extend: 'print',
                         title: '',
                         pageSize: 'A4',
-                        orientation: 'portrait',
+                        orientation: 'LANDSCAPE',
 
                         exportOptions: {
-
-                            columns: [0,3,4,5]
-                            // ':visible:not(.not-export-col)'
-                            // columns: ":not(.not-export-column)"
+                            columns: [0,3,4,5,6]
                         },
                         className: 'btn btn-success waves-effect waves-light',
                             messageTop: function () {
-                                muncit = $('#hlmun').val();
-                                hlbrgys = $('#hlbrgy').val();
-                            return '<h1 style="text-align:center;">House Leader Summary </h1> <h2 style="text-align:center;">'+ muncit + '-' +hlbrgys+'</h2>';
+                                muncit = $('#filterMuncit').val();
+                                hlbrgys = $('#filterBrgy').val();
+
+                                if (muncit && hlbrgys) {
+                                    return '<h1 style="text-align:center;">BSKE 2023 RESULT SUMMARY</h1>' +
+                                        '<h2 style="text-align:center;">' + muncit + ' - ' + hlbrgys + '</h2>';
+                                } else if (muncit && !hlbrgys) {
+                                    return '<h1 style="text-align:center;">BSKE 2023 RESULT SUMMARY</h1>' +
+                                        '<h2 style="text-align:center;">' + muncit + '</h2>';
+                                } else {
+                                    return '<h1 style="text-align:center;">BSKE 2023 RESULT SUMMARY - ALL</h1>';
+                                }
                         }
-                    },
+                    }
                 ]
 
         });
 
         // $.fn.dataTable.ext.errMode = 'throw';
+
+        $(document).on('change','.btnParty', function(){
+            var selectedPartyVal = $(this).val();
+
+            var closestRow = $(this).closest('tr');
+            var rowData = bske2023.row(closestRow).data();
+            var selectedRowId = rowData.id;
+
+            // console.log(selectedPartyVal, selectedRowId);
+
+            $.ajax({
+                url: '{{ route("archives.updtparty") }}' ,
+                method: 'POST',
+                data: {selectedPartyVal: selectedPartyVal, selectedRowId: selectedRowId},
+                success: function(response) {
+                    if(response) {
+                        toastr.success(response.success);
+                    }
+                },
+                error: function(xhr, status, error){
+                    //console.log(error);
+                    if(error) {
+                        var err = eval("(" + xhr.responseText + ")");
+                        toastr.error(err.message);
+                    }
+                }
+            });
+        });
 
 
         $('#filterMuncit').on('change', function(e){
@@ -153,6 +210,14 @@
                 selectPos.push($(this).val())
             })
             bske2023.column(4).sort().search(selectPos).draw();
+        });
+
+        $('#filterParty').on('change', function(e){
+            var selectParty = []
+            $.each($('#filterParty'), function(i,elem){
+                selectParty.push($(this).val())
+            })
+            bske2023.column(6).sort().search(selectParty, true).draw();
         });
 
         $(document).on('click','.delRec', function(e){
@@ -266,6 +331,12 @@
                     }
                 }
             }
+        });
+
+        $('#filterParty').select2({
+            placeholder: "Filter Party",
+            allowClear: true,
+            minimumResultsForSearch: -1
         });
     });
     </script>

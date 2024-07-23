@@ -15,7 +15,7 @@ return [
     |
     | Supported: "file", "cookie", "database", "apc",
     |            "memcached", "redis", "dynamodb", "array"
-    |
+    |'driver' => env('SESSION_DRIVER', 'file'),
     */
 
     'driver' => env('SESSION_DRIVER', 'file'),
@@ -31,7 +31,7 @@ return [
     |
     */
 
-    'lifetime' => env('SESSION_LIFETIME', 120),
+    'lifetime' => env('SESSION_LIFETIME', 30),
 
     'expire_on_close' => false,
 

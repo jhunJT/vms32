@@ -29,29 +29,12 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
         $request->session()->regenerate();
-        $dt = Carbon::now();
-        $todayDate = $dt->toDayDateTimeString();
 
-        $activity = [
-            'name' =>   $request->user()->name,
-            'descrption' => 'Log In',
-            'role' =>  $request->user()->role,
-            'date_time' => $todayDate,
-        ];
+        // Update session details in user's record
+        $this->updateSessionDetails($request);
 
-        if($request->user()->role === 'admin'){
-            DB::table('activitylogs')->insert($activity);
-            return redirect()->route('dashboard.admin');
-
-        }elseif($request->user()->role === 'encoder'){
-            DB::table('activitylogs')->insert($activity);
-            return redirect()->route('dashboard.encoder');
-
-        }elseif($request->user()->role === 'supervisor'){
-            DB::table('activitylogs')->insert($activity);
-            return redirect()->route('dashboard.supervisor');
-        }
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // Redirect based on user role
+        return $this->redirectUserBasedOnRole($request->user());
     }
 
     /**
@@ -59,25 +42,76 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        // Update session details before logging out
+        $this->updateSessionDetails($request);
 
+        // Logout user
+        Auth::guard('web')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
+    }
+
+    /**
+     * Update session details in user's record.
+     */
+    protected function updateSessionDetails(Request $request)
+    {
+        $dt = Carbon::now();
+        $todayDate = $dt->toDayDateTimeString();
+
+        $user = $request->user();
+
+        $id = $request->session()->getId();
+        $ip = $request->ip();
+        $agent = $request->userAgent();
+
+
+        if ($user) {
+            $user->last_session_id = $id;
+            $user->last_ip_address = $ip;
+            $user->last_user_agent = $agent;
+            $user->save();
+        }
+
+        $sessiondetails = [
+            'user_id' => $user->id,
+            'payload' => $id,
+            'ip_address' => $ip,
+            'user_agent' => $agent,
+            'last_activity' => $todayDate,
+        ];
+        DB::table('sessions')->insert($sessiondetails);
+    }
+
+    /**
+     * Redirect user based on their role.
+     */
+    protected function redirectUserBasedOnRole($user): RedirectResponse
+    {
         $dt = Carbon::now();
         $todayDate = $dt->toDayDateTimeString();
 
         $activity = [
-            'name' =>   $request->user()->name,
-            'descrption' => 'Log Out',
-            'role' =>  $request->user()->role,
+            'name' => $user->name,
+            'descrption' => 'Log In',
+            'role' => $user->role,
             'date_time' => $todayDate,
         ];
 
-        Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
+        // Insert activity log
         DB::table('activitylogs')->insert($activity);
 
-        return redirect('/');
+        // Redirect based on user role
+        switch ($user->role) {
+            case 'admin':
+                return redirect()->route('dashboard.admin');
+            case 'encoder':
+                return redirect()->route('dashboard.encoder');
+            case 'supervisor':
+                return redirect()->route('dashboard.supervisor');
+            default:
+                return redirect()->intended(RouteServiceProvider::HOME);
+        }
     }
 }

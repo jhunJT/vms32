@@ -28,6 +28,9 @@
 
                             <div class="my-4 text-left">
                                 <button type="button" id ="createNewUser" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".bs-example-modal-center">Add User</button>
+                                <button type="button" id ="showOnline" data-state="Offline" class="btn btn-info waves-effect waves-light">Online</button>
+                                {{-- <input type="checkbox" class="btn-check" id="showOnline" value="" autocomplete="off">
+                                <label class="btn btn-danger" for="showOnline"> Online </label> --}}
                             </div>
 
                             <table id="tbUser" class="table table-striped table-bordered tbUser" style="border-collapse: collapse; border-spacing: 0; width: 100%;">

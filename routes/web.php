@@ -35,7 +35,14 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', [roleController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'checkUserSession'])->group(function () {
+    // Routes that require single-session login protection
+    // Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+    // Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
+    Route::get('/dashboard', [roleController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+});
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -48,6 +55,7 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth','role:admin'])->controller(adminController::class)->group(function () {
     route::get('dashboard/admin', 'index')->name('dashboard.admin');
     Route::get('/dashboard/admin/profile/edit/{id}', 'profileedit')->name('admin.profile');
+
     Route::post('/dashboard/getmuncit/', 'getmuncit')->name('dashboard.getmuncit');
     Route::get('/allusers/show', 'userShow')->name('allusers.show');
     Route::post('/allusers/store', 'registerUser')->name('allusers.store');
@@ -74,6 +82,7 @@ Route::middleware(['auth','role:admin'])->controller(rvrecordsController::class)
     route::get('/dashboard/recordsadmin', 'recordsadmin')->name('admin.recordsadmin');
     route::post('/dashboard/selmuncit', 'selectmuncit')->name('admin.selectmuncit');
     route::post('/dashboard/selBrgy', 'selectBrgy')->name('admin.selectBrgy');
+    route::get('/dashboard/admin/summary', 'adminsumm')->name('dashboard.adminsumm');
 });
 
 Route::middleware('auth')->controller(userlogsController::class)->group(function(){
@@ -156,6 +165,8 @@ Route::middleware('auth')->controller(bske2023Controller::class)->group(function
     Route::post('/archives/bske2023/fetch-muncit', 'fetchmuncitss')->name('stamargarita.fetchmuncitss');
     Route::post('/archives/bske2023/fetch-brgy', 'fetchbrgyss')->name('stamargarita.fetchbrgyss');
     Route::post('/archives/bske2023/fetch-position', 'fetchpositionss')->name('stamargarita.fetchpositionss');
+
+    Route::post('/archives/bske2023/update/party', 'updtparty')->name('archives.updtparty');
 });
 
 Route::middleware('auth')->controller(nle2022Controller::class)->group(function(){

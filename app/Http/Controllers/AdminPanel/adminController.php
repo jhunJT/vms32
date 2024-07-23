@@ -57,10 +57,13 @@ class adminController extends Controller
 
         $totalRV = d1nle2023::where([
             ['man_add','=', 0]])->count();
+
         $totalCV = d1nle2023::where([
             ['survey_stat','=', 1]])->count();
+
         $totalHL = d1nle2023::where([
             ['survey_stat','=', 1]])->distinct('HL')->count('HL');
+
         $totalMA = d1nle2023::where([
             ['survey_stat','=', 1],
             ['man_add','=', 1]])->count();

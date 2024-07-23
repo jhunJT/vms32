@@ -25,42 +25,45 @@
 
                                 <div><hr style="height:2px;border-width:0;color:gray;background-color:gray"></div>
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="card-title">
-                                                    <h4>Select Filters</h4>
+                                    <div class="row">
+                                        <div class="card-group">
+                                            <div class="card">
+                                              <div class="card-body">
+                                                <h5 class="card-title">Select Filters</h5>
+                                                <div class="input-group gap-3">
+                                                    <select class="form-control " style="width: 100%;"  tabindex="-1" aria-hidden="true" name="selDist" id="selDist">
+                                                        <option selected disabled></option>
+                                                        <option value="District I">District I</option>
+                                                        <option value="District II">District II</option>
+                                                    </select>
+                                                    <select class="form-control" style="width: 100%;" id="selMuncit"  tabindex="-1" aria-hidden="true" name="selMuncit"></select>
+                                                    <select class="form-control" style="width: 100%;" id="selBrgy"   tabindex="-1" aria-hidden="true" name="selBrgy"></select>
+                                                    <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group mt-2">
+                                                        <input type="checkbox" class="btn-check  filter-checkbox" id="btncheck1" value="1" autocomplete="off">
+                                                        <label class="btn btn-success " for="btncheck1"> S </label>
+                                                        <input type="checkbox" class="btn-check filter-checkbox" id="btncheck2" value="0" autocomplete="off">
+                                                        <label class="btn btn-danger" for="btncheck2"> U </label>
+                                                        <input type="checkbox" class="btn-check filter-checkboxManual" id="btncheck3" value="1" autocomplete="off">
+                                                        <label class="btn btn-primary" for="btncheck3"> M </label>
+                                                    </div>
                                                 </div>
-
-                                                    <div class="input-group gap-2">
-                                                        <select class="form-control " style="width: 100%;"  tabindex="-1" aria-hidden="true" name="selDist" id="selDist">
-                                                            <option selected disabled></option>
-                                                            <option value="District I">District I</option>
-                                                            <option value="District II">District II</option>
-                                                        </select>
-                                                        <select class="form-control" style="width: 100%;" id="selMuncit"  tabindex="-1" aria-hidden="true" name="selMuncit"></select>
-                                                        <select class="form-control " style="width: 100%;" id="selBrgy"   tabindex="-1" aria-hidden="true" name="selBrgy"></select>
-                                                        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                                                            <input type="checkbox" class="btn-check  filter-checkbox" id="btncheck1" value="1" autocomplete="off">
-                                                            <label class="btn btn-success " for="btncheck1"> S </label>
-                                                            <input type="checkbox" class="btn-check filter-checkbox" id="btncheck2" value="0" autocomplete="off">
-                                                            <label class="btn btn-danger" for="btncheck2"> U </label>
-                                                            <input type="checkbox" class="btn-check filter-checkboxManual" id="btncheck3" value="1" autocomplete="off">
-                                                            <label class="btn btn-primary" for="btncheck3"> M </label>
-                                                        </div>
+                                              </div>
+                                            </div>
+                                            <div class="card">
+                                              <div class="card-body">
+                                                <h5 class="card-title">Summary</h5>
+                                                <hr>
+                                                <div class="row">
+                                                    <label for="regvot"><h6>Registerd Voters :</h6></label>
+                                                    <label for="tcv"><h6>Command Votes :</h6></label>
+                                                    <label for="thl"><h6>Houseleader :</h6></label>
+                                                    <label for="tmembers"><h6>Members :</h6></label>
+                                                    <label for="tman"><h6>Manually Added :</h6></label>
                                                 </div>
+                                              </div>
                                             </div>
-                                        </div>
+                                          </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="card-title"><h4>Summary</h4></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div><hr style="height:2px;border-width:0;color:gray;background-color:gray"></div>
                             </div>
                         </div>
@@ -448,6 +451,9 @@
     var encoderDataUpdate = "{{ route("encoder.storeorupdate") }}";
     var encoderDataVMdelete = "{{ route("encoder.vmdelete","") }}";
     var encoderDataSaveSelda = "{{ route('encoder.save-silda') }}";
+
+    var adminrecsumm = "{{ route('dashboard.adminsumm') }}";
+
 </script>
 
 <script src="{{ asset('assets/auth/js/recordsadmin.js') }}"></script>

@@ -19,9 +19,10 @@ $(document).ready(function() {
 
     var table5 = $('#tblsumm').DataTable({
         "dom": 'rtip',
-        "pageLength" : 10,
+        "pageLength" : 11,
         "ordering": false,
         "info":     false
+
     });
 
     $('#filterMuncit').select2({
@@ -298,8 +299,37 @@ $(document).ready(function() {
     });
 
     $('#dist1').DataTable({
-        "dom": 'frtip',
-        "autoWidth" : true
+        "dom": 'Bfrtip',
+        "autoWidth" : true,
+        "buttons": [
+                {
+                    text: 'excel',
+                    extend: 'excelHtml5',
+                    title: 'DISTRICT I SUMMARY',
+                    className: 'btn btn-success waves-effect waves-light',
+                    exportOptions: {
+                        columns: ':visible:not(.not-export-col)'
+                    },
+                    messageTop:
+                        'The information in this table is confidential.'
+                },
+                {
+                    text: 'print',
+                    extend: 'print',
+                    title: 'DISTRICT I SUMMARY',
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL',
+                    exportOptions: {
+                        columns: [0,1,2,3,4,5]
+                        // ':visible:not(.not-export-col)'
+                        // columns: ":not(.not-export-column)"
+                    },
+                    className: 'btn btn-success waves-effect waves-light',
+                        messageTop: function () {
+                        return '<h4 style="text-align:center;">DISTRICT I SUMMARY</h4>';
+                    }
+                },
+            ]
     });
 
     $('#dist2').DataTable({
@@ -338,7 +368,7 @@ $(document).ready(function() {
                 sendmuncit: sendmuncit
              },
             success: function(response) {
-                console.log('Response from server:', response);
+                // console.log('Response from server:', response);
                 if (response && response.data && response.data.length > 0) {
                     // Clear existing rows and add new data to DataTable
                     modalTable.clear().rows.add(response.data).draw();

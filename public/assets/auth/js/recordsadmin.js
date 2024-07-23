@@ -152,6 +152,28 @@ $(document).ready(function(e) {
     });
 
     $(document).on('change','#selMuncit', function(){
+        var seldist = $('#selDist').val();
+        var selmun = $('#selMuncit option:selected').text();
+
+
+        $.ajax({
+            type: "get",
+            url:  adminrecsumm,
+            data: {seldist:seldist,selmun:selmun},
+            success: function(response){
+                $('label[for="regvot"] h6').text('Registered Voters: ' + response.totalRV.toLocaleString());
+                $('label[for="tcv"] h6').text('Command Votes : ' + response.totalCV.toLocaleString());
+                $('label[for="thl"] h6').text('Houseleader : ' + response.totalHL.toLocaleString());
+                $('label[for="tmembers"] h6').text('Members: ' + (response.totalCV-response.totalHL).toLocaleString());
+                $('label[for="tman"] h6').text('Manually Added : ' + response.totalMA.toLocaleString());
+
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', status, error);
+            }
+        });
+
+
         var selectMuncit = []
         $.each($('#selMuncit'), function(i,elem){
             selectMuncit.push($(this).val())
@@ -186,7 +208,6 @@ $(document).ready(function(e) {
         })
         table.column(10).search(searchTerms,true).draw();
     });
-
 
 
 
@@ -731,14 +752,13 @@ $(document).ready(function(e) {
                 };
             },
             processResults: function (data) {
-                console.log(data);
+                // console.log(data);
                 var houseleaders = data.items.map(function(item) {
                     return {
                         id: item.id,
                         text: item.Name,
                         purok: item.hlids
                     }
-                    console.log(pl);
                 });
                 return {
                     results: houseleaders
@@ -754,8 +774,8 @@ $(document).ready(function(e) {
         var text = selectedData.text;
         $('#hlId').val(id);
         $('#hlnamemodal').val(text);
-        console.log('Selected ID:', id);
-        console.log('Selected Text:', text);
+        // console.log('Selected ID:', id);
+        // console.log('Selected Text:', text);
     });
 
     $('.plss').select2({
@@ -897,7 +917,7 @@ $(document).ready(function(e) {
                         purok: item.purok,
                         sqn: item.sqn
                     }
-                    console.log(pl);
+                    // console.log(pl);
                 });
 
                 return {

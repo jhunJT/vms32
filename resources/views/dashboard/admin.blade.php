@@ -75,7 +75,7 @@
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
                                         <p class="text-truncate font-size-14 mb-2">Total Members</p>
-                                        <h4 class="mb-2">{{ number_format($totalMA) }}</h4>
+                                        <h4 class="mb-2">{{ number_format($totalCV - $totalHL) }}</h4>
                                     </div>
                                     <div class="avatar-sm">
                                         <span class="avatar-title bg-light text-success rounded-3">

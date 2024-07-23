@@ -53,6 +53,32 @@ $(document).ready(function() {
 
         });
 
+        $('#showOnline').on('click', function() {
+            // var buttonValue = $(this).val();
+
+            var currentState = $(this).attr('data-state');
+            // console.log(currentState);
+            // Toggle column visibility based on current state
+            if (currentState === "Offline") {
+                tbuser.column(7).search(currentState, true).draw(); // Show Column 7 (index 6)
+                $(this).attr('data-state', 'Online').text('Online');
+            } else {
+                tbuser.column(7).search(currentState, false).draw(); // Hide Column 7 (index 6)
+                $(this).attr('data-state', 'Offline').text('Offline');
+            }
+        });
+
+
+        // $('#showOnline').on('click', function(){
+        //     var searchTerms = []
+        //     $.each($('showOnline'), function(i,elem){
+        //         if($(elem).prop('checked')){
+        //         searchTerms.push($(this).val() )
+        //         }
+        //     })
+        //     table.column(7).search(searchTerms,true).draw();
+        // });
+
         $('#createNewUser').click(function () {
             $('#savedata').html('Save New User');
             $('#id').val('');
