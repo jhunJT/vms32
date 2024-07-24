@@ -25,7 +25,7 @@ class RedirectIfAuthenticated
             $existingSession = DB::table('sessions')
                 ->where('user_id', $user->id)
                 ->where('id', '!=', $sessionId)
-                ->latest()
+                // ->latest()
                 ->first();
 
             // If there's an existing session other than the current one

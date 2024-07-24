@@ -43,10 +43,9 @@ td.tleft{
     vertical-align: baseline;
 }
 
-
-
-
-
+.datepicker {
+    z-index: 99999 !important;
+  }
 
 /* .modal-backdrop {
     z-index: -1;

@@ -37,7 +37,7 @@ class grantController extends Controller
         $municipality = Auth::user()->muncit;
         $grantssumm = grantDetails::select('barangay',
             DB::raw('sum(case when grant_details.grant = "AICS" then 1 else 0 end) as AICS'),
-            DB::raw('sum(case when grant_details.grant = "Cash" then 1 else 0 end) as Cash'),
+            DB::raw('sum(case when grant_details.grant = "AKAP" then 1 else 0 end) as AKAP'),
             DB::raw('sum(case when grant_details.grant = "Scholarship" then 1 else 0 end) as Scolarship'),
             DB::raw('sum(case when grant_details.grant = "TUPAD" then 1 else 0 end) as TUPAD'),
             DB::raw('sum(case when grant_details.grant = "MSME GRANT" then 1 else 0 end) as MSME'))
@@ -58,11 +58,11 @@ class grantController extends Controller
     }
 
     public function getHLbrgy(Request $request){
-        $muncit = $request->muncit;
+        $muncit = Auth::user()->muncit;
         $search = $request->search;
-        $databrgy = grantDetails::where([
-                ['muncit','=',$muncit,],
-                ['barangay','like','%'.$search.'%']])
+        $databrgy = d1nle2023::where([
+                ['Municipality','=',$muncit,],
+                ['Barangay','like','%'.$search.'%']])
              ->orderBy('barangay')
              ->pluck('barangay','barangay');
         return response()->json(['items'=>$databrgy]);
@@ -128,9 +128,9 @@ class grantController extends Controller
         $grntUpdate = ([
             'name' => $request->gname, //
             'grant' => $request->ggrant, //
-            'date' => $request->gdate, //
-            'amount' => $request->gamount, //
-            'remarks' =>$request->gremarks
+            'date' => $request->gdates, //
+            'amount' => $request->gamounts, //
+            'remarks' =>$request->gremarkss
         ]);
 
         grantDetails::where('id',$request->gid)->update($grntUpdate);
@@ -161,6 +161,41 @@ class grantController extends Controller
     }
 
     public function grantfetch(Request $request){
+        // $events = grantsdrp::all();
+        // $data = [];
+
+        // foreach ($events as $event) {
+        //     $id = $event->id;
+        //     $category = $event->grant_type;
+        //     $date =  $event->date_of_grant;
+
+        //     $found = false;
+        //     foreach ($data as &$item) {
+        //         if ($item['text'] === $category) {
+        //             $item['children'][] = [
+        //                 'id' => $event->id,
+        //                 'text' => $date
+        //             ];
+        //             $found = true;
+        //             break;
+        //         }
+        //     }
+        //     if (!$found) {
+        //         $data[] = [
+        //             'id' => $category,
+        //             'text' => $category,
+        //             'children' => [
+        //                 [
+        //                     'id' => $event->id,
+        //                     'text' => $date
+        //                 ]
+        //             ]
+        //         ];
+        //     }
+        // }
+        // return response()->json($data);
+
+
         $search = $request->search;
             $grnttypes = DB::table('grantsdrps')
                 ->where(
@@ -209,7 +244,6 @@ class grantController extends Controller
                      ["date", $request->gdate]
             ])->exists();
         abort_if($ifExsist,400, 'Grant already exist');
-
 
         grantDetails::create([
             'name' => strtoupper($request->vuname),

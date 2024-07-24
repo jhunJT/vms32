@@ -6,59 +6,61 @@
             <div class="col-12">
                 <div class="card" id="refreshTB">
                     <div class="card-body">
-                        <div class="card">
-                            <div class="card-body">
-                                    <button type="button" class="btn btn-success waves-effect waves-light btnAddgrnt">Add Record</button>
-                                    <button type="button" class="btn btn-info waves-effect waves-light btngrnttype">Add Grant Type</button>
-                                    <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".bs-example-modal-lg">Grant Summary</button>
-                                </div>
-                                <div class="row">
-                                    <div class="col-2">
-                                        <input class="form-control" type="text" id="dist" placeholder="District I" value="{{ Auth::user()->district}}" readonly>
-                                        {{-- <select id="gdist" class="form-control" name="gdist"></select> --}}
+                        <div class="px-4">
+                            <div class="card">
+                                <div class="card-body">
+                                        <button type="button" class="btn btn-success waves-effect waves-light btnAddgrnt">Add Record</button>
+                                        <button type="button" class="btn btn-info waves-effect waves-light btngrnttype">Add Grant Type</button>
+                                        <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".bs-example-modal-lg">Grant Summary</button>
                                     </div>
-                                    <div class="col-2">
-                                        {{-- <input class="form-control" type="text" id="hlmun"  value="CALBAYOG CITY" readonly> --}}
-                                        <select id="grantMuncit" class="form-control" name="grantMuncit" >
-                                            <option value="{{ Auth::user()->muncit}}" selected>{{ Auth::user()->muncit}}</option>
-                                        </select>
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <input class="form-control" type="text" id="dist" placeholder="District I" value="{{ Auth::user()->district}}" readonly>
+                                            {{-- <select id="gdist" class="form-control" name="gdist"></select> --}}
+                                        </div>
+                                        <div class="col-2">
+                                            {{-- <input class="form-control" type="text" id="hlmun"  value="CALBAYOG CITY" readonly> --}}
+                                            <select id="grantMuncit" class="form-control" name="grantMuncit" >
+                                                <option value="{{ Auth::user()->muncit}}" selected>{{ Auth::user()->muncit}}</option>
+                                            </select>
 
-                                    </div>
-                                    <div class="col-2">
-                                        <select id="hlbrgy" class="form-control" name="hlbrgy"></select>
-                                    </div>
-                                    <div class="col-2">
-                                        <select id="typegrant" class="form-control" name="typegrant"></select>
-                                    </div>
-                                    <div class="col-4">
-                                        <select id="fltrDate" class="form-control fltrDate" name="fltrDate[]" multiple="multiple"></select>
+                                        </div>
+                                        <div class="col-2">
+                                            <select id="hlbrgy" class="form-control" name="hlbrgy"></select>
+                                        </div>
+                                        <div class="col-2">
+                                            <select id="typegrant" class="form-control" name="typegrant"></select>
+                                        </div>
+                                        <div class="col-4">
+                                            <select id="fltrDate" class="form-control fltrDate" name="fltrDate[]" multiple="multiple"></select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <table id="grantTbl" class="table table-striped table-bordered dt-responsive nowrap grantTbl" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                            <thead>
-                            <tr>
-                                <th style="width:2rem;">Id</th>
-                                <th style="width:15rem;">Name</th>
-                                <th>Municipality</th>
-                                <th>Barangay</th>
-                                <th>Grant</th>
-                                <th>Date Granted</th>
-                                <th>Amount</th>
-                                <th>Remarks</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                        </table>
+
+                            <table id="grantTbl" class="table table-striped table-bordered dt-responsive nowrap grantTbl" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead>
+                                <tr>
+                                    <th style="width:2rem;">Id</th>
+                                    <th style="width:15rem;">Name</th>
+                                    <th>Municipality</th>
+                                    <th>Barangay</th>
+                                    <th>Grant</th>
+                                    <th>Date Granted</th>
+                                    <th>Amount</th>
+                                    <th>Remarks</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div> <!-- end col -->
         </div> <!-- end row -->
     </div>
 </div>
-
 
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -73,14 +75,23 @@
                     <tr>
                         <th style="width:15rem;">Barangay</th>
                         <th>AICS</th>
-                        <th>CASH</th>
+                        <th>AKAP</th>
                         <th>Scholarship</th>
                         <th>TUPAD</th>
                         <th>MSME</th>
                     </tr>
                     </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Total:</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
                 </table>
-
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -167,7 +178,7 @@
     <div class="modal-dialog modal-m modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Grant Edit</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Grant Update</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -189,12 +200,6 @@
                         <div class="col-sm-10">
                             {{-- <input type="text" name="ggrant" id="ggrant" class="form-control"> --}}
                             <select class="form-select" name="ggrant" id="ggrant">
-                                <option selected disabled value="">Choose...</option>
-                                <option value="AICS">AICS</option>
-                                <option value="Cash">Cash</option>
-                                <option value="Scolarship">Scolarship</option>
-                                <option value="TUPAD">TUPAD</option>
-                                <option value="MSME GRANT">MSME Grant</option>
                             </select>
                         </div>
                     </div>
@@ -205,19 +210,18 @@
                         <div class="col-sm-10">
                             {{-- <input type="text" name="gdate" id="gdate" class="form-control"> --}}
                             <div class="input-group" id="datepicker2">
-                                <input type="text" class="form-control" placeholder="dd M, yyyy" name="gdate" id="gdate"
-                                    data-date-format="dd M, yyyy" data-date-container='#datepicker2' data-provide="datepicker"
-                                    data-date-autoclose="true">
+                                <input type="text" class="form-control" placeholder="dd M, yyyy" data-provide="datepicker"
+                                    name="gdates" id="gdates"  data-date-format="dd M, yyyy" data-date-autoclose="true">
                                 <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-sm-2 col-form-label">
-                            <label for="gname">Amount</label>
+                            <label for="gamounts">Amount</label>
                         </div>
                         <div class="col-sm-10">
-                            <input type="text" name="gamount" id="gamount" class="form-control">
+                            <input type="text" name="gamounts" id="gamounts" class="form-control">
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -225,24 +229,22 @@
                             <label for="gname">Remarks</label>
                         </div>
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="gremarks" id="gremarks" cols="10" rows="2"></textarea>
+                            <textarea class="form-control" name="gremarkss" id="gremarkss" cols="10" rows="2"></textarea>
                         </div>
                     </div>
                     <hr>
                     <div class=" d-grid mb-3">
                         <button type="button" class="btn btn-primary" id="grntedit">Update</button>
                     </div>
-
                 </form>
-
-
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
 
 {{-- grnttype --}}
-<div class="modal fade bs-example-modal-sm addgrnttype" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bs-example-modal-sm addgrnttype" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true" >
     <div class="modal-dialog modal-m modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -266,7 +268,9 @@
                         <div class="col-sm-10">
                             {{-- <input type="text" name="gdate" id="gdate" class="form-control"> --}}
                             <div class="input-group" id="datepicker2">
-                                <input type="date" class="form-control" placeholder="dd M, yyyy" name="ggdate" id="ggdate">
+                                <input type="text" class="form-control" placeholder="dd M, yyyy" data-provide="datepicker"
+                                    name="ggdate" id="ggdate" data-date-format="dd M, yyyy" data-date-autoclose="true">
+                                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                             </div>
                         </div>
                     </div>
@@ -389,12 +393,12 @@
         "dom": 'Bfrtip',
         "ajax": "{{ route('grant.grantsummary') }}",
         "columns":[
-                    { "data": "barangay"}, //1
-                    { "data": "AICS"}, //2
-                    { "data": "Cash"}, //3
-                    { "data": "Scolarship"}, //4
-                    { "data": "TUPAD"}, //5
-                    { "data": "MSME"} //6
+                    { "data": "barangay"}, //0
+                    { "data": "AICS"}, //1
+                    { "data": "AKAP"}, //2
+                    { "data": "Scolarship"}, //3
+                    { "data": "TUPAD"}, //4
+                    { "data": "MSME"} //5
                 ],
         "buttons":[
             {
@@ -442,11 +446,52 @@
             }
         ],
         "columnDefs": [
-                    // {"targets": 0, "ckeckboxes": {"selectedRow": true}},
-                    // {"className": "align-middle", "targets": "_all"},
-                    {"className": "text-center", "targets": [1,2,3,4]},
-                    {"className": "dt-center", "targets": "_all"},
-                ],
+                // {"targets": 0, "ckeckboxes": {"selectedRow": true}},
+                // {"className": "align-middle", "targets": "_all"},
+                {"className": "text-center", "targets": [1,2,3,4]},
+                {"className": "dt-center", "targets": "_all"},
+            ],
+        "footerCallback": function (row, data, start, end, display) {
+            var api = this.api(), data;
+
+            // Total the AICS column
+            var totalAICS = api.column(1, {page: 'current'}).data()
+                .reduce(function(a, b) {
+                    return parseInt(a) + parseInt(b);
+                }, 0);
+
+            // Total the AKAP column
+            var totalAKAP = api.column(2, {page: 'current'}).data()
+                .reduce(function(a, b) {
+                    return parseInt(a) + parseInt(b);
+                }, 0);
+
+            // Total the Scholarship column
+            var totalScholarship = api.column(3, {page: 'current'}).data()
+                .reduce(function(a, b) {
+                    return parseInt(a) + parseInt(b);
+                }, 0);
+
+            // Total the TUPAD column
+            var totalTUPAD = api.column(4, {page: 'current'}).data()
+                .reduce(function(a, b) {
+                    return parseInt(a) + parseInt(b);
+                }, 0);
+
+            // Total the MSME column
+            var totalMSME = api.column(5, {page: 'current'}).data()
+                .reduce(function(a, b) {
+                    return parseInt(a) + parseInt(b);
+                }, 0);
+
+            // Update footer
+            $(api.column(1).footer()).html(totalAICS);
+            $(api.column(2).footer()).html(totalAKAP);
+            $(api.column(3).footer()).html(totalScholarship);
+            $(api.column(4).footer()).html(totalTUPAD);
+            $(api.column(5).footer()).html(totalMSME);
+        }
+
     });
 
     grantTbl.on('order.dt search.dt', function () {
@@ -508,6 +553,39 @@
         }
     });
 
+    $('#ggrant').select2({
+        placeholder: "Choose Grant",
+        dropdownParent: $(".addgrnt"),
+        allowClear: true,
+        ajax:{
+            url:"{{ route('grants.fetch') }}",
+            type:"post",
+            dataType:"json",
+            delay:250,
+            quietMillis: 100,
+            data: function(params){
+                return{
+                    search: params.term,
+                };
+            },
+            processResults: function(data){
+                var granttypes = data.items.map(function(item) {
+                    return {
+                        id: item.id,
+                        text: item.grant_type,
+                        date: item.date_of_grant,
+                        gtype: item.grant_amount,
+                        gremarks: item.g_remarks
+                    }
+                });
+                return {
+                    results: granttypes
+                };
+            },
+            cache: true
+        }
+    });
+
     $('#agname').select2({
         placeholder: "Select Grantee",
         dropdownParent: $(".addgrnt"),
@@ -531,7 +609,6 @@
                 };
             },
             processResults: function(data){
-                // console.log(data);
                 var houseleaders = data.items.map(function(item) {
                     return {
                         id: item.id,
@@ -603,7 +680,6 @@
     $(document).on('click','.gntdelete', function(e){
         e.preventDefault();
         let id = $(this).attr('data-id');
-        // console.log(id);
             Swal.fire({
                 title:"Are you sure?",
                 text:"You won't be able to revert this!",
@@ -744,18 +820,18 @@
             url: "{{ route('grant.edit', '') }}" +'/'+id,
             method:'GET',
             success: function(response){
-
                 $('.grntedit').modal('show');
                 $('#gid').val(response.id);
                 $('#gname').val(response.name);
-                $('#ggrant').val(response.grant).change();
-                $('#gdate').val(response.date);
-                $('#gamount').val(response.amount);
-                $('#gremarks').val(response.remarks);
+                $('#gdates').val(response.date);
+                $('#gamounts').val(response.amount);
+                $('#gremarkss').val(response.remarks);
+
+                var newOptionsGT = new Option(response.grant, response.grant, true, true);
+                $('#ggrant').append(newOptionsGT).trigger('change');
 
             },
             error: function(xhr, status, error){
-                //console.log(error);
                 if(error) {
                     var err = eval("(" + xhr.responseText + ")");
                     toastr.error(err.message);
@@ -775,12 +851,16 @@
 
             success: function(response) {
                 grantTbl.ajax.reload();
-
-                $('.grntedit').modal('toggle');
-
                 if(response) {
-                    toastr.success(response.success);
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Grant type added!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 }
+                $('.grntedit').modal('toggle');
             },
             error: function(xhr, status, error){
                 if(error) {
@@ -791,8 +871,6 @@
         });
 
     });
-
-    $('.addgrnt').modal({backdrop: 'static', keyboard: false})
 
     $('.btnAddgrnt').click(function(){
         var getDistrict = $('#dist').val();
@@ -808,7 +886,6 @@
         }else{
             $('.addgrnt').modal('show');
         }
-
     });
 
     $('.btngrnttype').click(function(){
@@ -878,9 +955,9 @@
                 }
             }
         });
-
-
     });
+
+    $('.addgrnt').modal({backdrop: 'static', keyboard: false})
 
 });
 </script>
