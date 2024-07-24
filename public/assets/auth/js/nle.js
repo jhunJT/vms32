@@ -91,7 +91,7 @@ $(document).ready(function(e) {
                     { "data": "OBWC"}, //5
                     { "data": "TRANSFER"}, //5
                 ],
-            "buttons":[
+        "buttons":[
                 {
                     text: 'copy',
                         extend: 'copyHtml5',
@@ -678,14 +678,12 @@ $(document).ready(function(e) {
                 };
             },
             processResults: function (data) {
-                console.log(data);
                 var houseleaders = data.items.map(function(item) {
                     return {
                         id: item.id,
                         text: item.Name,
                         purok: item.hlids
                     }
-                    console.log(pl);
                 });
                 return {
                     results: houseleaders
@@ -944,7 +942,6 @@ $(document).ready(function(e) {
         hls = $('#hlnamemodal').val();
         hlspurok = $('#hlPurok').val();
         hlssqn = $('#seqNum').val();
-
         var formHlData = new FormData(formHL);
 
         $.ajax({
@@ -968,9 +965,6 @@ $(document).ready(function(e) {
                     toastr.success(response.success);
                 }
                 $('#hlName, #hlBrgy').val('').trigger('change');
-
-
-
             },
             error: function(xhr, status, error){
                 if(error) {

@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
+|brgy
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
@@ -150,6 +150,11 @@ Route::middleware('auth')->controller(grantController::class)->group(function ()
     Route::get('/district/grants/grants/edit/{id}', 'grantedit')->name('grant.edit');
     Route::post('/district/grants/grants/update', 'grantupdate')->name('grant.update');
     Route::get('/district/grants/grants-summary', 'grantSumm')->name('grant.grantsummary');
+
+    Route::post('/district/grants/grants-names', 'grantnames')->name('grants.names');
+    Route::post('/district/grants/grants-add', 'granttypeadd')->name('grants.addtype');
+    Route::post('/district/grants/grants-fetch', 'grantfetch')->name('grants.fetch');
+    Route::post('/district/grants/grants-save', 'grantsave')->name('grants.save');
 });
 
 Route::middleware('auth')->controller(cvrecordController::class)->group(function () {

@@ -34,7 +34,9 @@
                                                     <label class="btn btn-success " for="btncheck1"> S </label>
                                                     <input type="checkbox" class="btn-check filter-checkbox" id="btncheck2" value="0" autocomplete="off">
                                                     <label class="btn btn-danger" for="btncheck2"> U </label>
-                                                    c
+                                                    <input type="checkbox" class="btn-check filter-checkboxManual" id="btncheck3" value="1" autocomplete="off">
+                                                    <label class="btn btn-primary" for="btncheck3"> M </label>
+
                                                 </div>
                                         </div>
                                     </div>

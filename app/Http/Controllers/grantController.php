@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
+use App\Models\d1nle2023;
+use App\Models\grantsdrp;
+
+use DateTime;
 
 
 class grantController extends Controller
@@ -131,5 +135,98 @@ class grantController extends Controller
 
         grantDetails::where('id',$request->gid)->update($grntUpdate);
         return response()->json(['success' => 'Grant Updated!'], 201);
+    }
+
+    public function grantnames(Request $request){
+
+        $dist = $request->dist;
+        $muncit = $request->muncit;
+        $barangay = $request->brgy;
+        $search = $request->search;
+
+        // dd( $dist , $muncit, $barangay,$search);
+
+            $grtname = d1nle2023::select('id','Name')
+                ->where(
+                [
+                    ['District','=',$dist,],
+                    ['Municipality','=',$muncit,],
+                    ['Barangay','=',$barangay,],
+                    ['Name','like', "%$search%"]
+                ])
+            ->orderBy('Name')
+            ->get();
+
+        return response()->json(['items'=>$grtname]);
+    }
+
+    public function grantfetch(Request $request){
+        $search = $request->search;
+            $grnttypes = DB::table('grantsdrps')
+                ->where(
+                [['grant_type','like', "%$search%"]])
+            ->latest()
+            ->get();
+        return response()->json(['items'=>$grnttypes]);
+    }
+
+    public function granttypeadd(Request $request){
+
+        $request->validate([
+            'granttype' => 'required',
+        ]);
+
+        $ifExsist = DB::table('grantsdrps')
+            ->where([["grant_type", $request->granttype],
+                     ["date_of_grant", $request->ggdate]
+            ])->exists();
+        abort_if($ifExsist,400, 'Grant already exist');
+
+        $date = new DateTime($request->ggdate);
+
+        grantsdrp::create([
+            'grant_type' => strtoupper($request->granttype),
+            'date_of_grant' => date_format($date ,"d M, Y" ) ,
+            'grant_amount' =>  $request->ggamount,
+            'g_remarks' => $request->ggremarks,
+        ]);
+
+        return response()->json([
+            'success' => 'House Leader Added!'
+        ], 201);
+    }
+
+    public function grantsave(Request $request){
+        $uid = Auth::user()->id;
+        $request->validate([
+            'agname' => 'required',
+            'vuname' => 'required',
+            'grnt_type' => 'required',
+        ]);
+
+        $ifExsist = DB::table('grant_details')
+            ->where([["name", $request->vuname],
+                     ["date", $request->gdate]
+            ])->exists();
+        abort_if($ifExsist,400, 'Grant already exist');
+
+
+        grantDetails::create([
+            'name' => strtoupper($request->vuname),
+            'district' => $request->grnt_dist ,
+            'muncit' =>  $request->grnt_muncit,
+            'barangay' => $request->grnt_brgy,
+            'grant' => $request->grnt_type,
+            'date' => $request->gdate,
+            'amount' => $request->gamount,
+            'remarks' => $request->gremarks,
+            'vid' => $request->vuid,
+            'uid' => $uid
+
+        ]);
+
+        return response()->json([
+            'success' => 'Record Added!'
+        ], 201);
     }
 }
