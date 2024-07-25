@@ -180,7 +180,10 @@ class encoderController extends Controller
             'hl_brgy' => 'required',
         ]);
 
-        $ifExsist = DB::table('houseleaders')->where("houseleader", $request->hlnamemodal)->exists();
+        $ifExsist = DB::table('houseleaders')->where([
+            // ["muncit", $request->muncit],
+            ["houseleader", $request->hlnamemodal]
+            ])->exists();
         abort_if($ifExsist,400, 'Houseleader already exist');
 
         $data = ([

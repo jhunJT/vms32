@@ -17,6 +17,7 @@ use App\Http\Controllers\rvrecordsController;
 use App\Http\Controllers\userlogsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\setdrpdwnController;
+use App\Http\Controllers\plhlController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -87,6 +88,10 @@ Route::middleware(['auth','role:admin'])->controller(rvrecordsController::class)
 
 Route::middleware('auth')->controller(userlogsController::class)->group(function(){
     Route::get('/allusers/userlogs', 'userlogs')->name('allusers.userlogs');
+});
+
+Route::middleware('auth')->controller(plhlController::class)->group(function(){
+    Route::get('/hlrecords', 'hlindex')->name('hlrecords.index');
 });
 
 

@@ -15,15 +15,28 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-2">
-                                            <input class="form-control" type="text" id="dist" placeholder="District I" value="{{ Auth::user()->district}}" readonly>
-                                            {{-- <select id="gdist" class="form-control" name="gdist"></select> --}}
+                                            @if (Auth::user()->role == 'encoder')
+                                                {{-- <input class="form-control" type="text" id="dist" placeholder="District I" value="{{ Auth::user()->district}}" readonly > --}}
+                                                <select id="dist" class="form-control" name="dist">
+                                                    <option value="{{ Auth::user()->district}}" selected>{{ Auth::user()->district}}</option>
+                                                </select>
+                                            @elseif (Auth::user()->role == 'admin' || Auth::user()->role == 'supervisor' || Auth::user()->role == 'superuser')
+                                                <select id="gdist" class="form-control" name="gdist">
+                                                    <option selected disabled>Select District</option>
+                                                    <option value="District I">District I</option>
+                                                    <option value="District II">District II</option>
+                                                </select>
+                                            @endif
+
                                         </div>
                                         <div class="col-2">
-                                            {{-- <input class="form-control" type="text" id="hlmun"  value="CALBAYOG CITY" readonly> --}}
-                                            <select id="grantMuncit" class="form-control" name="grantMuncit" >
-                                                <option value="{{ Auth::user()->muncit}}" selected>{{ Auth::user()->muncit}}</option>
-                                            </select>
-
+                                            @if (Auth::user()->role == 'encoder')
+                                                    <select id="grantMuncit_1" class="form-control" name="grantMuncit_1" >
+                                                        <option value="{{ Auth::user()->muncit}}" selected>{{ Auth::user()->muncit}}</option>
+                                                    </select>
+                                            @elseif (Auth::user()->role == 'admin' || Auth::user()->role == 'supervisor' || Auth::user()->role == 'superuser')
+                                                    <select id="grantMuncit" class="form-control" name="grantMuncit"></select>
+                                            @endif
                                         </div>
                                         <div class="col-2">
                                             <select id="hlbrgy" class="form-control" name="hlbrgy"></select>
@@ -708,7 +721,51 @@
     });
 
     $('#grantMuncit').select2({
-        placeholder: "Select Barangay",
+        placeholder: "Select Municipality/City",
+        minimumResultsForSearch: -1,
+        allowClear: true,
+        ajax:{
+            url:"{{ route('grants.muncit') }}",
+            type:"POST",
+            dataType:"json",
+            delay:250,
+            quietMillis: 100,
+            data: function(params){
+                return{
+                    search: params.term
+                };
+            },
+            processResults: function(data){
+                return{
+                    results: $.map(data.items, function(obj,i) {
+                        return {
+                        id:i, text:obj
+                        };
+                    })
+                }
+            }
+        }
+
+    });
+
+    $('#grantMuncit').on('change', function(){
+        alert('hello');
+        $('#grantTbl').dataTable().fnDestroy();
+        grantTbl.ajax.reload();
+    });
+
+    $('#grantMuncit_1').select2({
+        placeholder: "Select District",
+        minimumResultsForSearch: -1,
+    });
+
+    $('#dist').select2({
+        placeholder: "Select District",
+        minimumResultsForSearch: -1,
+    });
+
+    $('#gdist').select2({
+        placeholder: "Select District",
         minimumResultsForSearch: -1
     });
 
@@ -740,6 +797,16 @@
         }
     });
 
+    $('#typegrant').on('change', function(){
+        dist = $('#dist').val();
+        dist2 = $('#gdist').val();
+        muncit1 = $('#grantMuncit').val();
+        muncit2 = $('#grantMuncit_1').val();
+        barangay = $('#hlbrgy').val();
+
+        console.log(dist, dist2, muncit1, muncit2, barangay);
+    });
+
     $('#typegrant').select2({
         placeholder: "Select Grant",
         allowClear: true,
@@ -751,13 +818,17 @@
             quietMillis: 100,
             data: function(params){
                 dist = $('#dist').val();
-                muncit = $('#grantMuncit').val();
+                dist2 = $('#gdist').val();
+                muncit1 = $('#grantMuncit').val();
+                muncit2 = $('#grantMuncit_1').val();
                 barangay = $('#hlbrgy').val();
                 return{
                     search: params.term,
-                    dist:dist,
-                    muncit:muncit,
-                    barangay:barangay
+                    dist: dist,
+                    dist2:dist2,
+                    muncit1:muncit1,
+                    muncit2: muncit2,
+                    barangay:barangay,
                 };
             },
             processResults: function(data){

@@ -11,13 +11,12 @@ use App\Models\grantsdrp;
 
 use DateTime;
 
-
 class grantController extends Controller
 {
     public function index(Request $request){
         $municipality = Auth::user()->muncit;
         $grants = grantDetails::where('muncit','=', $municipality)->get();
-        // dd($grants);
+
         if($request->ajax()){
             return DataTables::of($grants)
             ->addColumn('action',function($row){
@@ -58,19 +57,32 @@ class grantController extends Controller
     }
 
     public function getHLbrgy(Request $request){
-        $muncit = Auth::user()->muncit;
+
+        if(Auth::user()->role == 'encoder'){
+            $muncit = Auth::user()->muncit;
+        }else{
+            $muncit = $request->muncit;
+        }
+
         $search = $request->search;
-        $databrgy = d1nle2023::where([
-                ['Municipality','=',$muncit,],
-                ['Barangay','like','%'.$search.'%']])
+        $databrgy = grantDetails::where([
+                ['muncit','=',$muncit,],
+                ['barangay','like','%'.$search.'%']])
              ->orderBy('barangay')
              ->pluck('barangay','barangay');
         return response()->json(['items'=>$databrgy]);
     }
 
     public function getgrantType(Request $request){
-        $dist = $request->dist;
-        $muncit = $request->muncit;
+        if(Auth::user()->role == 'encoder'){
+            $dist = $request->dist;
+            $muncit = $request->muncit2;
+        }else{
+            $dist = $request->dist2;
+            $muncit = $request->muncit1;
+        }
+
+        // dd($dist, $muncit);
         $barangay = $request->barangay;
         $search = $request->search;
         $datagrant = grantDetails::where(
