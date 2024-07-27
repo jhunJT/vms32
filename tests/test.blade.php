@@ -34,3 +34,11 @@ $('#gggrant').on('change', function(){
  $('#agname').on('select2:unselecting', function(e) {
      $('#vuid').val('');
  });
+
+ // "drawCallback": function(settings) {
+    //     var api = this.api();
+    //     var startIndex = api.context[0]._iDisplayStart; // Get the index of the first row displayed on the current page
+    //     api.column(0, {order:'current'}).nodes().each(function(cell, i) {
+    //         cell.innerHTML = startIndex + i + 1; // Update the row number
+    //     });
+    // },

@@ -15,6 +15,7 @@ class grantController extends Controller
 {
     public function index(Request $request){
         $municipality = Auth::user()->muncit;
+
         $grants = grantDetails::where('muncit','=', $municipality)->get();
 
         if($request->ajax()){

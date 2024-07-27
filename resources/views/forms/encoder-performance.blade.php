@@ -306,15 +306,14 @@
                         .column(4, { page: 'current' })
                         .data()
                         .reduce((a, b) => intVal(a) + intVal(b), 0);
+
                     // Update footer
                     var totalPages = api.page.info().pages; // Total number of pages
                     var currentPage = api.page.info().page; // Current page number (zero-indexed)
 
                     if (currentPage < totalPages - 1) {
-                        // For all pages except the last one, display page total
                         api.column(4).footer().innerHTML = pageTotal + ' CV';
                     } else {
-                        // For the last page, display overall total
                         api.column(4).footer().innerHTML = pageTotal + ' ('+ total + ' Overall CV)';
                     }
 

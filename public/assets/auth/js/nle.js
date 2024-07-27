@@ -326,8 +326,8 @@ $(document).ready(function(e) {
     });
 
     $('body').on('click', '.gview', function(){
-
         var id = $(this).data('id');
+
         $.ajax({
             url: encoderDataViewGrant +'/'+ id ,
             method:'GET',

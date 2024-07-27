@@ -47,6 +47,19 @@ td.tleft{
     z-index: 99999 !important;
   }
 
+  div.dt-top-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+
+  div.dt-center-in-div {
+    margin: 0 auto;
+  }
+
+  div.dt-filter-spacer {
+    margin: 10px 0;
+  }
+
 /* .modal-backdrop {
     z-index: -1;
 } */

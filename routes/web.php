@@ -40,8 +40,10 @@ Route::middleware(['auth', 'checkUserSession'])->group(function () {
     // Routes that require single-session login protection
     // Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
     // Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
-    Route::get('/dashboard', [roleController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+
 });
+
+Route::get('/dashboard', [roleController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 
 
@@ -92,6 +94,11 @@ Route::middleware('auth')->controller(userlogsController::class)->group(function
 
 Route::middleware('auth')->controller(plhlController::class)->group(function(){
     Route::get('/hlrecords', 'hlindex')->name('hlrecords.index');
+    Route::post('/hlrecords/selbrgy', 'selbrgy')->name('hlrecords.selbrgy');
+    Route::post('/hlrecords/delete', 'hldelete')->name('hlrecords.hldelete');
+    Route::get('/hlrecords/edit/{id}', 'hledit')->name('hlrecords.hledit');
+    Route::post('/hlrecords/update', 'hlupdate')->name('hlrecords.hlupdate');
+    Route::get('/hlrecords/vmembers', 'vmembers')->name('hlrecords.vmembers');
 });
 
 

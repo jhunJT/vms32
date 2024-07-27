@@ -459,8 +459,6 @@
             }
         ],
         "columnDefs": [
-                // {"targets": 0, "ckeckboxes": {"selectedRow": true}},
-                // {"className": "align-middle", "targets": "_all"},
                 {"className": "text-center", "targets": [1,2,3,4]},
                 {"className": "dt-center", "targets": "_all"},
             ],
@@ -509,7 +507,6 @@
 
     grantTbl.on('order.dt search.dt', function () {
         let i = 1;
-
         grantTbl.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
             this.data(i++);
         });
@@ -749,7 +746,7 @@
     });
 
     $('#grantMuncit').on('change', function(){
-        alert('hello');
+        // alert('hello');
         $('#grantTbl').dataTable().fnDestroy();
         grantTbl.ajax.reload();
     });
