@@ -2,16 +2,32 @@
 @section('content')
 <div class="page-content">
     <div class="content-fluid">
+
         <div class="row">
             <div class="col-12">
+                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <h4 class="mb-sm-0">Household Leader List</h4>
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Data</a></li>
+                            <li class="breadcrumb-item active">{{ Auth::User()->muncit }}</li>
+                        </ol>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="col-12">
-                                        <h2 class="card-title"><strong>Grant</strong> </h2>
-                                        <select name="selbrgy" id="selbrgy" class="form-control"></select>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h2 class="card-title"><strong>Filter Barangay</strong></h2>
+                                            <select name="selbrgy" id="selbrgy" class="form-control"></select>
+                                        </div>
+                                        {{-- <div class="col-6">
+                                            <h2 class="card-title"><strong>Search</strong> </h2>
+                                            <input type="text" name="csearch" id="csearch" class="form-control">
+                                        </div> --}}
                                     </div>
                                     <hr>
                                     <div class="col-12">
@@ -109,14 +125,6 @@
                         <th>Remarks</th>
                     </tr>
                     </thead>
-                    {{-- <tbody>
-                        @foreach ( as )
-
-                        @endforeach
-                        <tr>
-                            <th></th>
-                        </tr>
-                    </tbody> --}}
                 </table>
             </div>
         </div><!-- /.modal-content -->
@@ -139,8 +147,7 @@
             "pageLength": 10,
             "lengthMenu": [[10,25,50, -1], [10,25,50, "All"]],
             "dom": '<"dt-top-container"<l><"dt-center-in-div"B><f>r>t<"dt-filter-spacer"f><ip>',
-            "buttons": [ 'copy', 'csv', 'excel', 'pdf', 'print' ],
-
+            // "searching": false,
             // "dom": 'Bfrtip',
             "serverSide": true,
             "processing": true,
@@ -200,6 +207,11 @@
 
         });
 
+
+        $('.dataTables_filter input[type="search"]').css(
+            {'width':'350px','display':'inline-block'}
+        );
+
         // hlTbl.on('order.dt search.dt', function () {
         //     let i = 1;
         //     hlTbl.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
@@ -242,6 +254,11 @@
             })
             hlTbl.column(2).search(selectBrgy).draw();
         })
+
+        // $('#csearch').on('keyup change', function(){
+        //     hlTbl.columns([1,2,4]).search(this.value).draw();
+        // });
+
 
 
         $(document).on('click','.gntdelete', function(e){
@@ -299,13 +316,13 @@
         });
 
         $('#bthHLSave').on('click', function(){
-        var formData = new FormData(hlrecupdate);
-        $.ajax({
-            url: "{{ route('hlrecords.hlupdate') }}" ,
-            method: 'POST',
-            processData: false,
-            contentType: false,
-            data: formData,
+            var formData = new FormData(hlrecupdate);
+            $.ajax({
+                url: "{{ route('hlrecords.hlupdate') }}" ,
+                method: 'POST',
+                processData: false,
+                contentType: false,
+                data: formData,
 
             success: function(response) {
                 hlTbl.ajax.reload();
@@ -366,7 +383,6 @@
                 }
             });
         });
-
     });
 </script>
 

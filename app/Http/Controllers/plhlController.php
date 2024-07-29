@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use App\Models\houseleader;
+use App\Models\purokleader;
 use App\Models\d1nle2023;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,13 +16,6 @@ class plhlController extends Controller
         $municipality = Auth::user()->muncit;
 
         $houseleader = houseleader::where('muncit','=', $municipality)->get();
-
-        // $houseleader = houseleader::select(DB::raw('houseleaders.houseleader, houseleaders.barangay ,houseleaders.purok,
-        //     houseleaders.remarks,COUNT(d1nle2023s.HL) AS count_house_leader'))
-        //     ->leftJoin('d1nle2023s','d1nle2023s.HL','=','houseleaders.houseleader')
-        //     ->groupBy(DB::raw('houseleaders.houseleader'))
-        //     ->where('muncit','=', $municipality)->get();
-
         if($request->ajax()){
             return DataTables::of($houseleader)
             ->addColumn('action',function($row){
@@ -39,6 +33,25 @@ class plhlController extends Controller
             ->make(true);
         }
         return view('forms.hlrecords');
+    }
+
+    public function pbpcindex(Request $request){
+        $municipality = Auth::user()->muncit;
+
+        $houseleader = purokleader::where('muncit','=', $municipality)->get();
+        if($request->ajax()){
+            return DataTables::of($houseleader)
+            ->addColumn('action',function($row){
+                return '<a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
+                class="btn btn-danger btn-rounded waves-effect pbpcdelete" ><i class="mdi mdi-account-remove"></i></a>
+                <a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
+                    class="btn btn-primary btn-rounded waves-effect pbpcedit" ><i class="mdi mdi-account-edit"></i></a>';
+            })
+            ->addColumn('mid','')
+            ->rawColumns(['action'])
+            ->make(true);
+        }
+        return view('forms.pbpcrecords');
     }
 
     public function selbrgy(Request $request){
@@ -87,5 +100,27 @@ class plhlController extends Controller
             if($request->ajax()){
                 return DataTables::of($members)->make(true);
         }
+    }
+
+    public function pbpcedit($id){
+        $pbpcdetails = purokleader::find($id);
+        if(! $pbpcdetails){
+            abort(404);
+        }
+        return $pbpcdetails;
+    }
+
+    public function pbpcdelete (Request $request){
+
+        purokleader::destroy($request->id);
+    }
+
+    public function pbpcupdate(Request $request){
+        $HLUpdate = ([
+            'status' => $request->pbstatus, //
+            'remarks' => $request->hlRemarks, //
+        ]);
+        purokleader::where('id',$request->hlid)->update($HLUpdate);
+        return response()->json(['success' => 'PB/PC Updated!'], 201);
     }
 }

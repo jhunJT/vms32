@@ -162,6 +162,7 @@ class encoderController extends Controller
             ['survey_stat','=', 0],
             ['Barangay','=', $brgyhl]])
             // ->pluck('Name','id',);
+            ->orderBy('Name','asc')
             ->get();
         return response()->json(['items'=>$datanames]);
     }

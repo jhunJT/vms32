@@ -23,15 +23,25 @@
     font-weight: bold;
 }
 
-@media print
+button.dt-button.active {
+    background: grey !important;
+}
+
+/* hide search datatables */
+/* .dataTables_filter {
+    display: none;
+} */
+
+/* @media print
 {
 html, body { height: auto; }
 .dt-print-table, .dt-print-table thead, .dt-print-table th, .dt-print-table tr {border: 0 none !important;}
-}
+} */
 
-th.text-center.align-middle.tright.sorting_disabled{
-    text-align: center !important;
-}
+/* th.text-center.align-middle.tright.sorting_disabled{
+    text-align: right !important;
+} */
+
 
 td.tright{
     text-align-last: right;

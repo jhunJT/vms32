@@ -99,6 +99,11 @@ Route::middleware('auth')->controller(plhlController::class)->group(function(){
     Route::get('/hlrecords/edit/{id}', 'hledit')->name('hlrecords.hledit');
     Route::post('/hlrecords/update', 'hlupdate')->name('hlrecords.hlupdate');
     Route::get('/hlrecords/vmembers', 'vmembers')->name('hlrecords.vmembers');
+
+    Route::get('/pbpcrecords', 'pbpcindex')->name('pbpcrecords.index');
+    Route::post('/pbpcrecords/delete', 'pbpcdelete')->name('pbpcrecords.pbpcdelete');
+    Route::get('/pbpcrecords/edit/{id}', 'pbpcedit')->name('pbpcrecords.pbpcedit');
+    Route::post('/pbpcrecords/update', 'pbpcupdate')->name('pbpcrecords.pbpcupdate');
 });
 
 

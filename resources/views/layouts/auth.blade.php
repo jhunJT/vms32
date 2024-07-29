@@ -25,7 +25,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/auth/libs/toastr/build/toastr.min.css') }}">
         <link href="{{ asset('assets/auth/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
 
-        <link href="{{ asset('assets/auth/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet') }}" type="text/css" />
+        {{-- <link href="{{ asset('assets/auth/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet') }}" type="text/css" /> --}}
 
         <!-- Responsive datatable examples -->
         {{-- <link href="{{ asset('assets/auth/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" /> --}}
