@@ -110,6 +110,8 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->route('dashboard.encoder');
             case 'supervisor':
                 return redirect()->route('dashboard.supervisor');
+            case 'superuser':
+                return redirect()->route('dashboard.superuser');
             default:
                 return redirect()->intended(RouteServiceProvider::HOME);
         }

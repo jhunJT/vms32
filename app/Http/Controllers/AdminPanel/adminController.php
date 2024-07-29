@@ -191,8 +191,6 @@ class adminController extends Controller
         return response()->json([
             'success'=>'Record deleted successfully.'
         ],200);
-
-
     }
 
     public function performanceView(Request $request){

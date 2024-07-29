@@ -17,7 +17,11 @@ class roleController extends Controller
 
         }elseif(Auth::user()->role === 'encoder'){
             return redirect()->route('dashboard.encoder');
+
+        }elseif(Auth::user()->role === 'superuser'){
+            return redirect()->route('dashboard.superuser');
         }
+
         return view('dashboard');
     }
 }

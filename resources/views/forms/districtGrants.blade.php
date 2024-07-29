@@ -18,37 +18,52 @@
                         <div class="px-4">
                             <div class="card">
                                 <div class="card-body">
-                                        <button type="button" class="btn btn-success waves-effect waves-light btnAddgrnt">Add Record</button>
-                                        <button type="button" class="btn btn-info waves-effect waves-light btngrnttype">Add Grant Type</button>
-                                        <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".bs-example-modal-lg">Grant Summary</button>
+                                    <div class="row">
+                                        <div class="col-md-6 d-flex justify-content-start">
+                                            <div class="d-flex align-items-start ">
+                                                <button type="button" class="btn btn-success waves-effect waves-light btnAddgrnt">Add Record</button>
+                                                <button type="button" class="btn btn-primary waves-effect waves-light mx-2" data-bs-toggle="modal" data-bs-target=".bs-example-modal-lg">Grant Summary</button>
+                                            </div>
+                                        </div>
+
+                                        <!-- Buttons aligned to the right side -->
+                                        <div class="col-md-6 d-flex justify-content-end">
+                                            <div class="d-flex align-items-end">
+                                                <button type="button" class="btn btn-info waves-effect waves-light btngrnttype">Add Grant Type</button>
+                                                <button type="button" class="btn btn-warning waves-effect waves-light mx-2 btngrntview">View Grant Type</button>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
                                     <div class="row">
                                         <div class="col-2">
-                                            @if (Auth::user()->role == 'encoder')
-                                                {{-- <input class="form-control" type="text" id="dist" placeholder="District I" value="{{ Auth::user()->district}}" readonly > --}}
+                                            @if (Auth::user()->role == 'encoder' || Auth::user()->role == 'supervisor' )
                                                 <select id="dist" class="form-control" name="dist">
                                                     <option value="{{ Auth::user()->district}}" selected>{{ Auth::user()->district}}</option>
                                                 </select>
-                                            @elseif (Auth::user()->role == 'admin' || Auth::user()->role == 'supervisor' || Auth::user()->role == 'superuser')
+                                            @elseif (Auth::user()->role == 'admin' || Auth::user()->role == 'superuser')
                                                 <select id="gdist" class="form-control" name="gdist">
                                                     <option selected disabled>Select District</option>
                                                     <option value="District I">District I</option>
                                                     <option value="District II">District II</option>
                                                 </select>
                                             @endif
-
                                         </div>
                                         <div class="col-2">
-                                            @if (Auth::user()->role == 'encoder')
+                                            @if (Auth::user()->role == 'encoder' || Auth::user()->role == 'supervisor')
                                                     <select id="grantMuncit_1" class="form-control" name="grantMuncit_1" >
                                                         <option value="{{ Auth::user()->muncit}}" selected>{{ Auth::user()->muncit}}</option>
                                                     </select>
-                                            @elseif (Auth::user()->role == 'admin' || Auth::user()->role == 'supervisor' || Auth::user()->role == 'superuser')
+                                            @elseif (Auth::user()->role == 'admin' || Auth::user()->role == 'superuser')
                                                     <select id="grantMuncit" class="form-control" name="grantMuncit"></select>
                                             @endif
                                         </div>
                                         <div class="col-2">
-                                            <select id="hlbrgy" class="form-control" name="hlbrgy"></select>
+                                            @if (Auth::user()->role == 'encoder' || Auth::user()->role == 'supervisor')
+                                                <select id="hlbrgy" class="form-control" name="hlbrgy"></select>
+                                            @elseif (Auth::user()->role == 'admin' || Auth::user()->role == 'superuser')
+                                                <select id="hlbrgy2" class="form-control" name="hlbrgy2"></select>
+                                            @endif
                                         </div>
                                         <div class="col-2">
                                             <select id="typegrant" class="form-control" name="typegrant"></select>
@@ -113,6 +128,30 @@
                             <th></th>
                         </tr>
                     </tfoot>
+                </table>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade grntViewModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Grant Type</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table id="grntviewtbl" class="table table-striped table-bordered dt-responsive nowrap grantTbl" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead>
+                    <tr>
+                        <th style="width:15rem;">Grant</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Remarks</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
                 </table>
             </div>
         </div><!-- /.modal-content -->
@@ -619,11 +658,15 @@
             data: function(params){
                 dist = $('#dist').val();
                 muncit = $('#grantMuncit').val();
+                muncit1 = $('#grantMuncit_1').val();
                 brgy = $('#hlbrgy').val();
+
+                console.log(dist,muncit, muncit1,brgy );
                 return{
                     search: params.term,
                     dist: dist,
                     muncit: muncit,
+                    muncit1:muncit1,
                     brgy: brgy
                 };
             },
@@ -810,7 +853,7 @@
         muncit2 = $('#grantMuncit_1').val();
         barangay = $('#hlbrgy').val();
 
-        console.log(dist, dist2, muncit1, muncit2, barangay);
+        // console.log(dist, dist2, muncit1, muncit2, barangay);
     });
 
     $('#typegrant').select2({
@@ -1035,6 +1078,73 @@
     });
 
     $('.addgrnt').modal({backdrop: 'static', keyboard: false})
+
+    $('.btngrntview').on('click', function(){
+        $('.grntViewModal').modal('show');
+        var grantList = $('#grntviewtbl').DataTable({
+                destroy: true, // Allows reinitializing the DataTable
+                processing: true,
+                serverSide: false, // Assuming client-side processing
+                data: [], // Initial empty data
+                columns: [
+                    { data: 'grant_type' },
+                    { data: 'date_of_grant' },
+                    { data: 'grant_amount' },
+                    { data: 'g_remarks' },
+                    { data: 'action'}
+                ]
+            });
+        $.ajax({
+            url: "{{ route('grants.viewrecords') }}",
+            method:'GET',
+            success: function(response){
+
+                grantList.clear().rows.add(response.data).draw();
+
+                $('.grntViewModal').modal('show');
+
+            },
+        error: function(xhr, status, error){
+            if(error) {
+                var err = eval("(" + xhr.responseText + ")");
+                    grantList.error(err.message);
+                }
+            }
+        });
+    });
+
+    $(document).on('click','.gntlistdelete', function(e){
+        e.preventDefault();
+        let id = $(this).attr('data-id');
+            Swal.fire({
+                title:"Are you sure?",
+                text:"You won't be able to revert this!",
+                icon:"warning",
+                showCancelButton:!0,
+                confirmButtonColor:"#1cbb8c",
+                cancelButtonColor:"#f32f53",
+                confirmButtonText:"Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed){
+                $.ajax({
+                    url: '{{ route('grants.viewdelete') }}',
+                    method: 'post',
+                    data:{id:id},
+                    success:function(res){
+                        Swal.fire(
+                            'Deleted!',
+                            'Record deleted.',
+                            'success'
+                        )
+                        $('.grntViewModal').modal('toggle');
+                    }
+                });
+            }
+        });
+    });
+
+
+
 
 });
 </script>

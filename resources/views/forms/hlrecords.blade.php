@@ -363,7 +363,6 @@
                 ]
             });
 
-            // $('.viewMembers').modal('show');
             $.ajax({
                 url: "{{ route('hlrecords.vmembers') }}",
                 method:'GET',

@@ -3,7 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\roleController;
 use App\Http\Controllers\AdminPanel\adminController ;
-use App\Http\Controllers\SupervisorPanel\supervisorController ;
+use App\Http\Controllers\SupervisorPanel\supervisorController;
+use App\Http\Controllers\superuserPanel\superuserController ;
 use App\Http\Controllers\EncoderPanel\encoderController;
 use App\Http\Controllers\userManagementController;
 use App\Http\Controllers\activityLogsController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\userlogsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\setdrpdwnController;
 use App\Http\Controllers\plhlController;
+use App\Http\Controllers\latlongController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -72,14 +74,9 @@ Route::middleware(['auth','role:admin'])->controller(adminController::class)->gr
 
 });
 
-// Route::post('/users/{id}/block', [UserController::class, 'blockUser'])->name('users.block');
-
-// Route::group(['middleware' => ['auth', 'check.status']], function () {
-//     Route::get('/dashboard/admin', [adminController::class, 'index']);
-//     Route::get('/dashboard/supervisor', [supervisorController::class, 'index']);
-//     Route::get('/dashboard/encoder', [encoderController::class, 'index']);
-
-// });
+Route::middleware(['auth','role:superuser'])->controller(superuserController::class)->group(function () {
+    route::get('dashboard/superuser', 'index')->name('dashboard.superuser');
+});
 
 Route::middleware(['auth','role:admin'])->controller(rvrecordsController::class)->group(function(){
     route::get('/dashboard/recordsadmin', 'recordsadmin')->name('admin.recordsadmin');
@@ -171,15 +168,30 @@ Route::middleware('auth')->controller(grantController::class)->group(function ()
     Route::post('/district/grants/grants-add', 'granttypeadd')->name('grants.addtype');
     Route::post('/district/grants/grants-fetch', 'grantfetch')->name('grants.fetch');
     Route::post('/district/grants/grants-save', 'grantsave')->name('grants.save');
+
+    Route::get('/district/grants/viewrecords', 'viewrecords')->name('grants.viewrecords');
+    Route::post('/district/grants/view/delete', 'viewdelete')->name('grants.viewdelete');
 });
 
 Route::middleware('auth')->controller(cvrecordController::class)->group(function () {
     Route::get('/cvrecord', 'index')->name('cvrecord.index');
     Route::get('/cvrecord/cvhlsumm', 'cvhlsumm')->name('cvrecord.cvhlsumm');
+    Route::post('/cvrecord/muncit', 'cvmuncit')->name('cvrecord.cvmuncit');
     Route::post('/cvrecord/brgy', 'cvrecordbrgy')->name('cvrecord.brgy');
     Route::post('/cvrecord/selHL', 'selHL')->name('cvrecord.selHL');
     Route::post('/cvrecord/sortPurok', 'sortPurok')->name('cvrecord.sortPurok');
 });
+
+Route::middleware('auth')->controller(latlongController::class)->group(function () {
+    Route::get('/coordinates', 'index')->name('coordinates.index');
+    Route::post('/coordinates/getbarangay', 'getbrgy')->name('coordinates.getbrgy');
+    Route::post('/coordinates/save', 'coordsave')->name('coordinates.coordsave');
+    Route::post('/coordinates/delete', 'coorddelete')->name('coordinates.coorddelete');
+    Route::get('/coordinates/edit/{id}', 'coordedit')->name('coordinates.coordedit');
+    Route::post('/coordinates/update', 'coordupdate')->name('coordinates.coordupdate');
+});
+
+
 
 Route::middleware('auth')->controller(bske2023Controller::class)->group(function(){
     route::get('/archives/bske2023', 'index')->name('bske2023.index');
