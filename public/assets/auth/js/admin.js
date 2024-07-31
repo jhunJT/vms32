@@ -5,18 +5,6 @@ $(document).ready(function() {
         }
     });
 
-    // var map = L.map('map', {
-    //     scrollWheelZoom: false
-    // }).setView([12.0374 , 124.6581], 13);
-
-    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //     // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    // }).addTo(map);
-
-    // L.marker([12.0374 , 124.6581]).addTo(map)
-    //     .bindPopup('Santa Margarita')
-    //     .openPopup();
-
     var table5 = $('#tblsumm').DataTable({
         "dom": 'rtip',
         "pageLength" : 11,

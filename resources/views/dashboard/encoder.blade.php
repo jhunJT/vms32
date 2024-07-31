@@ -65,6 +65,7 @@
                                                 <input type="text" class="form-control w-s" id="seqno" placeholder="SQ#" name="seqno" size="10" >
                                                 <button type="button" class="btn btn-primary w-sm waves-effect waves-light btn-block" name="newList" id="newList"><i class="mdi mdi-account-child-outline"></i>Save</button>
                                                 <button type="button" class="btn btn-danger w-sm waves-effect waves-light" name="clearText" id="clearText"><i class="mdi mdi-eraser-variant"></i>Clear</button>
+                                                <input type="hidden" id="hlvid" name="hlvid">
                                             </div>
                                         </div>
                                     </div>
@@ -172,7 +173,7 @@
             <div class="modal-body">
 
                 <form  id="hlForm" class="needs-validation" novalidate>
-                    <input type="hidden" name="h_id" id="h_id" valu="">
+                    <input type="hidden" name="h_id" id="h_id" >
                     <input type="hidden" name="hlId" id="hlId">
                     <input type="hidden" name="hl_brgy" id="hl_brgy">
                     <input type="hidden" name="hlnamemodal" id="hlnamemodal">

@@ -31,6 +31,18 @@
                     </li>
 
                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button">
+                            <i class="ri-stack-line me-2"></i>Records<div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="topnav-components">
+                            <a href="{{ route('cvrecord.index') }}" class="dropdown-item" target="_blank">CV Records</a>
+                            <a href="{{ route('district.grants') }}" class="dropdown-item" target="_blank">Grants Records</a>
+                            <a href="{{ route('hlrecords.index') }}" class="dropdown-item" target="_blank">HL Records</a>
+                            <a href="{{ route('pbpcrecords.index') }}" class="dropdown-item" target="_blank">PB/PC Records</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
                         <a class="nav-link  arrow-none" href="#" id="topnav-apps" role="button">
                             <i class="ri-apps-2-line me-2"></i>Archive <div class="arrow-down"></div>
                         </a>
@@ -68,7 +80,7 @@
                         </div>
                     </li>
 
-                    <li class="nav-item dropdown">
+                    {{-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button">
                             <i class="ri-stack-line me-2"></i>Records<div class="arrow-down"></div>
                         </a>
@@ -78,7 +90,7 @@
                                 <a href="{{ route('district.grants') }}" class="dropdown-item">Grants Records</a>
                             </div>
                         </div>
-                    </li>
+                    </li> --}}
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="javascript:void(0);" id="topnav-layout" role="button">
@@ -105,9 +117,8 @@
                             <i class="ri-stack-line me-2"></i>Municipality<div class="arrow-down"></div>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-components">
-                            <div class="dropdown">
-                                <a href="{{ route('dashboard.encoder') }}" class="dropdown-item">{{ Auth::User()->muncit }}</a>
-                            </div>
+                            <a href="{{ route('dashboard.encoder') }}" class="dropdown-item">{{ Auth::User()->muncit }}</a>
+                            <a href="{{ route('coordinates.index') }}" class="dropdown-item">SET COORDINATES</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -142,11 +153,11 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button">
                             <i class="ri-stack-line me-2"></i>Municipality<div class="arrow-down"></div>
+
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-components">
-                            <div class="dropdown">
-                                <a href="{{ route('dashboard.supervisor.dataview') }}" class="dropdown-item">{{ Auth::User()->muncit }}</a>
-                            </div>
+                            <a href="{{ route('dashboard.supervisor.dataview') }}" class="dropdown-item">{{ Auth::User()->muncit }}</a>
+                            <a href="{{ route('coordinates.index') }}" class="dropdown-item">SET COORDINATES</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -154,12 +165,10 @@
                             <i class="ri-stack-line me-2"></i>Records<div class="arrow-down"></div>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-components">
-                            <div class="dropdown">
-                                <a href="{{ route('cvrecord.index') }}" class="dropdown-item">CV Records</a>
-                                <a href="{{ route('district.grants') }}" class="dropdown-item">Grants Records</a>
-                                <a href="{{ route('hlrecords.index') }}" class="dropdown-item">HL Records</a>
-                                <a href="" class="dropdown-item">PB/PC Records</a>
-                            </div>
+                            <a href="{{ route('cvrecord.index') }}" class="dropdown-item" target="_blank">CV Records</a>
+                            <a href="{{ route('district.grants') }}" class="dropdown-item" target="_blank">Grants Records</a>
+                            <a href="{{ route('hlrecords.index') }}" class="dropdown-item" target="_blank">HL Records</a>
+                            <a href="{{ route('pbpcrecords.index') }}" class="dropdown-item" target="_blank">PB/PC Records</a>
                         </div>
                     </li>
                 @endif

@@ -59,18 +59,18 @@ class grantController extends Controller
 
     public function getHLbrgy(Request $request){
 
-        if(Auth::user()->role == 'encoder'){
+        if(Auth::user()->role == 'encoder' || Auth::user()->role == 'supervisor' ){
             $muncit = Auth::user()->muncit;
         }else{
             $muncit = $request->muncit;
         }
-
+        // dd($request->all());
         $search = $request->search;
-        $databrgy = grantDetails::where([
-                ['muncit','=',$muncit,],
-                ['barangay','like','%'.$search.'%']])
-             ->orderBy('barangay')
-             ->pluck('barangay','barangay');
+        $databrgy = d1nle2023::where([
+                ['Municipality','=',$muncit,],
+                ['Barangay','like','%'.$search.'%']])
+             ->orderBy('Barangay')
+             ->pluck('Barangay','Barangay');
         return response()->json(['items'=>$databrgy]);
     }
 
@@ -152,8 +152,12 @@ class grantController extends Controller
 
     public function grantnames(Request $request){
 
-        $dist = $request->dist;
-        $muncit = $request->muncit;
+        if(Auth::user()->role == 'encoder' || Auth::user()->role == 'supervisor' ){
+            $dist = $request->dist;
+            $muncit = Auth::user()->muncit;
+        }else{
+            $muncit = $request->muncit;
+        }
         $barangay = $request->brgy;
         $search = $request->search;
 
@@ -169,6 +173,8 @@ class grantController extends Controller
                 ])
             ->orderBy('Name')
             ->get();
+
+            // dd($grtname);
 
         return response()->json(['items'=>$grtname]);
     }
@@ -276,4 +282,27 @@ class grantController extends Controller
             'success' => 'Record Added!'
         ], 201);
     }
+
+    public function viewrecords(Request $request){
+        $grantlist = grantsdrp::all();
+
+        if($request->ajax()){
+            return DataTables::of($grantlist)
+
+            ->addColumn('action',function($row){
+                return '<a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
+                class="btn btn-danger btn-rounded waves-effect gntlistdelete" ><i class="mdi mdi-account-remove"></i></a>
+
+                <a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
+                    class="btn btn-primary btn-rounded waves-effect gntlistedit" ><i class="mdi mdi-account-edit"></i></a>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+        }
+    }
+
+    public function viewdelete(Request $request){
+        grantsdrp::destroy($request->id);
+    }
+
 }

@@ -27,6 +27,11 @@ button.dt-button.active {
     background: grey !important;
 }
 
+#dist1.table{
+    width: 100% !important;
+    table-layout: fixed !important;
+}
+
 /* hide search datatables */
 /* .dataTables_filter {
     display: none;
@@ -56,6 +61,12 @@ td.tleft{
     text-align-last: left;
     vertical-align: baseline;
 }
+
+td.tcenter{
+    text-align-last: center;
+    vertical-align: baseline;
+}
+
 
 .datepicker {
     z-index: 99999 !important;

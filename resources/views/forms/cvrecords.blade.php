@@ -25,14 +25,33 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-2">
-                                        <input class="form-control" type="text" id="dist" placeholder="District I" value="District I" readonly>
+                                        @if (Auth::user()->role == 'encoder' || Auth::user()->role == 'supervisor' )
+                                                <select id="dist2" class="form-control" name="dist2">
+                                                    <option value="{{ Auth::user()->district}}" selected>{{ Auth::user()->district}}</option>
+                                                </select>
+                                            @elseif (Auth::user()->role == 'admin' || Auth::user()->role == 'superuser')
+                                                <select id="dist" class="form-control" name="dist">
+                                                    <option selected disabled>Select District</option>
+                                                    <option value="District I">District I</option>
+                                                    <option value="District II">District II</option>
+                                                </select>
+                                            @endif
+                                        {{-- <input class="form-control" type="text" id="dist" placeholder="District I" value="District I" readonly> --}}
                                         {{-- <select id="gdist" class="form-control" name="gdist"></select> --}}
                                     </div>
                                     <div class="col-2">
-                                        {{-- <input class="form-control" type="text" id="hlmun"  value="CALBAYOG CITY" readonly> --}}
-                                        <select id="grantMuncit" style="width: 100%;" class="form-control" name="grantMuncit" >
+
+                                        @if (Auth::user()->role == 'encoder' || Auth::user()->role == 'supervisor')
+                                            <select id="grantMuncit2" class="form-control" name="grantMuncit2" >
+                                                <option value="{{ Auth::user()->muncit}}" selected>{{ Auth::user()->muncit}}</option>
+                                            </select>
+                                        @elseif (Auth::user()->role == 'admin' || Auth::user()->role == 'superuser')
+                                                <select id="grantMuncit" class="form-control" name="grantMuncit"></select>
+                                        @endif
+
+                                        {{-- <select id="grantMuncit" style="width: 100%;" class="form-control" name="grantMuncit" >
                                             <option value="{{ Auth::User()->muncit }}" selected>{{ Auth::User()->muncit }}</option>
-                                        </select>
+                                        </select> --}}
 
                                     </div>
                                     <div class="col-3">
@@ -60,6 +79,7 @@
                                 <th>Houseleader</th>
                                 <th>Purok</th>
                                 <th>Sequence</th>
+                                <th></th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -135,17 +155,18 @@
             "columns": [
                 {"data": "id",
                     render: function (data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;}},
+                        return meta.row + meta.settings._iDisplayStart + 1;}}, //0
                 {"data": "Name"}, //1
                 {"data": "Barangay"}, //2
                 {"data": "HL"},//3
                 {"data": "purok_rv"},//4
                 {"data": "sqn"},//5
                 {"data": "sethl"},//6
+                {"data": "Municipality"} //7
             ],
             "columnDefs": [
                 {"className": "text-center", "targets": [0,2,3,4,5]},
-                {"targets": 6, "visible": false, "searchable": false }
+                {"targets": [6,7], "visible": false, "searchable": false }
             ],
             "buttons": [
                 {
@@ -216,8 +237,46 @@
     // $(cvrec.table().header()).addClass('highlight');
 
     $('#grantMuncit').select2({
+        placeholder: "Select Municipality/City",
+        allowClear: true,
+        ajax:{
+            url:"{{ route('cvrecord.cvmuncit') }}",
+            type:"POST",
+            dataType:"json",
+            delay:250,
+            quietMillis: 100,
+            data: function(params){
+                muncit = $('#grantMuncit').val();
+                return{
+                    search: params.term,
+                    muncit: muncit
+                };
+            },
+            processResults: function(data){
+                return{
+                    results: $.map(data.items, function(obj,i) {
+                        return {
+                        id:i, text:obj
+                        };
+                    })
+                }
+            }
+        }
+    });
+
+    $('#grantMuncit2').select2({
         minimumResultsForSearch: -1
     });
+
+    $('#dist2').select2({
+        minimumResultsForSearch: -1
+    });
+
+    $('#dist').select2({
+        minimumResultsForSearch: -1
+    });
+
+
 
     $('.hlsumm').on('click',function(){
         var hlsummary = $('#hlsumm').dataTable({
@@ -291,6 +350,7 @@
     $('#selbrgy').on('change', function(e){
         $('#selHL').val('').trigger('change');
         $('#sortPurok').val('').trigger('change');
+
         var selectBrgy = []
         $.each($('#selbrgy'), function(i,elem){
             selectBrgy.push($(this).val())
@@ -298,7 +358,19 @@
         cvrec.column(2).sort().search(selectBrgy).draw();
     });
 
-    // sortPurok
+    $('#grantMuncit').on('change', function(){
+        var selectMuncit = []
+        $.each($('#grantMuncit'), function(i,elem){
+            selectMuncit.push($(this).val())
+        })
+        cvrec.column(7).search(selectMuncit).draw();
+    });
+
+    $('#gdist').select2({
+        placeholder: "Select District",
+        minimumResultsForSearch: -1,
+        allowClear: true,
+    });
 
 
     $('#selHL').on('change', function(e){

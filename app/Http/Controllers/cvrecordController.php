@@ -11,23 +11,18 @@ class cvrecordController extends Controller
 {
     public function index(Request $request){
 
-
         $municipality = Auth::user()->muncit;
-        $tbname = Auth::user()->tbname;
         $district = Auth::user()->district;
-
-
-       $cvrecord = d1nle2023::select('Name','Barangay','HL','purok_rv','sqn','sethl')
+            $cvrecord = d1nle2023::select('Name','Barangay','HL','purok_rv','sqn','sethl','Municipality')
                 ->where([['district','=', $district],['municipality','=', $municipality],['survey_stat','=', 1]])
                 ->orderByRaw ('Barangay, purok_rv,HL asc, position(Name IN HL) desc')
                 ->get();
-
-        if($request->ajax()){
-            return DataTables::of($cvrecord)
-            ->addColumn('id','')
-            ->rawColumns(['action'])
-            ->make(true);
-        }
+            if($request->ajax()){
+                return DataTables::of($cvrecord)
+                ->addColumn('id','')
+                ->rawColumns(['action'])
+                ->make(true);
+            }
         return view('forms.cvrecords');
     }
 
@@ -50,6 +45,16 @@ class cvrecordController extends Controller
         if($request->ajax()){
             return DataTables::of($hlsumm )->make(true);
         }
+    }
+
+    public function cvmuncit(Request $request){
+        $search = $request->search;
+        $dataMuncit = d1nle2023::where([
+                ['Municipality','like','%'.$search.'%']])
+             ->orderBy('Municipality')
+             ->pluck('Municipality','Municipality');
+
+        return response()->json(['items'=>$dataMuncit]);
     }
 
     public function cvrecordbrgy(Request $request){

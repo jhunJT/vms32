@@ -45,15 +45,7 @@ $(document).ready(function(e) {
             { "data": "PL" }, //5
             { "data": "HL" }, //6
             { "data": "purok_rv"}, //7
-            // { "data": "qrcode_id" ,orderable: false,
-            //     searchable: false,
-            //     render: function(data, type, full, meta) {
-            //         console.log(data);
-            //         // return '<img src="' + "{{ route('generate.qrcode', ':id') }}".replace(':id', data) + '" alt="QR Code" class="img-thumbnail" />';
-            //         return '<img src="' + "{{ QrCode::size(300)->generate("+ data +")}}" +'" alt="QR Code" class="img-thumbnail" />';
-            //     }
-            //  }, //8
-            { "data": "sqn"},
+            { "data": "sqn"}, //8
             { "data": "action", orderable:false, searchable: false, className:"tright"}, //9
             { "data": "survey_stat" }, //10
             { "data": "man_add"}, //11
@@ -150,7 +142,6 @@ $(document).ready(function(e) {
         $('#cvsumm').dataTable().fnDestroy();
     });
 
-
     $('.hlsumm').on('click',function(){
 
         var hlsummary = $('#hlsumm').dataTable({
@@ -237,6 +228,8 @@ $(document).ready(function(e) {
             }
         })
         table.column(11).search(searchTerms,true).draw();
+        // console.log(searchTerms);
+
     });
 
     $(document).on('change','#filterMuncit', function(){
@@ -258,6 +251,7 @@ $(document).ready(function(e) {
     $('#filterBrgy').on('change', function(){
         $('#houseleaderSelect, #purokLeader').val('').trigger('change');
         $('#setPurok, #seqno').val('');
+
         var selectBrgy = []
         $.each($('#filterBrgy'), function(i,elem){
             selectBrgy.push($(this).val())
@@ -319,7 +313,6 @@ $(document).ready(function(e) {
         });
     });
 
-    // CITY OF CALBAYOG
     $('#filterMuncit').select2({
         placeholder: "Filter Municipality",
         minimumResultsForSearch: -1,
@@ -539,7 +532,7 @@ $(document).ready(function(e) {
 
     });
 
-        $('#formModal').on('shown.bs.modal', function(){
+    $('#formModal').on('shown.bs.modal', function(){
             $('#hls').on('change', function(){
                 var selectedData = $(this).select2('data')[0];
                 var id = selectedData.id;
@@ -840,6 +833,7 @@ $(document).ready(function(e) {
             $('#houseleaderSelectName').val(selectedData.text);
             $('#setPurok').val(selectedData.purok);
             $('#seqno').val(selectedData.sqn);
+            $('#hlvid').val(selectedData.vid);
             // console.log(selectedData.sqn);
             return false;
         })
@@ -871,9 +865,9 @@ $(document).ready(function(e) {
                         id: item.id,
                         text: item.houseleader,
                         purok: item.purok,
-                        sqn: item.sqn
+                        sqn: item.sqn,
+                        vid: item.vid
                     }
-                    console.log(pl);
                 });
 
                 return {
@@ -942,6 +936,8 @@ $(document).ready(function(e) {
         hls = $('#hlnamemodal').val();
         hlspurok = $('#hlPurok').val();
         hlssqn = $('#seqNum').val();
+        hlvid = $('#hlId').val();
+
         var formHlData = new FormData(formHL);
 
         $.ajax({
@@ -960,6 +956,7 @@ $(document).ready(function(e) {
 
                 $('#setPurok').val(hlspurok);
                 $('#seqno').val(hlssqn);
+                $('#hlvid').val(hlvid);
 
                 if(response) {
                     toastr.success(response.success);
@@ -1015,7 +1012,6 @@ $(document).ready(function(e) {
         });
 
     });
-
 
     $('#mbPL').on('click', function(){
 
@@ -1084,6 +1080,7 @@ $(document).ready(function(e) {
         var hlsel = $('#houseleaderSelect').val();
         var purok = $('#setPurok').val();
         var seqno = $('#seqno').val();
+        var hlvid = $('#hlvid').val();
         var checkboxes = $('#calbcity2025').find('input[type="checkbox"]');
         var atLeastOneChecked = false;
 
@@ -1126,7 +1123,7 @@ $(document).ready(function(e) {
         $.ajax({
         url:encoderDataSaveSelda,
         method:"post",
-        data: {id:id,pl:pl,hl:hl, purok:purok,seqno:seqno,userid:userid },
+        data: {id:id,pl:pl,hl:hl, purok:purok,seqno:seqno,userid:userid,hlvid:hlvid },
         success:function(response){
             if(response.success){
                 Swal.fire({

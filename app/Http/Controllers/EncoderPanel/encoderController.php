@@ -179,6 +179,7 @@ class encoderController extends Controller
 
         $request->validate([
             'hl_brgy' => 'required',
+            'hlName' => 'required',
         ]);
 
         $ifExsist = DB::table('houseleaders')->where([
@@ -188,6 +189,8 @@ class encoderController extends Controller
         abort_if($ifExsist,400, 'Houseleader already exist');
 
         $data = ([
+            'vid' => $request->hlId, //
+            'm_id' => $request->id, //
             'barangay' => $request->hl_brgy, //
             'houseleader' => $request->hlnamemodal, //
             'muncit' =>  $muncit, //
@@ -198,14 +201,14 @@ class encoderController extends Controller
 
         DB::table('houseleaders')->Insert($data);
 
-        $vupdate =([
-            'HL' => $request->hlnamemodal, //
-            'hlids' => $request->hlId, //
-            'survey_stat' => '1',
-            'purok_rv' => $request->hlPurok,
-            'sqn' => $request->seqNum,
-            'sethl' => '1',
-        ]);
+        // $vupdate =([
+        //     'HL' => $request->hlnamemodal, //
+        //     'hlids' => $request->hlId, //
+        //     'survey_stat' => '1',
+        //     'purok_rv' => $request->hlPurok,
+        //     'sqn' => $request->seqNum,
+        //     'sethl' => '1',
+        // ]);
 
         $vupdate = d1nle2023::find($request->hlId);
 
@@ -436,6 +439,7 @@ class encoderController extends Controller
             'survey_stat' => '1', // separate table
             'sqn' => $request->seqno , //
             'userid' => $request->userid , //
+            'hlids' => $request->hlvid , //
         ]);
 
         return response()->json(['success' => 'New Silda Saved!']);
