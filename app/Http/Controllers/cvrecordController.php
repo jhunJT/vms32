@@ -19,8 +19,9 @@ class cvrecordController extends Controller
 
        $cvrecord = d1nle2023::select('Name','Barangay','HL','purok_rv','sqn','sethl')
                 ->where([['district','=', $district],['municipality','=', $municipality],['survey_stat','=', 1]])
-                ->orderByRaw ('Barangay,sqn, position(d1nle2023s.Name IN d1nle2023s.HL) desc, name')
+                ->orderByRaw ('Barangay, purok_rv,HL asc, position(Name IN HL) desc')
                 ->get();
+
         if($request->ajax()){
             return DataTables::of($cvrecord)
             ->addColumn('id','')

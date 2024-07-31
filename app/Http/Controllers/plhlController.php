@@ -16,6 +16,7 @@ class plhlController extends Controller
         $municipality = Auth::user()->muncit;
 
         $houseleader = houseleader::where('muncit','=', $municipality)->get();
+
         if($request->ajax()){
             return DataTables::of($houseleader)
             ->addColumn('action',function($row){
@@ -92,9 +93,11 @@ class plhlController extends Controller
         // dd($request->id, $request->hlname);
 
         $members  =  DB::table('d1nle2023s')
-            ->select('houseleaders.houseleader','houseleaders.barangay','d1nle2023s.Name','d1nle2023s.remarks', 'd1nle2023s.grant_rv')
+            ->select('houseleaders.houseleader','houseleaders.barangay','d1nle2023s.Name',
+                'd1nle2023s.remarks', 'd1nle2023s.grant_rv')
             ->join('houseleaders','houseleaders.houseleader','=','d1nle2023s.HL')
             ->where('houseleaders.houseleader','=',$request->hlname)
+            ->orderByRaw ('position(d1nle2023s.Name IN houseleaders.houseleader) desc')
             ->get();
 
             if($request->ajax()){

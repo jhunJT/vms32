@@ -351,11 +351,12 @@
             var hlname = $(this).data('name');
 
             var membersTable = $('#membersTable').DataTable({
-                destroy: true, // Allows reinitializing the DataTable
-                processing: true,
-                serverSide: false, // Assuming client-side processing
-                data: [], // Initial empty data
-                columns: [
+                "destroy": true,
+                "ordering": false,
+                "processing": true,
+                "serverSide": false,
+                "data": [],
+                "columns": [
                     { data: 'Name' },
                     { data: 'barangay' },
                     { data: 'grant_rv' },

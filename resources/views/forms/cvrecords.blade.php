@@ -12,6 +12,7 @@
                             <li class="breadcrumb-item active">{{ Auth::User()->muncit }}</li>
                         </ol>
                     </div>
+                    <button onclick="printTable()">Print Table</button>
                 </div>
                 <div class="card" id="refreshTB">
                     <div class="card-body">
@@ -124,10 +125,12 @@
             // "order": [[ 1, 'asc' ], [ 4, 'asc' ]],
             "ordering": false,
             "autoWidth" : true,
+            "lengthMenu": [[15,25,50, -1], [15,25,50, "All"]],
+            "dom": '<"dt-top-container"<l><"dt-center-in-div"B><f>r>t<"dt-filter-spacer"f><ip>',
             "pageLength": 15,
             "processing": true,
             "serverSide": true,
-            "dom": 'Bfrtip',
+            // "dom": 'Bfrtip',
             "ajax": "{{ route('cvrecord.index') }}",
             "columns": [
                 {"data": "id",
@@ -161,22 +164,54 @@
                     orientation: 'landscape',
                     pageSize: 'LEGAL',
                     exportOptions: {
-                        columns: [0,1,2,3,4]
+                        columns: [0,1,4,5]
                         // ':visible:not(.not-export-col)'
                         // columns: ":not(.not-export-column)"
                     },
                     className: 'btn btn-success waves-effect waves-light',
                         messageTop: function () {
                             muncit = $('#grantMuncit').val();
-                        return '<h1 style="text-align:center;">COMMAND VOTES</h1><h2 style="text-align:center;">'+muncit+'</h2>';
+                            hlbrgys = $('#selbrgy').val();
+                            if(muncit && hlbrgys) {
+                                return '<h1 style="text-align:center;">CV SUMMARY</h1>' +'<h2 style="text-align:center;">' + muncit + ' - ' + hlbrgys + '</h2>';
+                            }else if(muncit && !hlbrgys ){
+                                return '<h1 style="text-align:center;">CV Records</h1><h2 style="text-align:center;">'+muncit+'</h2>';
+                            }else{
+                                return '<h1 style="text-align:center;">CV SUMMARY - ALL</h1>';
+                        }
+                    },
+                    customize: function (win) {
+                        $(win.document.body).find('table').addClass('display').css('font-size', '10px');
+                        $(win.document.body).find('td').each(function() {
+                            if ($(this).text().startsWith('Prefix:')) {
+                                $(this).css('font-weight', 'bold');
+                            }
+                        });
                     }
                 },
             ],
             "fnRowCallback": function( row, data, index ) {
-                if ( (data.sethl  === 1) ) {$(row).addClass('green');}
-                // else if ( data.survey_stat == 1 ) {$(row).addClass('green');}
+                if  (data.Name  === data.HL) {
+                    $(row).addClass('green');
+                    var nameCell=$(row).find('td:eq(1)');
+                    var nametxt=nameCell.text();
+                    nameCell.text('HL: ' + nametxt);
+
+                }
             }
         });
+
+    function printTable() {
+        // Add a class to the table cells that should be bold
+        $('#example').find('td').each(function() {
+        if ($(this).text().startsWith('Prefix:')) {
+            $(this).css('font-weight', 'bold');
+        }
+    });
+
+    // Trigger print
+    window.print();
+}
 
     // $(cvrec.table().header()).addClass('highlight');
 
@@ -207,23 +242,23 @@
                         },
                         className: 'btn btn-success waves-effect waves-light'
                 },
-                // {
-                //     text: 'pdf',
-                //         extend: 'pdfHtml5',
-                //         title: 'HOUSELEADER SUMMARY',
-                //         orientation:'portrait',
-                //         pageSize: 'LEGAL',
-                //         customize: function (doc) {
-                //             doc.styles.tableHeader.alignment = 'center';
-                //             doc.defaultStyle.alignment = 'center';
-                //             doc.content[1].table.widths =
-                //                 Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                //         },
-                //         exportOptions: {
-                //             columns: [0,1,2]
-                //         },
-                //         className: 'btn btn-success waves-effect waves-light',
-                // },
+                {
+                    text: 'pdf',
+                        extend: 'pdfHtml5',
+                        title: 'HOUSELEADER SUMMARY',
+                        orientation:'portrait',
+                        pageSize: 'LEGAL',
+                        customize: function (doc) {
+                            doc.styles.tableHeader.alignment = 'center';
+                            doc.defaultStyle.alignment = 'center';
+                            doc.content[1].table.widths =
+                                Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                        },
+                        exportOptions: {
+                            columns: [0,1,2]
+                        },
+                        className: 'btn btn-success waves-effect waves-light',
+                },
                 {
                     text: 'print',
                         extend: 'print',
@@ -236,7 +271,6 @@
                         className: 'btn btn-success waves-effect waves-light',
                             messageTop: function () {
                                 muncit = $('#grantMuncit').val();
-                                // console.log(muncit);
                             return '<h1 style="text-align:center;">HOUSELEADER SUMMARY</h1><h2 style="text-align:center;">'+muncit+'</h2>';
                         }
                 }

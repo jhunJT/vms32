@@ -32,15 +32,19 @@ button.dt-button.active {
     display: none;
 } */
 
-/* @media print
+@media print
 {
 html, body { height: auto; }
 .dt-print-table, .dt-print-table thead, .dt-print-table th, .dt-print-table tr {border: 0 none !important;}
-} */
+}
 
-/* th.text-center.align-middle.tright.sorting_disabled{
+th.text-center.align-middle.tright.sorting_disabled{
     text-align: right !important;
-} */
+}
+
+.bold-text {
+    font-weight: bold;
+}
 
 
 td.tright{
