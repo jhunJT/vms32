@@ -661,7 +661,7 @@
                 muncit1 = $('#grantMuncit_1').val();
                 brgy = $('#hlbrgy').val();
 
-                console.log(dist,muncit, muncit1,brgy );
+                // console.log(dist,muncit, muncit1,brgy );
                 return{
                     search: params.term,
                     dist: dist,
@@ -1004,6 +1004,7 @@
                 icon: "warning"
             });
         }else{
+            $('#frmGrantAdd')[0].reset();
             $('.addgrnt').modal('show');
         }
     });
@@ -1058,6 +1059,7 @@
             success: function(response) {
                 $('#frmGrantAdd')[0].reset();
                 $('.addgrnt').modal('toggle');
+                grantTbl.ajax.reload();
                 if(response.success) {
                         Swal.fire({
                         position: "top-end",
@@ -1071,7 +1073,16 @@
             error: function(xhr, status, error){
                 if(error) {
                     var err = eval("(" + xhr.responseText + ")");
-                    toastr.error(err.message);
+                    // toastr.error(err.message);
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "error",
+                        title: err.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    $('#frmGrantAdd')[0].reset();
+
                 }
             }
         });
@@ -1142,6 +1153,10 @@
             }
         });
     });
+
+    // $('.addgrnt').on('hidden.bs.modal', function (e) {
+    //     document.getElementById("frmGrantAdd").reset();
+    // })
 
 
 
