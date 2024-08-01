@@ -63,10 +63,17 @@ $(document).ready(function() {
                 tbuser.column(7).search(currentState, true).draw(); // Show Column 7 (index 6)
                 $(this).attr('data-state', 'Online').text('Online');
             } else {
+
                 tbuser.column(7).search(currentState, false).draw(); // Hide Column 7 (index 6)
                 $(this).attr('data-state', 'Offline').text('Offline');
             }
+            tbuser.draw();
         });
+
+        // $('#refreshTb').on('click', function(){
+        //     tbuser.ajax.reload();
+        //     alert('ref');
+        // });
 
 
         // $('#showOnline').on('click', function(){

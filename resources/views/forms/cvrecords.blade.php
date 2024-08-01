@@ -12,7 +12,7 @@
                             <li class="breadcrumb-item active">{{ Auth::User()->muncit }}</li>
                         </ol>
                     </div>
-                    <button onclick="printTable()">Print Table</button>
+                    {{-- <button onclick="printTable()">Print Table</button> --}}
                 </div>
                 <div class="card" id="refreshTB">
                     <div class="card-body">
@@ -40,7 +40,6 @@
                                         {{-- <select id="gdist" class="form-control" name="gdist"></select> --}}
                                     </div>
                                     <div class="col-2">
-
                                         @if (Auth::user()->role == 'encoder' || Auth::user()->role == 'supervisor')
                                             <select id="grantMuncit2" class="form-control" name="grantMuncit2" >
                                                 <option value="{{ Auth::user()->muncit}}" selected>{{ Auth::user()->muncit}}</option>
@@ -70,7 +69,7 @@
                             </div>
                         </div>
 
-                        <table id="cvrectbl" class="table table-bordered dt-responsive nowrap cvrectbl" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <table id="cvrectbl" class="table table-bordered nowrap cvrectbl" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead >
                             <tr>
                                 <th>#</th>
@@ -78,7 +77,7 @@
                                 <th style="width:15rem;">Barangay</th>
                                 <th>Houseleader</th>
                                 <th>Purok</th>
-                                <th>Sequence</th>
+                                <th>SQN</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -156,7 +155,13 @@
                 {"data": "id",
                     render: function (data, type, row, meta) {
                         return meta.row + meta.settings._iDisplayStart + 1;}}, //0
-                {"data": "Name"}, //1
+                {"data": "Name",
+                    render: function (data, type, row, meta) {
+                    var prefix = "HL: ";
+                        if(data == row.HL){
+                            return prefix + data;
+                        }
+                            return data;}},
                 {"data": "Barangay"}, //2
                 {"data": "HL"},//3
                 {"data": "purok_rv"},//4
@@ -168,6 +173,11 @@
                 {"className": "text-center", "targets": [0,2,3,4,5]},
                 {"targets": [6,7], "visible": false, "searchable": false }
             ],
+            "fnRowCallback": function( row, data, index ) {
+                if  (data.Name  === data.HL) {
+                    $(row).addClass('green');
+                }
+            },
             "buttons": [
                 {
                     text: 'excel',
@@ -179,19 +189,67 @@
                     }
                 },
                 {
+                    text: 'pdf',
+                        extend: 'pdfHtml5',
+                        title: 'CV SUMMARY',
+                        orientation:'portrait',
+                        pageSize: 'LEGAL',
+                        customize: function (doc) {
+                            var columnAlignments = ['center', 'left', 'center', 'center'];
+                            var columnWidths = ['10%', '70%', '10%', '10%'];
+                            var sequenceCounter = 1; // Initialize the sequence counter
+
+                            if (doc.content && doc.content[1] && doc.content[1].table) {
+                                doc.content[1].table.widths = columnWidths;
+
+                                doc.content[1].table.body.forEach(function (row, rowIndex) {
+                                    row.forEach(function (cell, cellIndex) {
+                                        if (rowIndex === 0) {
+                                            // Header row: center-align all cells
+                                            cell.alignment = 'center';
+                                        } else {
+                                            // Data rows
+                                            cell.alignment = columnAlignments[cellIndex] || 'left';
+
+                                            // Check if the cell in the second column does not start with 'HL'
+                                            if (cellIndex === 1 && !cell.text.startsWith('HL')) {
+                                                cell.margin = [17, 0, 0, 0];
+                                                // Add sequence number to the first cell of the row
+                                                if (cellIndex === 0) {
+                                                    cell.text = sequenceCounter + '. ' + cell.text;
+                                                }
+                                                sequenceCounter++; // Increment the sequence counter
+                                            } else if (cellIndex === 1 && cell.text.startsWith('HL')) {
+                                                // Reset sequence counter when 'HL' is encountered
+                                                sequenceCounter = 1;
+                                            }
+                                        }
+                                    });
+                                });
+                            }
+
+                            doc.pageMargins = [40, 40, 40, 40];
+                        },
+                        exportOptions: {
+                            columns: [0,1,4,5]
+                        },
+                        className: 'btn btn-success waves-effect waves-light'
+                },
+                {
                     text: 'print',
                     extend: 'print',
                     title: '',
-                    orientation: 'landscape',
+                    orientation: 'portrait',
                     pageSize: 'LEGAL',
                     exportOptions: {
-                        columns: [0,1,4,5]
-                        // ':visible:not(.not-export-col)'
-                        // columns: ":not(.not-export-column)"
+                        columns: [0,1,4,5],
+                        modifier: {
+                            page: 'all' // This ensures all pages are included
+                        }
                     },
                     className: 'btn btn-success waves-effect waves-light',
                         messageTop: function () {
-                            muncit = $('#grantMuncit').val();
+                            muncit = $('#grantMuncit2').val();
                             hlbrgys = $('#selbrgy').val();
                             if(muncit && hlbrgys) {
                                 return '<h1 style="text-align:center;">CV SUMMARY</h1>' +'<h2 style="text-align:center;">' + muncit + ' - ' + hlbrgys + '</h2>';
@@ -202,39 +260,17 @@
                         }
                     },
                     customize: function (win) {
-                        $(win.document.body).find('table').addClass('display').css('font-size', '10px');
                         $(win.document.body).find('td').each(function() {
-                            if ($(this).text().startsWith('Prefix:')) {
+                            var cellHtml = $(this).html();
+                            if ($(this).text().startsWith('HL: ')) {
                                 $(this).css('font-weight', 'bold');
+                                $(this).css('color', 'red');
                             }
                         });
                     }
                 },
-            ],
-            "fnRowCallback": function( row, data, index ) {
-                if  (data.Name  === data.HL) {
-                    $(row).addClass('green');
-                    var nameCell=$(row).find('td:eq(1)');
-                    var nametxt=nameCell.text();
-                    nameCell.text('HL: ' + nametxt);
-
-                }
-            }
+            ]
         });
-
-    function printTable() {
-        // Add a class to the table cells that should be bold
-        $('#example').find('td').each(function() {
-        if ($(this).text().startsWith('Prefix:')) {
-            $(this).css('font-weight', 'bold');
-        }
-    });
-
-    // Trigger print
-    window.print();
-}
-
-    // $(cvrec.table().header()).addClass('highlight');
 
     $('#grantMuncit').select2({
         placeholder: "Select Municipality/City",
@@ -277,7 +313,6 @@
     });
 
 
-
     $('.hlsumm').on('click',function(){
         var hlsummary = $('#hlsumm').dataTable({
             "ordering":false,
@@ -309,7 +344,7 @@
                         pageSize: 'LEGAL',
                         customize: function (doc) {
                             doc.styles.tableHeader.alignment = 'center';
-                            doc.defaultStyle.alignment = 'center';
+                            doc.defaultStyle.alignment = 'left';
                             doc.content[1].table.widths =
                                 Array(doc.content[1].table.body[0].length + 1).join('*').split('');
                         },
@@ -329,7 +364,7 @@
                         },
                         className: 'btn btn-success waves-effect waves-light',
                             messageTop: function () {
-                                muncit = $('#grantMuncit').val();
+                                muncit = $('#grantMuncit2').val();
                             return '<h1 style="text-align:center;">HOUSELEADER SUMMARY</h1><h2 style="text-align:center;">'+muncit+'</h2>';
                         }
                 }
@@ -392,9 +427,12 @@
             quietMillis: 100,
             data: function(params){
                 muncit = $('#grantMuncit').val();
+                muncit2 = $('#grantMuncit2').val();
+                // console.log('m1' + muncit,'m2' + muncit2);
                 return{
                     search: params.term,
-                    muncit: muncit
+                    muncit: muncit,
+                    muncit2: muncit2
                 };
             },
             processResults: function(data){

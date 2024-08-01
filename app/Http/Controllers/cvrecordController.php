@@ -17,6 +17,7 @@ class cvrecordController extends Controller
                 ->where([['district','=', $district],['municipality','=', $municipality],['survey_stat','=', 1]])
                 ->orderByRaw ('Barangay, purok_rv,HL asc, position(Name IN HL) desc')
                 ->get();
+
             if($request->ajax()){
                 return DataTables::of($cvrecord)
                 ->addColumn('id','')
@@ -58,10 +59,15 @@ class cvrecordController extends Controller
     }
 
     public function cvrecordbrgy(Request $request){
-        $muncit = $request->muncit;
+
+        if(Auth::user()->role == 'admin' || Auth::user()->role == 'superuser'){
+            $muncit = $request->muncit;
+        }else if(Auth::user()->role == 'encoder' || Auth::user()->role == 'supervisor'){
+            $muncit = $request->muncit2;
+        }
+
         $search = $request->search;
         $databrgy = d1nle2023::where([
-                ['survey_stat','=','1'],
                 ['Municipality','=',$muncit],
                 ['Barangay','like','%'.$search.'%']])
              ->orderBy('Barangay')
