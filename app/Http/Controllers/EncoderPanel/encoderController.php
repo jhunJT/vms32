@@ -286,7 +286,7 @@ class encoderController extends Controller
             'vstatus' => $request->vstat ? $request->vstat : 'None',
             'occupation' => $request->occup,
             'contact_no' => $request->contno,
-            'sqn' => '',
+            'sqn' => '0',
             'user' => $request->user,
             'userlogs' => now(),
         ]);
@@ -325,7 +325,7 @@ class encoderController extends Controller
             'vstatus' => $request->vstat ? $request->vstat : 'None',
             'occupation' => $request->occup,
             'contact_no' => $request->contno,
-            'sqn' => '',
+            'sqn' => '0',
             'user' => $request->user,
             'userlogs' => now(),
         ]);
