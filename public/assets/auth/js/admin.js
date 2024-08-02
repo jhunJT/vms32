@@ -287,7 +287,7 @@ $(document).ready(function() {
     });
 
     $('#dist1').DataTable({
-        "dom": 'Bfrtip',
+        "pageLength": 11,
         "autoWidth" : true,
         "buttons": [
             {
@@ -343,7 +343,60 @@ $(document).ready(function() {
             { data: 'Members', name: 'Members' },
             { data: 'MA', name: 'MA' },
             { data: 'CV', name: 'CV' }
-        ]
+        ],
+        "footerCallback": function (row, data, start, end, display) {
+            var api = this.api();
+
+            // Check if the current page is the last page
+            var lastPage = api.page.info().pages - 1;
+            var currentPage = api.page.info().page;
+
+            if (currentPage === lastPage) {
+                // Total the RV column
+                var totalRV = api.column(1).data()
+                    .reduce(function(a, b) {
+                        return parseInt(a) + parseInt(b);
+                    }, 0);
+
+                // Total the HL column
+                var totalHL = api.column(2).data()
+                    .reduce(function(a, b) {
+                        return parseInt(a) + parseInt(b);
+                    }, 0);
+
+                // Total the Members column
+                var totalMembers = api.column(3).data()
+                    .reduce(function(a, b) {
+                        return parseInt(a) + parseInt(b);
+                    }, 0);
+
+                // Total the MA column
+                var totalMA = api.column(4).data()
+                    .reduce(function(a, b) {
+                        return parseInt(a) + parseInt(b);
+                    }, 0);
+
+                // Total the CV column
+                var totalCV = api.column(5).data()
+                    .reduce(function(a, b) {
+                        return parseInt(a) + parseInt(b);
+                    }, 0);
+
+                // Update footer
+                $(api.column(1).footer()).html(totalRV);
+                $(api.column(2).footer()).html(totalHL);
+                $(api.column(3).footer()).html(totalMembers);
+                $(api.column(4).footer()).html(totalMA);
+                $(api.column(5).footer()).html(totalCV);
+            } else {
+                // Clear the footer if not on the last page
+                $(api.column(1).footer()).html('');
+                $(api.column(2).footer()).html('');
+                $(api.column(3).footer()).html('');
+                $(api.column(4).footer()).html('');
+                $(api.column(5).footer()).html('');
+            }
+        }
     });
 
     $('.viewSummary').on('click', function(){

@@ -108,11 +108,11 @@
                                     @foreach ($dist1 as $data)
                                     <tr>
                                         <td>{{ $data->Municipality }}</td>
-                                        <td class="text-center middle-align">{{ $data->RV }}</td>
-                                        <td class="text-center">{{ $data->HL }}</td>
-                                        <td class="text-center">{{ $data->Members }}</td>
-                                        <td class="text-center">{{ $data->MA }}</td>
-                                        <td class="text-center">{{ $data->CV }}</td>
+                                        <td class="text-center middle-align">{{ number_format($data->RV) }}</td>
+                                        <td class="text-center">{{ number_format($data->HL) }}</td>
+                                        <td class="text-center">{{ number_format($data->Members) }}</td>
+                                        <td class="text-center">{{ number_format($data->MA) }}</td>
+                                        <td class="text-center">{{ number_format($data->CV) }}</td>
                                         <td>
                                             <a href="javascript:void(0);"
                                                 data-muncit = "{{ $data->Municipality }}"
@@ -160,7 +160,6 @@
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
 
@@ -187,8 +186,17 @@
                             <th style="text-align: center">MA</th>
                             <th style="text-align: center">CV</th>
                         </tr>
-                        <tbody></tbody>
                     </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Total:</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
                 </table>
 
             </div>
