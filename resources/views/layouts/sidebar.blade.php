@@ -175,6 +175,43 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ URL('/dashboard') }}"><i class="ri-dashboard-line me-2"></i> Dashboard</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link  arrow-none" href="#" id="topnav-apps" role="button">
+                            <i class="ri-apps-2-line me-2"></i>Archive <div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="topnav-app">
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="javascript:void(0);" id="topnav-layout-hori"
+                                    role="button">
+                                    <span key="t-horizontal">2023 BSKE</span> <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-layout-hori">
+                                    {{-- <a href="javascript:void(0);" class="dropdown-item" key="t-topbar-light" target="_blank">Data</a> --}}
+                                    <a href="{{ URL('/archives/bske2023') }}" class="dropdown-item" key="t-topbar-light" target="_blank">Result</a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="javascript:void(0);" id="topnav-layout-hori"
+                                    role="button">
+                                    <span key="t-horizontal">2022 NLE</span> <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-layout-hori">
+                                    <a href="{{ route('nle2022.statistics') }}" class="dropdown-item" key="t-topbar-light" target="_blank">Data</a>
+                                    <a href="{{ URL('/archives/nle2022') }}" class="dropdown-item" key="t-topbar-light" target="_blank">Result</a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="javascript:void(0);" id="topnav-layout-hori"
+                                    role="button">
+                                    <span key="t-horizontal">2019 NLE</span> <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-layout-hori">
+                                    <a href="javascript:void(0);" class="dropdown-item" key="t-topbar-light" target="_blank">Data</a>
+                                    <a href="javascript:void(0);" class="dropdown-item" key="t-topbar-light" target="_blank">Result</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
                     {{-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button">
                             <i class="ri-stack-line me-2"></i>Records<div class="arrow-down"></div>
