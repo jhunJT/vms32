@@ -53,7 +53,7 @@
                                     <span key="t-horizontal">2023 BSKE</span> <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-layout-hori">
-                                    <a href="javascript:void(0);" class="dropdown-item" key="t-topbar-light" target="_blank">Data</a>
+                                    {{-- <a href="javascript:void(0);" class="dropdown-item" key="t-topbar-light" target="_blank">Data</a> --}}
                                     <a href="{{ URL('/archives/bske2023') }}" class="dropdown-item" key="t-topbar-light" target="_blank">Result</a>
                                 </div>
                             </div>
@@ -171,6 +171,21 @@
                             <a href="{{ route('pbpcrecords.index') }}" class="dropdown-item" target="_blank">PB/PC Records</a>
                         </div>
                     </li>
+                @elseif (Auth::user()->role == 'superuser')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ URL('/dashboard') }}"><i class="ri-dashboard-line me-2"></i> Dashboard</a>
+                    </li>
+                    {{-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button">
+                            <i class="ri-stack-line me-2"></i>Records<div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="topnav-components">
+                            <a href="{{ route('cvrecord.index') }}" class="dropdown-item" target="_blank">CV Records</a>
+                            <a href="{{ route('district.grants') }}" class="dropdown-item" target="_blank">Grants Records</a>
+                            <a href="{{ route('hlrecords.index') }}" class="dropdown-item" target="_blank">HL Records</a>
+                            <a href="{{ route('pbpcrecords.index') }}" class="dropdown-item" target="_blank">PB/PC Records</a>
+                        </div>
+                    </li> --}}
                 @endif
                 </ul>
             </div>

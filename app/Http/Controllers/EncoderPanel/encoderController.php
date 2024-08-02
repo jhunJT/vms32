@@ -183,7 +183,7 @@ class encoderController extends Controller
         ]);
 
         $ifExsist = DB::table('houseleaders')->where([
-            // ["muncit", $request->muncit],
+            ["muncit", $request->muncit],
             ["houseleader", $request->hlnamemodal]
             ])->exists();
         abort_if($ifExsist,400, 'Houseleader already exist');

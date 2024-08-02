@@ -69,14 +69,14 @@ class superuserController extends Controller
             ['man_add','=', 1]])->count();
 
         $dist1 = d1nle2023::select(
-            DB::raw('IFNULL(Municipality, "TOTAL") as Municipality'),
+            DB::raw('Municipality'),
             DB::raw('count(case when man_add <> 1 then id end) as RV'),
             DB::raw('count(distinct(HL), case when survey_stat = 1 then HL end) as HL'),
             DB::raw('(count(case when survey_stat = 1 then survey_stat end) - count(distinct(HL), case when survey_stat = 1 then HL end ))  as Members'),
             DB::raw('count(case when survey_stat = 1 and man_add = 1 then survey_stat end)  as MA'),
             DB::raw('count(case when survey_stat = 1 then Name end) as CV'))
         ->where([['district','=', 'DISTRICT I']])
-        ->groupBy(DB::raw('Municipality with rollup'))
+        ->groupBy(DB::raw('Municipality'))
         ->get();
 
         $dist2 = d1nle2023::select(
@@ -91,5 +91,22 @@ class superuserController extends Controller
         ->get();
 
         return view('dashboard.superuser',compact('users','totalRV','totalCV','totalHL','totalMA','dist1','dist2'));
+    }
+
+    public function getMuncit(Request $request){
+        $muncitval = $request->sendmuncit;
+        $CVSummary = d1nle2023::select(
+            DB::raw('Barangay'),
+            DB::raw('count(*) as RV'),
+            DB::raw('count(distinct(HL), case when survey_stat = 1 then HL end) as HL'),
+            DB::raw('(count(case when survey_stat = 1 then survey_stat end) - count(distinct(HL), case when survey_stat = 1 then HL end ))  as Members'),
+            DB::raw('count(case when survey_stat = 1 and man_add = 1 then survey_stat end)  as MA'),
+            DB::raw('count(case when survey_stat = 1 then Name end) as CV'),)
+        ->where([['municipality','=', $muncitval]])
+        ->groupBy(DB::raw('Barangay'))
+        ->get();
+
+        // Return JSON response
+        return response()->json(['data' => $CVSummary]);
     }
 }

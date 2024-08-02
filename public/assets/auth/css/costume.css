@@ -37,6 +37,26 @@ button.dt-button.active {
     display: none;
 } */
 
+.stat-body {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100%; /* Fill the height of the card */
+}
+
+
+
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px; /* Adjust the space between charts */
+    width: 800px;
+    height:800px;
+}
+
+
 @media print
 {
 html, body { height: auto; }

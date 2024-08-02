@@ -76,6 +76,7 @@ Route::middleware(['auth','role:admin'])->controller(adminController::class)->gr
 
 Route::middleware(['auth','role:superuser'])->controller(superuserController::class)->group(function () {
     route::get('dashboard/superuser', 'index')->name('dashboard.superuser');
+    Route::post('/dashboard/superuser/getmuncit/', 'getmuncit')->name('superuser.getmuncit');
 });
 
 Route::middleware(['auth','role:admin'])->controller(rvrecordsController::class)->group(function(){

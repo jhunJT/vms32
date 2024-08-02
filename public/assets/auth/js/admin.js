@@ -290,34 +290,34 @@ $(document).ready(function() {
         "dom": 'Bfrtip',
         "autoWidth" : true,
         "buttons": [
-                {
-                    text: 'excel',
-                    extend: 'excelHtml5',
-                    title: 'DISTRICT I SUMMARY',
-                    className: 'btn btn-success waves-effect waves-light',
-                    exportOptions: {
-                        columns: ':visible:not(.not-export-col)'
-                    },
-                    messageTop:
-                        'The information in this table is confidential.'
+            {
+                text: 'excel',
+                extend: 'excelHtml5',
+                title: 'DISTRICT I SUMMARY',
+                className: 'btn btn-success waves-effect waves-light',
+                exportOptions: {
+                    columns: ':visible:not(.not-export-col)'
                 },
-                {
-                    text: 'print',
-                    extend: 'print',
-                    title: 'DISTRICT I SUMMARY',
-                    orientation: 'landscape',
-                    pageSize: 'LEGAL',
-                    exportOptions: {
-                        columns: [0,1,2,3,4,5]
-                        // ':visible:not(.not-export-col)'
-                        // columns: ":not(.not-export-column)"
-                    },
-                    className: 'btn btn-success waves-effect waves-light',
-                        messageTop: function () {
-                        return '<h4 style="text-align:center;">DISTRICT I SUMMARY</h4>';
-                    }
+                messageTop:
+                    'The information in this table is confidential.'
+            },
+            {
+                text: 'print',
+                extend: 'print',
+                title: 'DISTRICT I SUMMARY',
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                exportOptions: {
+                    columns: [0,1,2,3,4,5]
+                    // ':visible:not(.not-export-col)'
+                    // columns: ":not(.not-export-column)"
                 },
-            ]
+                className: 'btn btn-success waves-effect waves-light',
+                    messageTop: function () {
+                    return '<h4 style="text-align:center;">DISTRICT I SUMMARY</h4>';
+                }
+            },
+        ]
     });
 
     $('#dist2').DataTable({
