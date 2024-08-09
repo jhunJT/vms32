@@ -25,6 +25,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-2">
+
                                         @if (Auth::user()->role == 'encoder' || Auth::user()->role == 'supervisor' )
                                                 <select id="dist2" class="form-control" name="dist2">
                                                     <option value="{{ Auth::user()->district}}" selected>{{ Auth::user()->district}}</option>
@@ -320,8 +321,8 @@
             "dom": 'Bfrtip',
             "ajax": "{{ route('cvrecord.cvhlsumm') }}",
             "columns":[
-                        { "data": "Barangay"}, //1
-                        { "data": "HL"}, //2
+                        { "data": "Barangay"}, //0
+                        { "data": "HL"}, //1
                         { "data": "Members"},
                         { "data": "totalCV"}],
             "buttons":[
@@ -390,7 +391,7 @@
         $.each($('#selbrgy'), function(i,elem){
             selectBrgy.push($(this).val())
         })
-        cvrec.column(2).sort().search(selectBrgy).draw();
+        cvrec.column(2).search(selectBrgy).draw();
     });
 
     $('#grantMuncit').on('change', function(){
@@ -457,14 +458,22 @@
             delay:250,
             quietMillis: 100,
             data: function(params){
+
                 dist = $('#dist').val();
+                dist2 = $('#dist2').val();
                 muncit = $('#grantMuncit').val();
+                muncit2 = $('#grantMuncit2').val();
+
                 barangay = $('#selbrgy').val();
+
                 return{
                     search: params.term,
                     dist:dist,
+                    dist2:dist2,
                     muncit:muncit,
-                    barangay:barangay
+                    muncit2:muncit2,
+
+                    barangay:barangay,
                 };
             },
             processResults: function(data){
