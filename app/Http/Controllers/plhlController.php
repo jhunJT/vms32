@@ -15,7 +15,7 @@ class plhlController extends Controller
     public function hlindex(Request $request){
         $municipality = Auth::user()->muncit;
 
-        $houseleader = houseleader::where('muncit','=', $municipality)->get();
+        $houseleader = houseleader::select('houseleader','barangay','purok', 'remarks')->where('muncit','=', $municipality)->distinct()->get();
 
         if($request->ajax()){
             return DataTables::of($houseleader)
