@@ -1,7 +1,7 @@
 @extends('layouts.auth')
     @section('content')
     <div class="page-content">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -20,13 +20,13 @@
                                                </div>
                                            </div>
                                        </div>
-                                        {{-- <div class="col-md-3">
+                                        <div class="col-md-3">
                                              <div class="mb-1 ">
                                                 <div class="input-group gap-2">
                                                     <select class="form-control " style="width: 100%;"  tabindex="-1" aria-hidden="true" name="filterMuncit" id="filterMuncit"></select>
                                                 </div>
                                             </div>
-                                        </div> --}}
+                                        </div>
                                        <div class="col-md-3">
                                             <div class="mb-1 ">
                                                 <div class="input-group gap-2">
@@ -51,12 +51,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <h2>National Election 2022 Result</h2>
-                                            {{-- <div class="input-group gap-2">
-                                                <select class="form-control " style="width: 20%;"  tabindex="-1" aria-hidden="true" name="filterMuncit" id="filterMuncit"></select>
-                                                <select class="form-control " style="width: 20%;"  tabindex="-1" aria-hidden="true" name="filterBrgy" id="filterPosition"></select>
-                                                <button class="btn btn-primary" id="btnChart">Submit</button>
-                                            </div> --}}
-                                            <div id="testchart"></div>
+                                            <div id="nle2022Chart"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -76,17 +71,24 @@
         $(document).ready(function() {
             $.ajaxSetup({
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            }); //initalize csrf
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }); //initalize csrf
 
-        $('#filterBrgy').on('change', function(){
-            $('#filterPos, #filterCan').val('').trigger('change');
-        });
+        function destroy(){
+            nle2022Chart.destroy();
+        }
 
-        $('#filterPos').on('change', function(){
-            $('#filterCan').val('').trigger('change');
-        });
+        function destroy(){
+            nle2022Chart.render();
+        }
+
+        //setup
+        const data = {
+
+        };
+
+
 
         $('#filterDist').select2({
             placeholder: "Select District",
@@ -97,158 +99,124 @@
             var district = $('#filterDist').val();
             $('#filterMuncit').val('').trigger('change');
             $('#filterPos').val('').trigger('change');
-            // fetchDataAndUpdateChartDist();
-            $.ajax({
-                url: "{{ route('nle2022.data') }}",
-                type: "post",
-                data: {district:district},
-                success: function (res) {
-                    // console.log(res);
+            fetchDataAndUpdateChartDist();
+            // $.ajax({
+            //     url: "{{ route('nle2022.data') }}",
+            //     type: "post",
+            //     data: {district:district},
+            //     success: function (res) {
 
-                    var getmun = {};
-                    for(var i = 0; i <res.districtData.length; i++){
-                        getmun[i] = res.districtData[i].Municipality;
-                    }
-                    getmun = Object.values(getmun);
-                    // console.log(getmun)
+            //         var getmun = {};
+            //         for(var i = 0; i <res.districtData.length; i++){
+            //             getmun[i] = res.districtData[i].Municipality;
+            //         }
+            //         getmun = Object.values(getmun);
+            //         // console.log(getmun)
 
-                    var getrv = {};
-                    for(var i = 0; i <res.districtData.length; i++){
-                        getrv[i] = res.districtData[i].RV;
-                    }
-                    getrv = Object.values(getrv);
-                    // console.log(getrv)
+            //         var getrv = {};
+            //         for(var i = 0; i <res.districtData.length; i++){
+            //             getrv[i] = res.districtData[i].RV;
+            //         }
+            //         getrv = Object.values(getrv);
+            //         // console.log(getrv)
 
-                    var getcv = {};
-                    for(var i = 0; i <res.districtData.length; i++){
-                        getcv[i] = res.districtData[i].CV;
-                    }
-                    getcv = Object.values(getcv);
-                    // console.log(getcv)
+            //         var getcv = {};
+            //         for(var i = 0; i <res.districtData.length; i++){
+            //             getcv[i] = res.districtData[i].CV;
+            //         }
+            //         getcv = Object.values(getcv);
 
-                    // console.log(Object.values(getbrgy));
-                    // alert(uniqueValuescv);
+            //         options = {
+            //             chart: {
+            //             height: 400,
+            //             type: "bar",
+            //             toolbar: {
+            //                 show: !1
+            //             }
+            //         },
+            //             plotOptions: {
+            //             bar: {
+            //                 horizontal: !1,
+            //                 columnWidth: "50%",
+            //                 endingShape: "rounded"
+            //             }
+            //         },
+            //             dataLabels: {
+            //             enabled: !1
+            //         },
+            //             stroke: {
+            //             show: !0,
+            //             width: 2,
+            //             colors: ["transparent"]
+            //         },
+            //             series: [
+            //         {
+            //             name: '',
+            //             data: []
+            //         },{
+            //             name: "RV",
+            //             data: [],
+            //         },
+            //         {
+            //             name: "CV",
+            //             data: [],
+            //         }, {
+            //             name: '',
+            //             data: []
+            //         }],
+            //         colors: ["#fcb92c", "#1cbb8c", "#0f9cf3", "#f46a6a"],
+            //         xaxis: {
+            //             categories: getmun
+            //         },
+            //         yaxis: {
+            //             title: {
+            //                 text: "Registered Voters"
+            //             }
+            //         },
+            //         grid: {
+            //             borderColor: "#f1f1f1",
+            //             padding: {
+            //                 bottom: 10
+            //             }
+            //         },
+            //         fill: {
+            //             opacity: 1
+            //         },
+            //         tooltip: {
+            //             y: {
+            //                 formatter: function(e) {
+            //                     return  e + " votes"
+            //                 }
+            //             }
+            //         },
+            //             legend: {
+            //                 // position: 'bottom'
+            //                 offsetY: 10
+            //             }
+            //         };
 
-                    options = {
-                        chart: {
-                        height: 400,
-                        type: "bar",
-                        toolbar: {
-                            show: !1
-                        }
-                    },
-                        plotOptions: {
-                        bar: {
-                            horizontal: !1,
-                            columnWidth: "50%",
-                            endingShape: "rounded"
-                        }
-                    },
-                        dataLabels: {
-                        enabled: !1
-                    },
-                        stroke: {
-                        show: !0,
-                        width: 2,
-                        colors: ["transparent"]
-                    },
-                        series: [
-                    {
-                        name: '',
-                        data: []
-                    },{
-                        name: "RV",
-                        data: [],
-                    },
-                    {
-                        name: "CV",
-                        data: [],
-                    }, {
-                        name: '',
-                        data: []
-                    }],
-                    colors: ["#fcb92c", "#1cbb8c", "#0f9cf3", "#f46a6a"],
-                    xaxis: {
-                        categories: getmun
-                    },
-                    yaxis: {
-                        title: {
-                            text: "Registered Voters"
-                        }
-                    },
-                    grid: {
-                        borderColor: "#f1f1f1",
-                        padding: {
-                            bottom: 10
-                        }
-                    },
-                    fill: {
-                        opacity: 1
-                    },
-                    tooltip: {
-                        y: {
-                            formatter: function(e) {
-                                return  e + " votes"
-                            }
-                        }
-                    },
-                        legend: {
-                            // position: 'bottom'
-                            offsetY: 10
-                        }
-                    };
+            //         (chart = new ApexCharts(document.querySelector("#nle2022Chart"), options)).render();
 
-                    (chart = new ApexCharts(document.querySelector("#testchart"), options)).render();
+            //         chart.updateSeries([{
+            //             name: "",
+            //             data: []
+            //         },{
+            //             name: 'RV',
+            //             data:getrv
+            //         },{
+            //             name: 'CV',
+            //             data: getcv
+            //         },{
+            //             name: "",
+            //             data: []
+            //         }]);
 
-                    chart.updateSeries([{
-                        name: "",
-                        data: []
-                    },{
-                        name: 'RV',
-                        data:getrv
-                    },{
-                        name: 'CV',
-                        data: getcv
-                    },{
-                        name: "",
-                        data: []
-                    }]);
-
-                },
-                error: function(xhr, status, error) {
-                    // Handle errors
-                }
-            });
+            //     },
+            //     error: function(xhr, status, error) {
+            //         // Handle errors
+            //     }
+            // });
         });
-
-        // $('#filterBrgy').select2({
-        //     placeholder: "Select Barangay",
-        //     allowClear: true,
-        //     maximumSelectionLength: 1,
-        //     ajax:{
-        //         url:"{{ route('nle2022.fetchbrgyss') }}",
-        //         type:"POST",
-        //         dataType:"json",
-        //         delay:250,
-        //         quietMillis: 100,
-        //         data: function(params){
-        //             muncitss = $('#filterMuncit').val();
-        //             return{
-        //                 search: params.term,
-        //                 muncitss: muncitss
-        //             };
-        //         },
-        //         processResults: function(data){
-        //             return{
-        //                 results: $.map(data.items, function(obj,i) {
-        //                     return {
-        //                     id:obj, text:i
-        //                     };
-        //                 })
-        //             }
-        //         }
-        //     }
-        // });
 
         $('#filterPos').select2({
             placeholder: "Select Position",
@@ -280,35 +248,6 @@
                 }
             }
         });
-
-        // $('#filterCan').select2({
-        //     placeholder: "Select Candidate",
-        //     allowClear: true,
-        //     minimumResultsForSearch: -1,
-        //     ajax:{
-        //         url:"{{ route('nle2022.fetchcandidate') }}",
-        //         type:"POST",
-        //         dataType:"json",
-        //         delay:250,
-        //         quietMillis: 100,
-        //         data: function(params){
-        //             poss = $('#filterPos').val();
-        //             return{
-        //                 search: params.term,
-        //                 poss:poss
-        //             };
-        //         },
-        //         processResults: function(data){
-        //             return{
-        //                 results: $.map(data.items, function(obj,i) {
-        //                     return {
-        //                     id:obj, text:i
-        //                     };
-        //                 })
-        //             }
-        //         }
-        //     }
-        // });
 
          $('#filterMuncit').select2({
             placeholder: "Select Municipality",
@@ -352,18 +291,20 @@
 
         $('#filterMuncit').on('select2:unselect', function(e){
             $('#filterPosition').val(null).trigger('change');
-            fetchDataAndUpdateChartDist();
-            // var chart = new ApexCharts(document.querySelector("#testchart"), options);
+            // fetchDataAndUpdateChartDist();
+            // var chart = new ApexCharts(document.querySelector("#nle2022Chart"), options);
             // chart.destroy();
-
         });
 
         $('#filterPos').on('change',function(){
             distpost();
             var sposition = $('#filterPos').val();
             var cmuncit = $('#filterMuncit').val();
+        });
 
-
+        $('#filterPos').on('select2:unselect', function(e){
+            $('#filterPosition').val(null).trigger('change');
+            distpost();
         });
 
         $('#filterPos').on('select2:select',function(e){
@@ -458,7 +399,7 @@
                             var votes2 = Object.values(votesByMunicipalityC2);
                         }
 
-                        console.log(votes1, votes2,cand1, cand2 );
+                        // console.log(votes1, votes2,cand1, cand2 );
 
 
                         chart.updateSeries([{
@@ -583,7 +524,7 @@
                             }
                         };
 
-                        (chart = new ApexCharts(document.querySelector("#testchart"), options)).render();
+                        (chart = new ApexCharts(document.querySelector("#nle2022Chart"), options)).render();
 
                         chart.updateSeries([{
                             name: "",
@@ -628,14 +569,14 @@
                         getrv[i] = res.districtData[i].RV;
                     }
                     getrv = Object.values(getrv);
-                    console.log(getrv)
+                    // console.log(getrv)
 
                     var getcv = {};
                     for(var i = 0; i <res.districtData.length; i++){
                         getcv[i] = res.districtData[i].CV;
                     }
                     getcv = Object.values(getcv);
-                    console.log(getcv)
+                    // console.log(getcv)
 
                     // console.log(Object.values(getbrgy));
                     // alert(uniqueValuescv);
@@ -709,7 +650,7 @@
                         }
                     };
 
-                    (chart = new ApexCharts(document.querySelector("#testchart"), options)).render();
+                    (chart = new ApexCharts(document.querySelector("#nle2022Chart"), options)).render();
 
                     chart.updateSeries([{
                         name: "",
@@ -834,7 +775,7 @@
                         }
                     };
 
-                    (chart = new ApexCharts(document.querySelector("#testchart"), options)).render();
+                    (chart = new ApexCharts(document.querySelector("#nle2022Chart"), options)).render();
 
                     chart.updateSeries([{
                         name: "",
@@ -857,6 +798,64 @@
             });
         }
 
+        // $('#filterCan').select2({
+        //     placeholder: "Select Candidate",
+        //     allowClear: true,
+        //     minimumResultsForSearch: -1,
+        //     ajax:{
+        //         url:"{{ route('nle2022.fetchcandidate') }}",
+        //         type:"POST",
+        //         dataType:"json",
+        //         delay:250,
+        //         quietMillis: 100,
+        //         data: function(params){
+        //             poss = $('#filterPos').val();
+        //             return{
+        //                 search: params.term,
+        //                 poss:poss
+        //             };
+        //         },
+        //         processResults: function(data){
+        //             return{
+        //                 results: $.map(data.items, function(obj,i) {
+        //                     return {
+        //                     id:obj, text:i
+        //                     };
+        //                 })
+        //             }
+        //         }
+        //     }
+        // });
+
+        // $('#filterBrgy').select2({
+        //     placeholder: "Select Barangay",
+        //     allowClear: true,
+        //     maximumSelectionLength: 1,
+        //     ajax:{
+        //         url:"{{ route('nle2022.fetchbrgyss') }}",
+        //         type:"POST",
+        //         dataType:"json",
+        //         delay:250,
+        //         quietMillis: 100,
+        //         data: function(params){
+        //             muncitss = $('#filterMuncit').val();
+        //             return{
+        //                 search: params.term,
+        //                 muncitss: muncitss
+        //             };
+        //         },
+        //         processResults: function(data){
+        //             return{
+        //                 results: $.map(data.items, function(obj,i) {
+        //                     return {
+        //                     id:obj, text:i
+        //                     };
+        //                 })
+        //             }
+        //         }
+        //     }
+        // });
+
     });
     </script>
 
@@ -864,3 +863,5 @@
     @include('layouts.footer')
 
 @endsection
+
+

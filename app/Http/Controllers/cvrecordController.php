@@ -13,7 +13,7 @@ class cvrecordController extends Controller
 
         $municipality = Auth::user()->muncit;
         $district = Auth::user()->district;
-            $cvrecord = d1nle2023::select('Name','Barangay','HL','purok_rv','sqn','sethl','Municipality')
+            $cvrecord = d1nle2023::select('Name','Barangay','HL','purok_rv','sqn','sethl','Municipality','vstatus')
                 ->where([['district','=', $district],['municipality','=', $municipality],['survey_stat','=', 1]])
                 ->orderByRaw ('Barangay, purok_rv,HL asc, position(Name IN HL) desc')
                 ->get();

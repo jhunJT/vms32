@@ -71,7 +71,7 @@
                         <div class="col-md-12">
                             <div class="mb-3">
                                 <label for="Barangay" class="form-label">Barangay</label>
-                                <select class="form-control"  id="Barangay"  name="Barangay"  data-placeholder="Select an Barangay" tabindex="-1" aria-hidden="true"></select>
+                                <select class="form-control"  id="Barangay"  name="barangay"  data-placeholder="Select an Barangay" tabindex="-1" aria-hidden="true"></select>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -368,8 +368,6 @@
             }
         });
     });
-
-
 
 });
 </script>

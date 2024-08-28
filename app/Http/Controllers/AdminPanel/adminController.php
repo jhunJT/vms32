@@ -103,7 +103,7 @@ class adminController extends Controller
             DB::raw('count(case when survey_stat = 1 and man_add = 1 then survey_stat end)  as MA'),
             DB::raw('count(case when survey_stat = 1 then Name end) as CV'),)
         ->where([['municipality','=', $muncitval]])
-        ->groupBy(DB::raw('Barangay with rollup'))
+        ->groupBy(DB::raw('Barangay'))
         ->get();
 
         // Return JSON response

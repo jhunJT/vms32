@@ -41,10 +41,12 @@ class latlongController extends Controller
     public function getbrgy(Request $request){
         $municipality = Auth::user()->muncit;
         $district = Auth::user()->district;
+        $search = $request->search;
 
         $brgyList = d1nle2023::select('Barangay')->where([
             ['District','=',$district],
-            ['Municipality','=',$municipality]])
+            ['Municipality','=',$municipality],
+            ['Barangay','like','%'.$search.'%']])
             ->pluck('Barangay','Barangay');
         return response()->json(['items'=>$brgyList]);
     }

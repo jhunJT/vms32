@@ -56,7 +56,7 @@ $(document).ready(function(e) {
             {"className": "text-center", "targets": [7,8,9]},
             {"targets": [0], "visible": true, "bSortable": false, "width": '5%'},
             {"targets": [7,8,], "width": '5%'},
-            {"targets": [1,10,11,12,5], "visible": false, "searchable": false },
+            {"targets": [1,10,11,12,5], "visible": false, "searchable": true },
         ],
         "rowCallback": function( row, data, index ) {
 
@@ -217,7 +217,6 @@ $(document).ready(function(e) {
             }
         })
         table.column(10).search(searchTerms, true, false, true).draw();
-        // console.log(searchTerms);
     });
 
     $('.filter-checkboxManual').on('change', function(){
@@ -228,8 +227,6 @@ $(document).ready(function(e) {
             }
         })
         table.column(11).search(searchTerms,true).draw();
-        // console.log(searchTerms);
-
     });
 
     $(document).on('change','#filterMuncit', function(){
@@ -1133,7 +1130,6 @@ $(document).ready(function(e) {
                     showConfirmButton: false,
                     timer: 1500
                 });
-                // toastr.success(response.success);
                 table.ajax.reload();
 
             }else
@@ -1169,16 +1165,16 @@ $(document).ready(function(e) {
                 dataType: 'json',
                 success: function (data) {
                     table.ajax.reload(null, false);
-                },
-                error: function (data) {
-                    console.log('Error:', data);
-                }
-            });
-                Swal.fire(
-                    'Deleted',
-                    'User has been deleted!',
-                    'success'
-                )
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
+                    }
+                });
+                    Swal.fire(
+                        'Deleted',
+                        'User has been deleted!',
+                        'success'
+                    )
             }
         })
 
