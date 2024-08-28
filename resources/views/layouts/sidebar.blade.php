@@ -169,6 +169,7 @@
                             <a href="{{ route('district.grants') }}" class="dropdown-item" target="_blank">Grants Records</a>
                             <a href="{{ route('hlrecords.index') }}" class="dropdown-item" target="_blank">HL Records</a>
                             <a href="{{ route('pbpcrecords.index') }}" class="dropdown-item" target="_blank">PB/PC Records</a>
+                            <a href="{{ route('unsurveyed.index') }}" class="dropdown-item" target="_blank">Unsurveyed</a>
                         </div>
                     </li>
                 @elseif (Auth::user()->role == 'superuser')
