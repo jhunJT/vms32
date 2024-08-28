@@ -375,7 +375,6 @@ $(document).ready(function(e) {
         var getDistrict = $('#getDistrict').val();
         var brgy = $('#filterBrgy').val();
 
-
         if( checkBrgy === null){
             Swal.fire({
                 title: "Message",

@@ -20,6 +20,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\setdrpdwnController;
 use App\Http\Controllers\plhlController;
 use App\Http\Controllers\latlongController;
+use App\Http\Controllers\unsurveyedController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -192,8 +193,6 @@ Route::middleware('auth')->controller(latlongController::class)->group(function 
     Route::post('/coordinates/update', 'coordupdate')->name('coordinates.coordupdate');
 });
 
-
-
 Route::middleware('auth')->controller(bske2023Controller::class)->group(function(){
     route::get('/archives/bske2023', 'index')->name('bske2023.index');
     Route::post('/archives/bske2023/fetch-muncit', 'fetchmuncitss')->name('stamargarita.fetchmuncitss');
@@ -212,6 +211,13 @@ Route::middleware('auth')->controller(nle2022Controller::class)->group(function(
     Route::post('/archives/nle2022/fetch-position', 'fetchpositionss')->name('nle2022.fetchpositionss');
     Route::post('/archives/nle2022/fetch-candidate', 'fetchcandidate')->name('nle2022.fetchcandidate');
     Route::post('/archives/fetch-getposition', 'getposition')->name('archives.getposition');
+});
+
+Route::middleware('auth')->controller(unsurveyedController::class)->group(function(){
+    route::get('/unsurveyed', 'index')->name('unsurveyed.index');
+    route::get('/unsurveyed/cvhlsumm', 'cvhlsumm')->name('unsurveyed.cvhlsumm');
+    route::post('/unsurveyed/muncit', 'cvmuncit')->name('unsurveyed.cvmuncit');
+    route::post('/unsurveyed/brgy', 'cvrecordbrgy')->name('unsurveyed.brgy');
 });
 
 Route::middleware('auth')->controller(rvManagmentController::class)->group(function(){

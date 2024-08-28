@@ -77,16 +77,22 @@ class cvrecordController extends Controller
     }
 
     public function selHL(Request $request){
-        $dist = $request->dist;
-        $muncit = $request->muncit;
+
+        if(Auth::user()->role == 'admin' || Auth::user()->role == 'superuser'){
+            $muncit = $request->muncit;
+            $dist = $request->dist;
+        }else if(Auth::user()->role == 'encoder' || Auth::user()->role == 'supervisor'){
+            $muncit = $request->muncit2;
+            $dist = $request->dist2;
+        }
+
         $barangay = $request->barangay;
         $search = $request->search;
-        // dd($dist,$muncit,  $barangay);
         $dataHL = d1nle2023::where(
             [
-                ['District','=',$dist,],
-                ['Municipality','=',$muncit,],
-                ['Barangay','=',$barangay,],
+                ['District','=',$dist],
+                ['Municipality','=',$muncit],
+                ['Barangay','=',$barangay],
                 ['HL','like','%'.$search.'%']
             ])
              ->orderBy('HL')

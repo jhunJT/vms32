@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0"> Command Vote Records</h4>
+                    <h4 class="mb-sm-0"> Unsurveyed Voters</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Data</a></li>
@@ -57,15 +57,6 @@
                                     <div class="col-3">
                                         <select id="selbrgy" style="width: 100%;" class="form-control" name="selbrgy"></select>
                                     </div>
-                                    <div class="col-3">
-                                        <select id="selHL" style="width: 100%;" class="form-control" name="selHL"></select>
-                                    </div>
-                                    <div class="col-2">
-                                        <select id="sortPurok" style="width: 100%;" class="form-control" name="sortPurok"></select>
-                                    </div>
-                                    {{-- <div class="col-4">
-                                        <select id="fltrDate" class="form-control fltrDate" name="fltrDate[]" multiple="multiple"></select>
-                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -76,10 +67,9 @@
                                 <th>#</th>
                                 <th style="width:2rem;">Name</th>
                                 <th style="width:15rem;">Barangay</th>
-                                <th>Houseleader</th>
+                                <th>Precinct No</th>
                                 <th>Purok</th>
-                                <th>SQN</th>
-                                <th></th>
+                                <th>Remarks</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -102,10 +92,9 @@
                 <table id="hlsumm" class="table table-bordered dt-responsive nowrap grantTbl" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                     <thead>
                     <tr>
+                        <th style="width:15rem;">No</th>
                         <th style="width:15rem;">Barangay</th>
-                        <th>HL</th>
-                        <th>Members</th>
-                        <th>Total CV</th>
+                        <th>Count</th>
                     </tr>
                     </thead>
                 </table>
@@ -151,28 +140,21 @@
             "processing": true,
             "serverSide": true,
             // "dom": 'Bfrtip',
-            "ajax": "{{ route('cvrecord.index') }}",
+            "ajax": "{{ route('unsurveyed.index') }}",
             "columns": [
                 {"data": "id",
                     render: function (data, type, row, meta) {
                         return meta.row + meta.settings._iDisplayStart + 1;}}, //0
-                {"data": "Name",
-                    render: function (data, type, row, meta) {
-                    var prefix = "HL: ";
-                        if(data == row.HL){
-                            return prefix + data;
-                        }
-                            return data;}},
+                {"data": "Name"}, //1
                 {"data": "Barangay"}, //2
-                {"data": "HL"},//3
+                {"data": "Precinct_no"},//3
                 {"data": "purok_rv"},//4
-                {"data": "sqn"},//5
-                {"data": "sethl"},//6
-                {"data": "Municipality"} //7
+                {"data": "SIP"},//5 pinaka remarks
+                {"data": "Municipality"} //6
             ],
             "columnDefs": [
-                {"className": "text-center", "targets": [0,2,3,4,5]},
-                {"targets": [6,7], "visible": false, "searchable": false }
+                {"className": "text-center", "targets": [0,3,4]},
+                {"targets": [6], "visible": false, "searchable": false }
             ],
             "fnRowCallback": function( row, data, index ) {
                 if  (data.Name  === data.HL) {
@@ -232,7 +214,7 @@
                             doc.pageMargins = [40, 40, 40, 40];
                         },
                         exportOptions: {
-                            columns: [0,1,4,5]
+                            columns: [0,1,3,4,5]
                         },
                         className: 'btn btn-success waves-effect waves-light'
                 },
@@ -243,7 +225,7 @@
                     orientation: 'portrait',
                     pageSize: 'LEGAL',
                     exportOptions: {
-                        columns: [0,1,4,5],
+                        columns: [0,1,3,4,5],
                         modifier: {
                             page: 'all' // This ensures all pages are included
                         }
@@ -319,12 +301,14 @@
             "ordering":false,
             "dom": "rtip",
             "dom": 'Bfrtip',
-            "ajax": "{{ route('cvrecord.cvhlsumm') }}",
+            "ajax": "{{ route('unsurveyed.cvhlsumm') }}",
             "columns":[
-                        { "data": "Barangay"}, //0
-                        { "data": "HL"}, //1
-                        { "data": "Members"},
-                        { "data": "totalCV"}],
+                        { "data": "Barangay",
+                            render: function (data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + 1;}
+                        }, //0
+                        { "data": "Barangay"}, //1
+                        { "data": "count"}],//2
             "buttons":[
                 {
                     text: 'copy',
@@ -333,7 +317,7 @@
                         orientation:'portrait',
                         pageSize: 'LEGAL',
                         exportOptions: {
-                            columns: [0,1,2,3]
+                            columns: [0,1,2]
                         },
                         className: 'btn btn-success waves-effect waves-light'
                 },
@@ -361,7 +345,7 @@
                         orientation:'portrait',
                         pageSize: 'LEGAL',
                         exportOptions: {
-                            columns: [0,1,2,3]
+                            columns: [0,1,2]
                         },
                         className: 'btn btn-success waves-effect waves-light',
                             messageTop: function () {
@@ -371,7 +355,7 @@
                 }
             ],
             "columnDefs": [
-                    {"className": "text-center", "targets": [1,2,3]},
+                    {"className": "text-center", "targets": [0,1,2]},
                     {"className": "dt-center", "targets": "_all"},
                 ]
         });
@@ -407,7 +391,6 @@
         minimumResultsForSearch: -1,
         allowClear: true,
     });
-
 
     $('#selHL').on('change', function(e){
         var selectHL = []
