@@ -49,10 +49,6 @@
                                                 <select id="grantMuncit" class="form-control" name="grantMuncit"></select>
                                         @endif
 
-                                        {{-- <select id="grantMuncit" style="width: 100%;" class="form-control" name="grantMuncit" >
-                                            <option value="{{ Auth::User()->muncit }}" selected>{{ Auth::User()->muncit }}</option>
-                                        </select> --}}
-
                                     </div>
                                     <div class="col-3">
                                         <select id="selbrgy" style="width: 100%;" class="form-control" name="selbrgy"></select>
@@ -283,10 +279,11 @@
             delay:250,
             quietMillis: 100,
             data: function(params){
-                muncit = $('#grantMuncit').val();
+                // muncit = $('#grantMuncit').val();
+                dist = $('#dist').val();
                 return{
                     search: params.term,
-                    muncit: muncit
+                    dist: dist
                 };
             },
             processResults: function(data){
@@ -312,7 +309,6 @@
     $('#dist').select2({
         minimumResultsForSearch: -1
     });
-
 
     $('.hlsumm').on('click',function(){
         var hlsummary = $('#hlsumm').dataTable({
@@ -391,7 +387,7 @@
         $.each($('#selbrgy'), function(i,elem){
             selectBrgy.push($(this).val())
         })
-        cvrec.column(2).search(selectBrgy).draw();
+        cvrec.column(2).search('^' + selectBrgy + '$', true, false).draw();
     });
 
     $('#grantMuncit').on('change', function(){

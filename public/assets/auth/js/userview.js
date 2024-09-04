@@ -186,7 +186,7 @@ $(document).ready(function() {
             {District: 'District II', muncit:'SAN SEBASTIAN',code:'002402', coordinates:'',tbname:''},
             {District: 'District II', muncit:'TALALORA',code:'002502', coordinates:'',tbname:''},
             {District: 'District II', muncit:'VILLAREAL',code:'002602', coordinates:'',tbname:''},
-            {District: 'District II', muncit:'ZUMARRAGA',code:'002702', coordinates:'',tbname:''},
+            {District: 'District II', muncit:'ZUMARRAGA',code:'002702', coordinates:'',tbname:''}
         ]
 
         $('#district').change(function() {

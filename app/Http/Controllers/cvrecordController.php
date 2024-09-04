@@ -49,8 +49,10 @@ class cvrecordController extends Controller
     }
 
     public function cvmuncit(Request $request){
+        // dd($request->all());
         $search = $request->search;
         $dataMuncit = d1nle2023::where([
+                ['District','=',$request->dist],
                 ['Municipality','like','%'.$search.'%']])
              ->orderBy('Municipality')
              ->pluck('Municipality','Municipality');

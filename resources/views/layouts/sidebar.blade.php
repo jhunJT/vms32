@@ -42,7 +42,7 @@
                         </div>
                     </li>
 
-                    <li class="nav-item dropdown">
+                    {{-- <li class="nav-item dropdown">
                         <a class="nav-link  arrow-none" href="#" id="topnav-apps" role="button">
                             <i class="ri-apps-2-line me-2"></i>Archive <div class="arrow-down"></div>
                         </a>
@@ -53,7 +53,6 @@
                                     <span key="t-horizontal">2023 BSKE</span> <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-layout-hori">
-                                    {{-- <a href="javascript:void(0);" class="dropdown-item" key="t-topbar-light" target="_blank">Data</a> --}}
                                     <a href="{{ URL('/archives/bske2023') }}" class="dropdown-item" key="t-topbar-light" target="_blank">Result</a>
                                 </div>
                             </div>
@@ -78,7 +77,7 @@
                                 </div>
                             </div>
                         </div>
-                    </li>
+                    </li> --}}
 
                     {{-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button">
@@ -92,7 +91,7 @@
                         </div>
                     </li> --}}
 
-                    <li class="nav-item dropdown">
+                    {{-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="javascript:void(0);" id="topnav-layout" role="button">
                             <i class="ri-layout-3-line me-2"></i><span key="t-layouts">Reports</span> <div class="arrow-down"></div>
                         </a>
@@ -108,7 +107,7 @@
                                 </div>
                             </div>
                         </div>
-                    </li>
+                    </li> --}}
 
                 {{--  Encoder--}}
                 @elseif (Auth::user()->role == 'encoder')

@@ -160,7 +160,7 @@
                 {"data": "barangay"},//2
                 {"data": "purok"},//3
                 // {"data": "count_house_leader"},
-                {"data": "remarks"},//4
+                {"data": "grant_rv", searchable: false},//4
                 {"data": "action", orderable:false, searchable: false, "className": "text-center"} //5
             ],
             "columnDefs": [

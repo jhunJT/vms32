@@ -613,6 +613,12 @@
     var encoderDataUpdate = "{{ route("encoder.storeorupdate") }}";
     var encoderDataVMdelete = "{{ route("encoder.vmdelete","") }}";
     var encoderDataSaveSelda = "{{ route('encoder.save-silda') }}";
+    var authuser = {{ auth::user()->role }};
+
+    // $(document).ready(function({
+    //     console.log(authuser);
+    // }));
+
 </script>
 
 <script src="{{ asset('assets/auth/js/nle.js') }}"></script>

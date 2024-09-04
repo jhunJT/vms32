@@ -66,6 +66,10 @@ $(document).ready(function(e) {
             if(data.man_add != 1){
                 $(row).addClass('hideDel');
             }
+
+            // if(data.man_add != 1){
+            //     $(row).addClass('hideDel');
+            // }
         }
     });
 
@@ -451,12 +455,12 @@ $(document).ready(function(e) {
         $('#saveBtn').html('Update');
         $('#grant_check').prop('checked',false);
         $('#formModal').modal({backdrop: 'static', keyboard: false});
-
+        // console.log(id);
         $.ajax({
             url: encoderDataView + '/' + id,
             method:'GET',
             success: function(response){
-
+                // console.log(id);
                 $('.ajaxForm').modal('show');
                 $('.modal-title').html('Voter Information Update');
 
