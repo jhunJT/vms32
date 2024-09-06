@@ -246,7 +246,9 @@ $(document).ready(function(e) {
         $.each($('#brgySelect'), function(i,elem){
             selectBrgy.push($(this).val())
         })
-        table.order([3,'asc']).column(3).search(selectBrgy).draw();
+        // table.order([3,'asc']).column(3).search(selectBrgy).draw();
+        table.order([3,'asc']).column(3).search('^' + selectBrgy + '$', true, false).draw();
+        // cvrec.column(2).search('^' + selectBrgy + '$', true, false).draw();
     });
 
     $('#filterBrgy').on('change', function(){
@@ -257,7 +259,8 @@ $(document).ready(function(e) {
         $.each($('#filterBrgy'), function(i,elem){
             selectBrgy.push($(this).val())
         })
-        table.column(3).search(selectBrgy).draw();
+        table.order([3,'asc']).column(3).search('^' + selectBrgy + '$', true, false).draw();
+        // table.column(3).search(selectBrgy).draw();
     });
 
     var form = $('#ajaxForm')[0];

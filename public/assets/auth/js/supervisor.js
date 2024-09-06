@@ -18,10 +18,59 @@ $(document).ready(function() {
         .openPopup();
 
     var table5 = $('#tblsumm').DataTable({
-        "dom": 'rtip',
+        // "dom": 'rtip',
+        "dom": 'Bfrtip',
+        // "dom": 'lrt',
+        "bFilter": false,
+        "bInfo": false,
         "pageLength" : 10,
         "ordering": false,
-        "info":     false
+        "info":     false,
+        "buttons":[
+            {
+                text: 'copy',
+                    extend: 'copyHtml5',
+                    title: 'CV SUMMARY PER BARANGAY',
+                    orientation:'portrait',
+                    pageSize: 'LEGAL',
+                    exportOptions: {
+                        columns: [0,1,2,3,4]
+                    },
+                    className: 'btn btn-success waves-effect waves-light'
+            },
+            {
+                text: 'pdf',
+                    extend: 'pdfHtml5',
+                    title: 'CV SUMMARY PER BARANGAY',
+                    orientation:'portrait',
+                    pageSize: 'LEGAL',
+                    customize: function (doc) {
+                        doc.styles.tableHeader.alignment = 'center';
+                        doc.defaultStyle.alignment = 'left';
+                        doc.content[1].table.widths =
+                            Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                    },
+                    exportOptions: {
+                        columns: [0,1,2,3,4]
+                    },
+                    className: 'btn btn-success waves-effect waves-light',
+            },
+            {
+                text: 'print',
+                    extend: 'print',
+                    title: '',
+                    orientation:'portrait',
+                    pageSize: 'LEGAL',
+                    exportOptions: {
+                        columns: [0,1,2,3,4]
+                    },
+                    className: 'btn btn-success waves-effect waves-light',
+                        messageTop: function () {
+                            muncit = $('#hlmun').val();
+                        return '<h1 style="text-align:center;">CV SUMMARY PER BARANGAY</h1><h2 style="text-align:center;">'+muncit+'</h2>';
+                    }
+            }
+        ]
     });
 
     $('#filterMuncit').select2({

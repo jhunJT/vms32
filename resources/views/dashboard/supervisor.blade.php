@@ -1,7 +1,6 @@
 @extends('layouts.auth')
 @section('content')
 
-
 <div class="page-content">
     <div class="container-fluid">
         <!-- start page title -->
@@ -95,16 +94,16 @@
         </div><!-- end row -->
         <div class="row">
             <div class="col-lg-6">
-                <div class="card" style="height: 650px;">
+                <div class="card" style="height: 700px;">
                     <div class="card-body">
-                        <div id="map" style="height: 600px;"></div>
+                        <div id="map" style="height: 650px;"></div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="card" style="height: 650px;">
+                <div class="card" style="height: 700px;">
                     <div class="card-body">
-                        <div  style="height: 600px;">
+                        <div  style="height: 650px;">
                             <table class="table" id="tblsumm">
                                 <thead>
                                     <tr>
@@ -132,47 +131,6 @@
                 </div>
             </div>
         </div>
-
-
-
-        {{-- <div class="row">
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">District I</h4>
-                        <p class="card-title-dsec">Map area of 1st District of Samar</p>
-                        <img class="card-img-top img-fluid" src="assets/auth/images/maps/Ph_fil_congress_samar_1d.png" alt="Card image cap">
-                    </div> <!-- end card-body-->
-                </div> <!-- end card-->
-            </div> <!-- end col-->
-
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">District II</h4>
-                        <p class="card-title-dsec">Map area of 1st District of Samar</p> &nbsp;
-                        <img class="card-img-top img-fluid" src="assets/auth/images/maps/Ph_fil_congress_samar_2d.png" alt="Card image cap">
-                    </div> <!-- end card-body-->
-                </div> <!-- end card-->
-            </div> <!-- end col-->
-        </div> --}}
-        {{-- <div class="row">
-            <div class="col-xl-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h2>National Election 2022 Result</h2>
-                        <div class="input-group gap-2">
-                            <select class="form-control " style="width: 20%;"  tabindex="-1" aria-hidden="true" name="filterMuncit" id="filterMuncit"></select>
-                            <select class="form-control " style="width: 20%;"  tabindex="-1" aria-hidden="true" name="filterBrgy" id="filterPosition"></select>
-                            <button class="btn btn-primary" id="btnChart">Submit</button>
-                        </div>
-                        <div id="testchart"></div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-
-        <!-- end row -->
     </div>
 
 </div>

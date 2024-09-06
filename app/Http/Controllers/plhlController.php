@@ -25,9 +25,9 @@ class plhlController extends Controller
         //     ->distinct()
         //     ->get();
 
-        $houseleader = houseleader::select('houseleaders.houseleader', 'houseleaders.barangay', 'houseleaders.purok', 'd1nle2023s.grant_rv')
-            ->join('vms.d1nle2023s','d1nle2023s.id','=','houseleaders.vid')
-            ->groupBy('houseleaders.houseleader', 'houseleaders.barangay', 'houseleaders.purok','d1nle2023s.grant_rv');
+        $houseleader = houseleader::select('houseleaders.houseleader', 'houseleaders.barangay', 'houseleaders.purok', 'd1nle2023s.grant_rv','houseleaders.id')
+            ->leftJoin ('vms.d1nle2023s','d1nle2023s.id','=','houseleaders.vid')
+            ->groupBy('houseleaders.houseleader', 'houseleaders.barangay', 'houseleaders.purok','d1nle2023s.grant_rv','houseleaders.id');
 
         if($request->ajax()){
             return DataTables::of($houseleader)
@@ -36,10 +36,10 @@ class plhlController extends Controller
                 class="btn btn-danger btn-rounded waves-effect gntdelete" ><i class="mdi mdi-account-remove"></i></a>
 
                 <a href="javascript:void(0)" type="button" data-id="'.$row->id.'" data-name="'.$row->houseleader.'"
-                       class="btn btn-info btn-rounded waves-effect hlmemview" ><i class="mdi mdi-account-group"></i></a>
+                       class="btn btn-info btn-rounded waves-effect hlmemview" ><i class="mdi mdi-account-group"></i></a>';
 
-                <a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
-                    class="btn btn-primary btn-rounded waves-effect hledit" ><i class="mdi mdi-account-edit"></i></a>';
+                // <a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
+                //     class="btn btn-primary btn-rounded waves-effect hledit" ><i class="mdi mdi-account-edit"></i></a>'
             })
             ->addColumn('mid','')
             ->rawColumns(['action'])

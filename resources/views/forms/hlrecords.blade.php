@@ -222,7 +222,6 @@
 
         $('#selbrgy').select2({
             placeholder: "Select Barangay",
-            minimumResultsForSearch: -1,
             allowClear: true,
             ajax:{
                 url:"{{ route('hlrecords.selbrgy') }}",
@@ -264,6 +263,7 @@
         $(document).on('click','.gntdelete', function(e){
             e.preventDefault();
             let id = $(this).attr('data-id');
+
                 Swal.fire({
                     title:"Are you sure?",
                     text:"You won't be able to revert this!",

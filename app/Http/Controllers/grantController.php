@@ -75,44 +75,50 @@ class grantController extends Controller
     }
 
     public function getgrantType(Request $request){
-        if(Auth::user()->role == 'encoder'){
-            $dist = $request->dist;
-            $muncit = $request->muncit2;
-        }else{
-            $dist = $request->dist2;
-            $muncit = $request->muncit1;
-        }
+        // dd($request->all());
 
-        // dd($dist, $muncit);
+        // if(Auth::user()->role == 'encoder'){
+        //     $dist = $request->dist;
+        //     $muncit = $request->muncit2;
+        // }else{
+        //     $dist = $request->dist2;
+        //     $muncit = $request->muncit1;
+        // }
+
+        $dist = $request->dist;
+        $muncit2 = $request->muncit2;
         $barangay = $request->barangay;
         $search = $request->search;
-        $datagrant = grantDetails::where(
-            [
-                ['district','=',$dist,],
-                ['muncit','=',$muncit,],
-                ['barangay','=',$barangay,],
-                ['grant','like','%'.$search.'%']
-            ])
+
+        $datagrant = grantDetails::select('grant')
+            ->where(
+                [
+                    ['district','=',$dist,],
+                    ['muncit','=',$muncit2,],
+                    ['grant','like','%'.$search.'%']
+                ])
              ->orderBy('grant')
              ->pluck('grant','grant');
         return response()->json(['items'=>$datagrant]);
     }
 
     public function fltrdate(Request $request){
+
         $dist = $request->dist;
-        $muncit = $request->muncit;
-        $barangay = $request->barangay;
+        $muncit = Auth::user()->muncit;
+        // $muncit = $request->grantMuncit_1;
+        // $barangay = $request->barangay;
         $typegrant = $request->typegrant;
 
         // $grtdate =[];
         $search = $request->search;
-
+        // dd($dist,$muncit, $typegrant);
             $grtdate = grantDetails::where(
                 // 'date','like', "%$search%")
                 [
                     ['district','=',$dist,],
                     ['muncit','=',$muncit,],
-                    ['barangay','=',$barangay,],
+                    // ['barangay','=',$barangay,],
                     ['grant','=',$typegrant,],
                     ['date','like', "%$search%"]
                 ]
@@ -137,10 +143,9 @@ class grantController extends Controller
     }
 
     public function grantupdate(Request $request){
-
         $grntUpdate = ([
             'name' => $request->gname, //
-            'grant' => $request->ggrant, //
+            'grant' => $request->gntHolder, //
             'date' => $request->gdates, //
             'amount' => $request->gamounts, //
             'remarks' =>$request->gremarkss
@@ -161,9 +166,7 @@ class grantController extends Controller
         $barangay = $request->brgy;
         $search = $request->search;
 
-        // dd( $dist , $muncit, $barangay,$search);
-
-            $grtname = d1nle2023::select('id','Name')
+            $grtname = d1nle2023::select('id','Name','survey_stat')
                 ->where(
                 [
                     ['District','=',$dist,],
@@ -180,41 +183,6 @@ class grantController extends Controller
     }
 
     public function grantfetch(Request $request){
-        // $events = grantsdrp::all();
-        // $data = [];
-
-        // foreach ($events as $event) {
-        //     $id = $event->id;
-        //     $category = $event->grant_type;
-        //     $date =  $event->date_of_grant;
-
-        //     $found = false;
-        //     foreach ($data as &$item) {
-        //         if ($item['text'] === $category) {
-        //             $item['children'][] = [
-        //                 'id' => $event->id,
-        //                 'text' => $date
-        //             ];
-        //             $found = true;
-        //             break;
-        //         }
-        //     }
-        //     if (!$found) {
-        //         $data[] = [
-        //             'id' => $category,
-        //             'text' => $category,
-        //             'children' => [
-        //                 [
-        //                     'id' => $event->id,
-        //                     'text' => $date
-        //                 ]
-        //             ]
-        //         ];
-        //     }
-        // }
-        // return response()->json($data);
-
-
         $search = $request->search;
             $grnttypes = DB::table('grantsdrps')
                 ->where(
@@ -260,7 +228,9 @@ class grantController extends Controller
 
         $ifExsist = DB::table('grant_details')
             ->where([["name", $request->vuname],
-                     ["date", $request->gdate]
+                     ["date", $request->gdate],
+                     ["grant", $request->grnt_type],
+
             ])->exists();
         abort_if($ifExsist,400, 'Grant already exist');
 
@@ -291,10 +261,10 @@ class grantController extends Controller
 
             ->addColumn('action',function($row){
                 return '<a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
-                class="btn btn-danger btn-rounded waves-effect gntlistdelete" ><i class="mdi mdi-account-remove"></i></a>
+                class="btn btn-danger btn-rounded waves-effect gntlistdelete" ><i class="mdi mdi-account-remove"></i></a>';
 
-                <a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
-                    class="btn btn-primary btn-rounded waves-effect gntlistedit" ><i class="mdi mdi-account-edit"></i></a>';
+                // <a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
+                //     class="btn btn-primary btn-rounded waves-effect gntlistedit" ><i class="mdi mdi-account-edit"></i></a>';
             })
             ->rawColumns(['action'])
             ->make(true);

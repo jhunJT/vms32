@@ -31,6 +31,7 @@
                                             <div class="d-flex align-items-end">
                                                 <button type="button" class="btn btn-info waves-effect waves-light btngrnttype">Add Grant Type</button>
                                                 <button type="button" class="btn btn-warning waves-effect waves-light mx-2 btngrntview">View Grant Type</button>
+                                                <a href="" ><i class="mdi mdi-refresh-circle "  style="font-size: 1.8em;"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -259,7 +260,7 @@
                             <label for="gname">Grant</label>
                         </div>
                         <div class="col-sm-10">
-                            {{-- <input type="text" name="ggrant" id="ggrant" class="form-control"> --}}
+                            <input type="hidden" name="gntHolder" id="gntHolder" class="form-control">
                             <select class="form-select" name="ggrant" id="ggrant">
                             </select>
                         </div>
@@ -575,7 +576,11 @@
         $.each($('#hlbrgy'), function(i,elem){
             selectBrgy.push($(this).val())
         })
-        grantTbl.column(3).sort().search(selectBrgy).order([5,'asc']).draw();
+        grantTbl.column(3).sort().search('^' + selectBrgy + '$', true, false).order([5,'asc']).draw();
+    });
+
+    $('.refreshdata').on('click', function(){
+        grantTbl.ajax.reload(null, false);
     });
 
     $('#gggrant').select2({
@@ -612,8 +617,8 @@
     });
 
     $('#ggrant').select2({
-        placeholder: "Choose Grant",
-        dropdownParent: $(".addgrnt"),
+        placeholder: "Choose Grants",
+        dropdownParent: $(".grntedit"),
         allowClear: true,
         ajax:{
             url:"{{ route('grants.fetch') }}",
@@ -648,6 +653,7 @@
         placeholder: "Select Grantee",
         dropdownParent: $(".addgrnt"),
         tags: true,
+        exact: true,
         allowClear: true,
         ajax:{
             url:"{{ route('grants.names') }}",
@@ -660,8 +666,6 @@
                 muncit = $('#grantMuncit').val();
                 muncit1 = $('#grantMuncit_1').val();
                 brgy = $('#hlbrgy').val();
-
-                // console.log(dist,muncit, muncit1,brgy );
                 return{
                     search: params.term,
                     dist: dist,
@@ -671,19 +675,38 @@
                 };
             },
             processResults: function(data){
+                console.log(data);
                 var houseleaders = data.items.map(function(item) {
                     return {
                         id: item.id,
-                        text: item.Name
+                        text: item.Name,
+                        survey_stat: item.survey_stat
                     }
                 });
                 return {
-                    results: houseleaders
+                    results: houseleaders,
                 };
             },
             cache: true
-        }
+        },
+        templateResult: formatState
     });
+
+    function formatState (emp_n) {
+    if (!emp_n.id) {
+            return emp_n.text;
+        }
+        if (emp_n.survey_stat === 1) {
+            var $emp_n = $(
+                '<span><i class="fa fa-user-check" style="color: green;"></i>&nbsp;&nbsp;'+ emp_n.text + '</span>');
+        }else{
+            var $emp_n = $(
+                '<span>'+ emp_n.text +'</span>');
+        };
+
+
+        return $emp_n;
+    };
 
     $('#agname').on('change', function(){
         var selectedData = $(this).select2('data')[0];
@@ -710,10 +733,6 @@
             $('#gremarks').val('');
         }
     });
-
-    // $('#agname').on('select2:unselecting', function(e) {
-    //     $('#vuid').val('');
-    // });
 
     $('#typegrant').on('change', function(e){
         var selectGrant = []
@@ -881,6 +900,7 @@
                 };
             },
             processResults: function(data){
+                console.log(data);
                 return{
                     results: $.map(data.items, function(obj,i) {
                         return {
@@ -909,7 +929,7 @@
                     // "_token":"{{ csrf_token() }}",
                     dist:dist,
                     muncit:muncit,
-                    barangay:barangay,
+                    // barangay:barangay,
                     typegrant:typegrant
                 };
             },
@@ -946,10 +966,12 @@
                 $('#gdates').val(response.date);
                 $('#gamounts').val(response.amount);
                 $('#gremarkss').val(response.remarks);
+                $('#gntHolder').val(response.grant);
 
                 var newOptionsGT = new Option(response.grant, response.grant, true, true);
                 $('#ggrant').append(newOptionsGT).trigger('change');
 
+                // grantChange();
             },
             error: function(xhr, status, error){
                 if(error) {
@@ -959,6 +981,19 @@
             }
         });
     });
+
+    $('#ggrant').on('select2:select', function(){
+        var selectedData = $(this).select2('data')[0];
+        if (selectedData) {
+            $('#gntHolder').val(selectedData.text);
+            $('#gdates').val(selectedData.date);
+            $('#gamounts').val(selectedData.gtype);
+            $('#gremarkss').val(selectedData.gremarks);
+        }
+    });
+
+
+
 
     $('#grntedit').on('click', function(){
         var formData = new FormData(frmGrantEdit);
@@ -1102,7 +1137,7 @@
                     { data: 'date_of_grant' },
                     { data: 'grant_amount' },
                     { data: 'g_remarks' },
-                    { data: 'action'}
+                    { data: 'action', class:"text-center"}
                 ]
             });
         $.ajax({
@@ -1157,7 +1192,6 @@
     // $('.addgrnt').on('hidden.bs.modal', function (e) {
     //     document.getElementById("frmGrantAdd").reset();
     // })
-
 
 
 
