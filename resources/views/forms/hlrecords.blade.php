@@ -263,6 +263,7 @@
         $(document).on('click','.gntdelete', function(e){
             e.preventDefault();
             let id = $(this).attr('data-id');
+            let vid = $(this).attr('data-vid');
 
                 Swal.fire({
                     title:"Are you sure?",
@@ -277,7 +278,7 @@
                         $.ajax({
                             url: '{{ route('hlrecords.hldelete') }}',
                             method: 'post',
-                            data:{id:id},
+                            data:{id:id, vid:vid},
                             success:function(res){
                                 Swal.fire(
                                     'Deleted!',

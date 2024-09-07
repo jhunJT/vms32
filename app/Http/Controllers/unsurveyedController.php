@@ -14,8 +14,7 @@ class unsurveyedController extends Controller
         $district = Auth::user()->district;
             $cvrecord = d1nle2023::select('Name','Barangay','purok_rv','Precinct_no','SIP','Municipality')
                 ->where([['district','=', $district],['municipality','=', $municipality],['survey_stat','=', 0]])
-                ->orderByRaw ('Barangay, purok_rv,HL asc, position(Name IN HL) desc')
-                ->get();
+                ->orderByRaw ('Barangay, purok_rv,HL asc, position(Name IN HL) desc');
 
             if($request->ajax()){
                 return DataTables::of($cvrecord)

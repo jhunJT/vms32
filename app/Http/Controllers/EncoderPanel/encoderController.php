@@ -25,9 +25,9 @@ class encoderController extends Controller
         $tbname = Auth::user()->tbname;
 
         $voters = d1nle2023::select('id','Name','District','Municipality','Barangay',
-            'Province','man_add','Precinct_no','SIP','purok_rv','survey_stat','grant_rv',
-            'HL','PL','remarks','vstatus','sqn','contact_no','dob','user','userlogs','qrcode_id')
-        ->where('Municipality','=',$muncit);
+                'Province','man_add','Precinct_no','SIP','purok_rv','survey_stat','grant_rv',
+                'HL','PL','remarks','vstatus','sqn','contact_no','dob','user','userlogs','qrcode_id')
+            ->where('Municipality','=',$muncit);
 
         if($request->ajax()){
             return DataTables::of($voters)

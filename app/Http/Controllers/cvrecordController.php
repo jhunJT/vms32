@@ -15,8 +15,8 @@ class cvrecordController extends Controller
         $district = Auth::user()->district;
             $cvrecord = d1nle2023::select('Name','Barangay','HL','purok_rv','sqn','sethl','Municipality','vstatus')
                 ->where([['district','=', $district],['municipality','=', $municipality],['survey_stat','=', 1]])
-                ->orderByRaw ('Barangay, purok_rv,HL asc, position(Name IN HL) desc')
-                ->get();
+                ->orderByRaw ('Barangay, purok_rv,HL asc, position(Name IN HL) desc');
+
 
             if($request->ajax()){
                 return DataTables::of($cvrecord)
@@ -104,11 +104,14 @@ class cvrecordController extends Controller
     }
 
     public function sortPurok(Request $request){
-        $dist = $request->dist;
-        $muncit = $request->muncit;
+
+        // $dist = $request->dist;
+        // $muncit = $request->muncit;
+        $dist = Auth::user()->district;
+        $muncit = Auth::user()->muncit;
         $barangay = $request->barangay;
         $search = $request->search;
-        // dd($dist,$muncit,  $barangay);
+
         $sortP = d1nle2023::where(
             [
                 ['District','=',$dist],

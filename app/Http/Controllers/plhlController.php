@@ -25,14 +25,14 @@ class plhlController extends Controller
         //     ->distinct()
         //     ->get();
 
-        $houseleader = houseleader::select('houseleaders.houseleader', 'houseleaders.barangay', 'houseleaders.purok', 'd1nle2023s.grant_rv','houseleaders.id')
+        $houseleader = houseleader::select('houseleaders.houseleader', 'houseleaders.barangay', 'houseleaders.purok', 'd1nle2023s.grant_rv','houseleaders.id','houseleaders.vid')
             ->leftJoin ('vms.d1nle2023s','d1nle2023s.id','=','houseleaders.vid')
-            ->groupBy('houseleaders.houseleader', 'houseleaders.barangay', 'houseleaders.purok','d1nle2023s.grant_rv','houseleaders.id');
+            ->groupBy('houseleaders.houseleader', 'houseleaders.barangay', 'houseleaders.purok','d1nle2023s.grant_rv','houseleaders.id','houseleaders.vid');
 
         if($request->ajax()){
             return DataTables::of($houseleader)
             ->addColumn('action',function($row){
-                return '<a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
+                return '<a href="javascript:void(0)" type="button" data-id="'.$row->id.'" data-vid="'.$row->vid.'"
                 class="btn btn-danger btn-rounded waves-effect gntdelete" ><i class="mdi mdi-account-remove"></i></a>
 
                 <a href="javascript:void(0)" type="button" data-id="'.$row->id.'" data-name="'.$row->houseleader.'"
@@ -80,6 +80,15 @@ class plhlController extends Controller
 
     public function hldelete (Request $request){
         houseleader::destroy($request->id);
+        $unset = ([
+            'survey_stat' => 0,
+            'HL' => '',
+            'hlids' => null,
+            'sethl' => 0,
+            'sqn' => null
+        ]);
+
+        DB::table('d1nle2023s')->where('id', $request->vid)->update($unset);
     }
 
     public function hledit($id){

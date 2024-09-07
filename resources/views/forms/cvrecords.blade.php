@@ -138,7 +138,6 @@
         }
 
     var cvrec = $('#cvrectbl').DataTable({
-            // "order": [[ 1, 'asc' ], [ 4, 'asc' ]],
             "ordering": false,
             "autoWidth" : true,
             "lengthMenu": [[15,25,50, -1], [15,25,50, "All"]],
@@ -146,7 +145,6 @@
             "pageLength": 15,
             "processing": true,
             "serverSide": true,
-            // "dom": 'Bfrtip',
             "ajax": "{{ route('cvrecord.index') }}",
             "columns": [
                 {"data": "id",
@@ -241,7 +239,7 @@
                     exportOptions: {
                         columns: [0,1,4,5],
                         modifier: {
-                            page: 'all' // This ensures all pages are included
+                            page: 'all'
                         }
                     },
                     className: 'btn btn-success waves-effect waves-light',
