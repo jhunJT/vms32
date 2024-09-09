@@ -39,8 +39,8 @@
                                                         <th style="width:15rem;">Name</th>
                                                         <th>Barangay</th>
                                                         <th>Purok</th>
-                                                        {{-- <th>Member Count</th> --}}
                                                         <th>Remarks</th>
+                                                        {{-- <th>Member Count</th> --}}
                                                         <th style="width:2rem;">Action</th>
                                                     </tr>
                                                 </thead>
@@ -147,8 +147,6 @@
             "pageLength": 10,
             "lengthMenu": [[10,25,50, -1], [10,25,50, "All"]],
             "dom": '<"dt-top-container"<l><"dt-center-in-div"B><f>r>t<"dt-filter-spacer"f><ip>',
-            // "searching": false,
-            // "dom": 'Bfrtip',
             "serverSide": true,
             "processing": true,
             "ajax": "{{ route('hlrecords.index') }}",
@@ -156,11 +154,10 @@
                 {"data": "mid",
                     render: function (data, type, row, meta) {
                         return meta.row + meta.settings._iDisplayStart + 1;}}, //0
-                {"data": "houseleader"}, //1
-                {"data": "barangay"},//2
-                {"data": "purok"},//3
-                // {"data": "count_house_leader"},
-                {"data": "grant_rv", searchable: false},//4
+                {"data": "HL"}, //1
+                {"data": "Barangay"},//2
+                {"data": "purok_rv"},//3
+                {"data": "Municipality", searchable: true},//4
                 {"data": "action", orderable:false, searchable: false, "className": "text-center"} //5
             ],
             "columnDefs": [
@@ -251,19 +248,15 @@
             $.each($('#selbrgy'), function(i,elem){
                 selectBrgy.push($(this).val())
             })
-            hlTbl.column(2).search(selectBrgy).draw();
+            hlTbl.column(2).search('^' + selectBrgy + '$', true, true, false).draw();
+
         })
-
-        // $('#csearch').on('keyup change', function(){
-        //     hlTbl.columns([1,2,4]).search(this.value).draw();
-        // });
-
 
 
         $(document).on('click','.gntdelete', function(e){
             e.preventDefault();
             let id = $(this).attr('data-id');
-            let vid = $(this).attr('data-vid');
+            // let vid = $(this).attr('data-vid');
 
                 Swal.fire({
                     title:"Are you sure?",
@@ -278,7 +271,7 @@
                         $.ajax({
                             url: '{{ route('hlrecords.hldelete') }}',
                             method: 'post',
-                            data:{id:id, vid:vid},
+                            // data:{id:id, vid:vid},
                             success:function(res){
                                 Swal.fire(
                                     'Deleted!',

@@ -13,10 +13,9 @@ class cvrecordController extends Controller
 
         $municipality = Auth::user()->muncit;
         $district = Auth::user()->district;
-            $cvrecord = d1nle2023::select('Name','Barangay','HL','purok_rv','sqn','sethl','Municipality','vstatus')
+            $cvrecord = d1nle2023::select('Name','Barangay','HL','purok_rv','sqn','sethl','Municipality','vstatus','is_member')
                 ->where([['district','=', $district],['municipality','=', $municipality],['survey_stat','=', 1]])
                 ->orderByRaw ('Barangay, purok_rv,HL asc, position(Name IN HL) desc');
-
 
             if($request->ajax()){
                 return DataTables::of($cvrecord)

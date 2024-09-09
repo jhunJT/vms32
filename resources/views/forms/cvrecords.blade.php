@@ -73,18 +73,32 @@
                                 <th style="width:2rem;">Name</th>
                                 <th style="width:15rem;">Barangay</th>
                                 <th>Houseleader</th>
+                                <th>is_Leader</th>
+                                <th>is_Member</th>
                                 <th>Purok</th>
                                 <th>SQN</th>
                                 <th></th>
                                 <th></th>
                             </tr>
                             </thead>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
             </div> <!-- end col -->
         </div> <!-- end row -->
     </div>
+</div>
+
+<div id="popup" style="display:none; position:fixed; top:20%; left:30%; padding:20px; background:white; border:1px solid black;">
+    <p id="popupMessage"></p>
+    <button onclick="$('#popup').hide()">Close</button>
 </div>
 
 <div id="hlsumm-modal-lg" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -138,7 +152,8 @@
         }
 
     var cvrec = $('#cvrectbl').DataTable({
-            "ordering": false,
+            "ordering": true,
+            // "order": [[8, 'asc'],[2, 'asc'],[7, 'asc']],
             "autoWidth" : true,
             "lengthMenu": [[15,25,50, -1], [15,25,50, "All"]],
             "dom": '<"dt-top-container"<l><"dt-center-in-div"B><f>r>t<"dt-filter-spacer"f><ip>',
@@ -147,9 +162,9 @@
             "serverSide": true,
             "ajax": "{{ route('cvrecord.index') }}",
             "columns": [
-                {"data": "id",
-                    render: function (data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;}}, //0
+                {"data": "id"},
+                    // render: function (data, type, row, meta) {
+                    //     return meta.row + meta.settings._iDisplayStart + 1;}}, //0
                 {"data": "Name",
                     render: function (data, type, row, meta) {
                     var prefix = "HL: ";
@@ -159,19 +174,29 @@
                             return data;}},
                 {"data": "Barangay"}, //2
                 {"data": "HL"},//3
-                {"data": "purok_rv"},//4
-                {"data": "sqn"},//5
-                {"data": "sethl"},//6
-                {"data": "Municipality"} //7
+                {"data": "sethl"},//8
+                {"data": "is_member"},//4
+                {"data": "purok_rv"},//6
+                {"data": "sqn"},//7
+                {"data": "Municipality"} //8
             ],
             "columnDefs": [
                 {"className": "text-center", "targets": [0,2,3,4,5]},
-                {"targets": [6,7], "visible": false, "searchable": false }
+                {"targets": [8], "visible": false, "searchable": false }
             ],
             "fnRowCallback": function( row, data, index ) {
                 if  (data.Name  === data.HL) {
                     $(row).addClass('green');
                 }
+            },
+            "footerCallback": function (row, data, start, end, display) {
+                // Count the number of rows with Name equal to HL
+                var countHL = data.reduce(function (count, row) {
+                    return count + (row.Name === row.HL ? 1 : 0);
+                }, 0);
+
+                // Update the footer
+                $(this.api().column(1).footer()).html('HL Count: ' + countHL);
             },
             "buttons": [
                 {
@@ -265,6 +290,7 @@
                     }
                 },
             ]
+
         });
 
     $('#grantMuncit').select2({
@@ -378,13 +404,14 @@
     });
 
     $('#selbrgy').on('change', function(e){
+
         $('#selHL').val('').trigger('change');
         $('#sortPurok').val('').trigger('change');
 
-        var selectBrgy = []
-        $.each($('#selbrgy'), function(i,elem){
-            selectBrgy.push($(this).val())
-        })
+        var selectBrgy = $(this).val();
+        // $.each($('#selbrgy'), function(i,elem){
+        //     selectBrgy.push($(this).val())
+        // })
         cvrec.column(2).search('^' + selectBrgy + '$', true, false).draw();
     });
 

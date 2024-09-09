@@ -14,28 +14,33 @@ class plhlController extends Controller
 {
     public function hlindex(Request $request){
         $municipality = Auth::user()->muncit;
+        $dist = Auth::user()->district;
 
-        // select houseleaders.houseleader, houseleaders.barangay, houseleaders.purok, d1nle2023s.grant_rv from vms.houseleaders
-        // join vms.d1nle2023s on d1nle2023s.id = houseleaders.vid
-        // where houseleaders.muncit = 'santa margarita'
-        // group by houseleaders.houseleader, houseleaders.barangay, houseleaders.purok;
+        // $houseleader = houseleader::select(DB::raw('houseleaders.houseleader, houseleaders.barangay as barangay,
+        //                 houseleaders.purok, d1nle2023s.grant_rv, houseleaders.id, houseleaders.vid'))
+        //     ->leftJoin('vms.d1nle2023s', 'd1nle2023s.id', '=', 'houseleaders.vid')
+        //     ->groupBy('houseleaders.houseleader', 'houseleaders.barangay', 'houseleaders.purok', 'd1nle2023s.grant_rv', 'houseleaders.id', 'houseleaders.vid')
+        //     ->where('d1nle2023s.Municipality','=',$municipality);
 
-        // $houseleader = houseleader::select('houseleader','barangay','purok', 'remarks')
-        //     ->where('muncit','=', $municipality)
-        //     ->distinct()
-        //     ->get();
-
-        $houseleader = houseleader::select('houseleaders.houseleader', 'houseleaders.barangay', 'houseleaders.purok', 'd1nle2023s.grant_rv','houseleaders.id','houseleaders.vid')
-            ->leftJoin ('vms.d1nle2023s','d1nle2023s.id','=','houseleaders.vid')
-            ->groupBy('houseleaders.houseleader', 'houseleaders.barangay', 'houseleaders.purok','d1nle2023s.grant_rv','houseleaders.id','houseleaders.vid');
+        $houseleader = DB::table('vms.d1nle2023s')
+            ->select(DB::raw('Distinct HL as HL'), DB::raw('COUNT(*) as c'), 'Barangay', 'purok_rv', 'remarks','id', 'Municipality')
+            ->where('District','=',$dist )
+            ->where('Municipality','=',$municipality )
+            ->where('survey_stat', '1')
+            ->where('sethl', '1')
+            ->groupBy('HL', 'Barangay', 'purok_rv', 'remarks','id','Municipality')
+            ->havingRaw('COUNT(*) >= 1')
+            ->orderBy('Barangay')
+            ->orderBy('purok_rv')
+            ->orderBy('HL');
 
         if($request->ajax()){
             return DataTables::of($houseleader)
             ->addColumn('action',function($row){
-                return '<a href="javascript:void(0)" type="button" data-id="'.$row->id.'" data-vid="'.$row->vid.'"
+                return '<a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
                 class="btn btn-danger btn-rounded waves-effect gntdelete" ><i class="mdi mdi-account-remove"></i></a>
 
-                <a href="javascript:void(0)" type="button" data-id="'.$row->id.'" data-name="'.$row->houseleader.'"
+                <a href="javascript:void(0)" type="button" data-id="'.$row->id.'" data-name="'.$row->HL.'"
                        class="btn btn-info btn-rounded waves-effect hlmemview" ><i class="mdi mdi-account-group"></i></a>';
 
                 // <a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
