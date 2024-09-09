@@ -38,7 +38,7 @@ class plhlController extends Controller
             return DataTables::of($houseleader)
             ->addColumn('action',function($row){
                 return '<a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
-                class="btn btn-danger btn-rounded waves-effect gntdelete" ><i class="mdi mdi-account-remove"></i></a>
+                class="btn btn-danger btn-rounded waves-effect gntdelete disabled"  ><i class="mdi mdi-account-remove"></i></a>
 
                 <a href="javascript:void(0)" type="button" data-id="'.$row->id.'" data-name="'.$row->HL.'"
                        class="btn btn-info btn-rounded waves-effect hlmemview" ><i class="mdi mdi-account-group"></i></a>';

@@ -157,7 +157,7 @@
                 {"data": "HL"}, //1
                 {"data": "Barangay"},//2
                 {"data": "purok_rv"},//3
-                {"data": "Municipality", searchable: true},//4
+                {"data": "remarks", searchable: true},//4
                 {"data": "action", orderable:false, searchable: false, "className": "text-center"} //5
             ],
             "columnDefs": [
@@ -347,8 +347,7 @@
             var membersTable = $('#membersTable').DataTable({
                 "destroy": true,
                 "ordering": false,
-                "processing": true,
-                "serverSide": false,
+                "searching": false, "paging": false, "info": false,
                 "data": [],
                 "columns": [
                     { data: 'Name' },

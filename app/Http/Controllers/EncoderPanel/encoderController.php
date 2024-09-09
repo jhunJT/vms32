@@ -201,14 +201,6 @@ class encoderController extends Controller
 
         DB::table('houseleaders')->Insert($data);
 
-        // $vupdate =([
-        //     'HL' => $request->hlnamemodal, //
-        //     'hlids' => $request->hlId, //
-        //     'survey_stat' => '1',
-        //     'purok_rv' => $request->hlPurok,
-        //     'sqn' => $request->seqNum,
-        //     'sethl' => '1',
-        // ]);
 
         $vupdate = d1nle2023::find($request->hlId);
 
@@ -218,7 +210,7 @@ class encoderController extends Controller
             'survey_stat' => '1',
             'purok_rv' => $request->hlPurok,
             'sqn' => $request->seqNum,
-            'sethl' => '1',
+            'sethl' => '1'
         ]);
 
         if(! $vupdate){
@@ -256,6 +248,7 @@ class encoderController extends Controller
             'Barangay' => $request->barangay, //
             'Province' =>'SAMAR (WESTERN SAMAR)',
             'man_add' =>'1',
+            'is_member' =>'1',
             'Precinct_no' => $request->precno, //
             'SIP' => $request->sip, //
             'purok_rv' => $request->purok, //
@@ -301,6 +294,7 @@ class encoderController extends Controller
             'SIP' => $request->sip ? $request->sip : 'None', //
             'purok_rv' => $request->purok, //
             'survey_stat' => '1', //
+            'is_member' => '1', //
             'grant_rv' => $request->grant, //
             'HL' => $request->hlnameeditmodal, // separate table
             'PL' => $request->pl, // separate table
@@ -319,6 +313,7 @@ class encoderController extends Controller
             'SIP' => $request->sip ? $request->sip : 'None', //
             'purok_rv' => $request->purok, //
             'survey_stat' => '0', //
+            'is_member' => '0', //
             'HL' => '', // separate table
             'PL' => '', // separate table
             'remarks' => $request->remarks, //text area
@@ -440,6 +435,7 @@ class encoderController extends Controller
             'sqn' => $request->seqno , //
             'userid' => $request->userid , //
             'hlids' => $request->hlvid , //
+            'is_member' => '1' //
         ]);
 
         return response()->json(['success' => 'New Silda Saved!']);
