@@ -389,7 +389,7 @@
                                     <div class="mb-3">
                                         <label class="form-label">Status</label>
                                         <select class="form-control" id="vstat2" name="vstat2" required>
-                                            <option selected value="None">None</option>
+                                            <option selected disabled>None</option>
                                             <option value="OBWC">OBWC</option>
                                             <option value="Deceased">Deceased</option>
                                             <option value="Transfer">Transfer</option>

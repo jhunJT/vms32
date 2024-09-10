@@ -24,7 +24,7 @@ class supervisorController extends Controller
                 DB::raw('IFNULL(Barangay, "TOTAL") as Barangay'),
                 DB::raw('count(*) as RV'),
                 DB::raw('count(CASE WHEN survey_stat = 1 AND sethl = 1 AND is_member = 0 THEN sethl END) AS HL'),
-                DB::raw('count(case when survey_stat = 1 then survey_stat end) - count(distinct(HL), case when survey_stat = 1 then HL end ) as Members'),
+                DB::raw('count(case when survey_stat = 1 then survey_stat end) - count(CASE WHEN survey_stat = 1 AND sethl = 1 AND is_member = 0 THEN sethl END ) as Members'),
                 DB::raw('count(case when survey_stat = 1 then Name end) as CV'),
             )
             ->where([['district','=',  $district],['municipality','=',  $muncit]])

@@ -22,7 +22,7 @@ class plhlController extends Controller
         //     ->groupBy('houseleaders.houseleader', 'houseleaders.barangay', 'houseleaders.purok', 'd1nle2023s.grant_rv', 'houseleaders.id', 'houseleaders.vid')
         //     ->where('d1nle2023s.Municipality','=',$municipality);
 
-        $houseleader = DB::table('vms.d1nle2023s')
+        $houseleader = DB::table('d1nle2023s')
             ->select(DB::raw('Distinct HL as HL'), DB::raw('COUNT(*) as c'), 'Barangay', 'purok_rv', 'remarks','id', 'Municipality')
             ->where('District','=',$dist )
             ->where('Municipality','=',$municipality )

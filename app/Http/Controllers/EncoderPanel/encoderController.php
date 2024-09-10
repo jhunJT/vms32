@@ -276,7 +276,7 @@ class encoderController extends Controller
             'SIP' => $request->sip ? $request->sip : 'None', //
             'purok_rv' => $request->purok, //
             'remarks' => $request->remarks, //text area
-            'vstatus' => $request->vstat ? $request->vstat : 'None',
+            'vstatus' => $request->vstat2 ? $request->vstat2 : 'None',
             'occupation' => $request->occup,
             'contact_no' => $request->contno,
             'sqn' => '0',
@@ -299,7 +299,7 @@ class encoderController extends Controller
             'HL' => $request->hlnameeditmodal, // separate table
             'PL' => $request->pl, // separate table
             'remarks' => $request->remarks, //text area
-            'vstatus' => $request->vstat ? $request->vstat : 'None',
+            'vstatus' => $request->vstat2 ? $request->vstat2 : 'None',
             'occupation' => $request->occup,
             'contact_no' => $request->contno,
             'sqn' => $request->sqn,
@@ -351,19 +351,23 @@ class encoderController extends Controller
                     'gdate' => 'required',
                     'amount' => 'required'
                 ]);
+                dd('1');
                 d1nle2023::where('id',$empid)->update($updateVoterDetailsAlso);
                 grantDetails::create($grantCreate);
                 return response()->json(['success' => 'Record/Grant Updated!'], 201);
             }else if($vcheck == true && $gcheck == false){
+                // dd($updateVoterDetailsAlso);
                 $request->validate([
                     'hl' => 'required'
                 ]);
                 d1nle2023::where('id',$empid)->update($updateVoterDetailsAlso);
                 return response()->json(['success' => 'Record Updated!'], 201);
             }else if($vcheck == false && $gcheck == true){
+                dd('3');
                 grantDetails::create($grantCreate);
                 return response()->json(['success' => 'Grant Updated!'], 201);
             }else if($vcheck == false && $gcheck == false){
+                dd('4');
                 d1nle2023::where('id',$empid)->update($updateVoterDetailsAlways);
                 return response()->json(['success' => 'Record/Grant Recorded!'], 201);
             }
