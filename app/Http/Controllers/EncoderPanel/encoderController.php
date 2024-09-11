@@ -351,7 +351,7 @@ class encoderController extends Controller
                     'gdate' => 'required',
                     'amount' => 'required'
                 ]);
-                dd('1');
+                // dd('1');
                 d1nle2023::where('id',$empid)->update($updateVoterDetailsAlso);
                 grantDetails::create($grantCreate);
                 return response()->json(['success' => 'Record/Grant Updated!'], 201);
@@ -363,11 +363,11 @@ class encoderController extends Controller
                 d1nle2023::where('id',$empid)->update($updateVoterDetailsAlso);
                 return response()->json(['success' => 'Record Updated!'], 201);
             }else if($vcheck == false && $gcheck == true){
-                dd('3');
+                // dd('3');
                 grantDetails::create($grantCreate);
                 return response()->json(['success' => 'Grant Updated!'], 201);
             }else if($vcheck == false && $gcheck == false){
-                dd('4');
+                // dd('4');
                 d1nle2023::where('id',$empid)->update($updateVoterDetailsAlways);
                 return response()->json(['success' => 'Record/Grant Recorded!'], 201);
             }
@@ -384,7 +384,6 @@ class encoderController extends Controller
                 'barangay' => 'required',
                 'muncit' => 'required',
                 'hl' => 'required',
-                // 'pl' => 'required',
             ]);
 
             if($gcheck == true){

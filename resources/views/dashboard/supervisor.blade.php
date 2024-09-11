@@ -109,6 +109,7 @@
                                     <tr>
                                         <th>Barangay</th>
                                         <th style="text-align: center">Registered Voter</th>
+                                        <th style="text-align: center">MAV</th>
                                         <th style="text-align: center">Houseleader</th>
                                         <th style="text-align: center">Members</th>
                                         <th style="text-align: center">CV</th>
@@ -118,6 +119,7 @@
                                         <tr>
                                             <td>{{ $data->Barangay}}</td>
                                             <td style="text-align: center">{{ $data->RV}}</td>
+                                            <td style="text-align: center">{{ $data->MA}}</td>
                                             <td style="text-align: center">{{ $data->HL}}</td>
                                             <td style="text-align: center">{{ $data->Members}}</td>
                                             <td style="text-align: center">{{ $data->CV}}</td>
