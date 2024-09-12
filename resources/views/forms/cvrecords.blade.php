@@ -74,7 +74,7 @@
                                 <th style="width:15rem;">Barangay</th>
                                 <th>Houseleader</th>
                                 <th>is_Leader</th>
-                                <th>is_Member</th>
+                                <th>Precinct No</th>
                                 <th>Purok</th>
                                 <th>SQN</th>
                                 <th></th>
@@ -171,18 +171,18 @@
                         if(data == row.HL){
                             return prefix + data;
                         }
-                            return data;}},
+                            return data;}}, //1
                 {"data": "Barangay"}, //2
                 {"data": "HL"},//3
-                {"data": "sethl"},//8
-                {"data": "is_member"},//4
+                {"data": "sethl"},//4
+                {"data": "precinct_no"},//5
                 {"data": "purok_rv"},//6
                 {"data": "sqn"},//7
                 {"data": "Municipality"} //8
             ],
             "columnDefs": [
                 {"className": "text-center", "targets": [0,2,3,4,5]},
-                {"targets": [8], "visible": false, "searchable": false }
+                {"targets": [8,4], "visible": false, "searchable": false }
             ],
             "fnRowCallback": function( row, data, index ) {
                 if  (data.Name  === data.HL) {
