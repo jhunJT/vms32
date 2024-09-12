@@ -191,7 +191,7 @@
                             muncit = "{{ Auth::user()->muncit }}";
                             hlbrgys = $('#selbrgy').val();
                             if(muncit && hlbrgys) {
-                                return '<h1 style="text-align:center;">GRANT SUMMARY</h1>' +'<h2 style="text-align:center;">' + muncit + ' - ' + hlbrgys + '</h2>';
+                                return '<h1 style="text-align:center;">HOUSELEADER SUMMARY</h1>' +'<h2 style="text-align:center;">' + muncit + ' - ' + hlbrgys + '</h2>';
                             }else if(muncit && !hlbrgys ){
                                 return '<h1 style="text-align:center;">HOUSELEADER SUMMARY</h1><h2 style="text-align:center;">'+muncit+'</h2>';
                             }else{

@@ -284,6 +284,18 @@ class encoderController extends Controller
             'userlogs' => now(),
         ]);
 
+        $ishl = '';
+        $ismember = '';
+
+
+        if($request->hlnameeditmodal == $request->name){
+            $ishl = '1';
+            $ismember = '0';
+        }else{
+            $ishl = '0';
+            $ismember = '1';
+        }
+
         $updateVoterDetailsAlso = ([
             'Name' => $request->name, //
             'District' => $request->district, //
@@ -294,7 +306,8 @@ class encoderController extends Controller
             'SIP' => $request->sip ? $request->sip : 'None', //
             'purok_rv' => $request->purok, //
             'survey_stat' => '1', //
-            'is_member' => '1', //
+            'sethl' => $ishl, //
+            'is_member' => $ismember, //
             'grant_rv' => $request->grant, //
             'HL' => $request->hlnameeditmodal, // separate table
             'PL' => $request->pl, // separate table
@@ -321,6 +334,8 @@ class encoderController extends Controller
             'occupation' => $request->occup,
             'contact_no' => $request->contno,
             'sqn' => null,
+            'is_member' => 0,
+            'sethl' => 0,
             'user' => $request->user,
             'userlogs' => now(),
         ]);
@@ -356,6 +371,7 @@ class encoderController extends Controller
                 grantDetails::create($grantCreate);
                 return response()->json(['success' => 'Record/Grant Updated!'], 201);
             }else if($vcheck == true && $gcheck == false){
+                // dd('2');
                 // dd($updateVoterDetailsAlso);
                 $request->validate([
                     'hl' => 'required'

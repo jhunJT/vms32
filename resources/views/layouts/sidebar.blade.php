@@ -212,6 +212,14 @@
                             </div>
                         </div>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button">
+                            <i class="ri-stack-line me-2"></i>Fix Records<div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="topnav-components">
+                            <a href="{{ route('fixhl-member.index') }}" class="dropdown-item" target="_blank">CV Records Fix</a>
+                        </div>
+                    </li>
                     {{-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button">
                             <i class="ri-stack-line me-2"></i>Records<div class="arrow-down"></div>

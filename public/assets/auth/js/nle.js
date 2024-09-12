@@ -480,9 +480,9 @@ $(document).ready(function(e) {
                     $("[id='survey_stat']").prop({'checked':false});
                 }
 
+
                 $('#survey_stat').val(ifchecked);
                 $('#name').val(response.Name);
-                $('#occup').val(response.occupation).change();
                 $('#sip').val(response.SIP).change();
                 $('#district').val(response.District);
                 $('#contno').val(response.contno);
@@ -497,6 +497,7 @@ $(document).ready(function(e) {
                 $('#vid').val(response.id);
                 $('#hlids').val(response.hlids);
                 $('#plids').val(response.plids);
+                $('#hlnameeditmodal').val(response.HL);
                 $('#hlnameeditmodal').val(response.HL);
 
                 $('#purok').val(response.purok_rv);
@@ -520,6 +521,14 @@ $(document).ready(function(e) {
                 }else{
                     $('#precno').attr('readonly', true);
                     $('#name').attr('readonly', true);
+                }
+
+                var occup = '';
+                if(response.occupation == null || response.occupation == '' ){
+                    $('#occup').val('None').change();
+                }else{
+                    $('#occup').val(response.occupation).change();
+
                 }
 
                 $('#grant_check').attr('disabled', false);

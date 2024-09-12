@@ -21,6 +21,7 @@ use App\Http\Controllers\setdrpdwnController;
 use App\Http\Controllers\plhlController;
 use App\Http\Controllers\latlongController;
 use App\Http\Controllers\unsurveyedController;
+use App\Http\Controllers\fixController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -226,6 +227,14 @@ Route::middleware('auth')->controller(rvManagmentController::class)->group(funct
 
 Route::middleware('auth')->controller(setdrpdwnController::class)->group(function(){
     route::get('/setdrpdwn', 'index')->name('setdrpdwn.index');
+});
+
+Route::middleware('auth')->controller(fixController::class)->group(function(){
+    route::get('/fixhl-member', 'index')->name('fixhl-member.index');
+    route::post('/fixhl-member/muncit', 'selmuncit')->name('fixhl-member.selmuncit');
+    route::post('/fixhl-member/brgy', 'selbrgy')->name('fixhl-member.selbrgy');
+    route::post('/fixhl-member/hleader', 'hleader')->name('fixhl-member.hleader');
+    route::post('/fixhl-member/filtpurok', 'filtpurok')->name('fixhl-member.filtpurok');
 });
 
 
