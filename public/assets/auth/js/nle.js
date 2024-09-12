@@ -56,7 +56,8 @@ $(document).ready(function(e) {
             {"className": "text-center", "targets": [7,8,9]},
             {"targets": [0], "visible": true, "bSortable": false, "width": '5%'},
             {"targets": [7,8,], "width": '5%'},
-            {"targets": [1,10,11,12,5], "visible": false, "searchable": true },
+            {"targets": [1,10,11,12], "visible": false, "searchable": true },
+            {"targets": [5], "visible": false, "searchable": false },
         ],
         "rowCallback": function( row, data, index ) {
 
