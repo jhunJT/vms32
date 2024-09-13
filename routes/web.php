@@ -236,6 +236,9 @@ Route::middleware('auth')->controller(fixController::class)->group(function(){
     route::post('/fixhl-member/brgy', 'selbrgy')->name('fixhl-member.selbrgy');
     route::post('/fixhl-member/hleader', 'hleader')->name('fixhl-member.hleader');
     route::post('/fixhl-member/filtpurok', 'filtpurok')->name('fixhl-member.filtpurok');
+
+    route::get('/fixhl', 'fixhlindex')->name('fixhl.fixhlindex');
+    route::post('/fixhl/delete', 'fixhldel')->name('fixhl.fixhldel');
 });
 
 

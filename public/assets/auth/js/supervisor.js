@@ -34,7 +34,7 @@ $(document).ready(function() {
                     orientation:'portrait',
                     pageSize: 'LEGAL',
                     exportOptions: {
-                        columns: [0,1,2,3,4]
+                        columns: [0,1,2,3,4,5]
                     },
                     className: 'btn btn-success waves-effect waves-light'
             },

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use App\Models\d1nle2023;
+use App\Models\houseleader;
 
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class fixController extends Controller
             $cvrecord = d1nle2023::select('Name','Barangay','HL','purok_rv','sqn','sethl','Municipality','vstatus','is_member')
                 ->where([['district','=', $district],['survey_stat','=', 1]])
                 // ->orderby()
-                ->orderByRaw ('Municipality, Barangay, purok_rv, sqn asc, position(Name IN HL) desc');
+                ->orderByRaw ('Municipality, Barangay, purok_rv, Name asc, position(Name IN HL) desc');
 
             if($request->ajax()){
                 return DataTables::of($cvrecord)
@@ -26,10 +27,28 @@ class fixController extends Controller
         return view('errors.fixhl-member');
     }
 
+    public function fixhlindex(Request $request){
+        $hlrecords = houseleader::
+            select('houseleader','muncit','barangay','purok','sqn','id')->orderBy('houseleader','asc');
+
+        if($request->ajax()){
+            return DataTables::of($hlrecords)
+            ->addColumn('action', function($row){
+                return '
+                   <a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
+                   class="btn btn-danger btn-rounded waves-effect recdelete"><i class="mdi mdi-account-remove"></i></a>';
+            })
+            ->addColumn('hid','')
+            ->rawColumns(['action','hid'])
+            ->make(true);
+        }
+        return view('errors.fixhl');
+    }
+
     public function selmuncit(Request $request){
         $search = $request->search;
         $dataMuncit = d1nle2023::where([
-                ['District','=',$request->dist],
+                // ['District','=',$request->dist],
                 ['Municipality','like','%'.$search.'%']])
              ->orderBy('Municipality')
              ->pluck('Municipality','Municipality');
@@ -40,7 +59,7 @@ class fixController extends Controller
     public function selbrgy(Request $request){
         $search = $request->search;
         $dataBrgy = d1nle2023::where([
-                ['District','=',$request->dist],
+                // ['District','=',$request->dist],
                 ['Municipality','=',$request->muncit],
                 ['Barangay','like','%'.$search.'%']
                 ])
@@ -62,6 +81,14 @@ class fixController extends Controller
              ->pluck('HL','HL');
 
         return response()->json(['items'=>$dataHL]);
+    }
+
+    public function fixhldel(Request $request){
+        // dd($request->id);
+        houseleader::destroy($request->id);
+        return response()->json([
+            'success'=>'Record deleted successfully.'
+        ],200);
     }
 
 }

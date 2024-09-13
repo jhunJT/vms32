@@ -121,7 +121,7 @@ class plhlController extends Controller
         $members  =  DB::table('d1nle2023s')
             ->select('houseleaders.houseleader','houseleaders.barangay','d1nle2023s.Name',
                 'd1nle2023s.remarks', 'd1nle2023s.grant_rv')
-            ->join('houseleaders','houseleaders.houseleader','=','d1nle2023s.HL')
+            ->leftJoin('houseleaders','houseleaders.houseleader','=','d1nle2023s.HL')
             ->where('houseleaders.houseleader','=',$request->hlname)
             ->orderByRaw ('position(d1nle2023s.Name IN houseleaders.houseleader) desc')
             ->get();
@@ -129,6 +129,16 @@ class plhlController extends Controller
             if($request->ajax()){
                 return DataTables::of($members)->make(true);
         }
+
+        // $members  =  DB::table('d1nle2023s')
+        //     ->select('HL','Barangay', 'grant_rv','remarks')
+        //     ->where('HL','=',$request->hlname)
+        //     ->orderByRaw ('position(d1nle2023s.Name IN houseleaders.houseleader) desc')
+        //     ->get();
+
+        //     if($request->ajax()){
+        //         return DataTables::of($members)->make(true);
+        // }
     }
 
     public function pbpcedit($id){

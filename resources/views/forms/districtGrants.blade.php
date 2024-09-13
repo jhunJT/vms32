@@ -349,6 +349,19 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-sm-3 col-form-label">
+                            <label for="granttype">Batch No</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <select name="g_batch" id="g_batch" class="form-control" style="text-transform:uppercase">
+                                <option disabled selected>Select Batch</option>
+                                <option value="Batch 1">Batch 1</option>
+                                <option value="Batch 2">Batch 2</option>
+                                <option value="Batch 3">Batch 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3 col-form-label">
                             <label for="ggdate">Date</label>
                         </div>
                         <div class="col-sm-9">
@@ -1011,6 +1024,7 @@
                 $('#gamounts').val(response.amount);
                 $('#gremarkss').val(response.remarks);
                 $('#gntHolder').val(response.grant);
+                $('#g_batch').val(response.g_batch);
 
                 var newOptionsGT = new Option(response.grant, response.grant, true, true);
                 $('#ggrant').append(newOptionsGT).trigger('change');
@@ -1033,6 +1047,7 @@
             $('#gdates').val(selectedData.date);
             $('#gamounts').val(selectedData.gtype);
             $('#gremarkss').val(selectedData.gremarks);
+            $('#g_batch').val(selectedData.gbatch);
         }
     });
 
@@ -1235,6 +1250,13 @@
                 });
             }
         });
+    });
+
+    $('#g_batch').select2({
+        placeholder: "Select Batch",
+        dropdownParent: $(".addgrnttype"),
+        tags:true,
+        allowClear: true,
     });
 
     // $('.addgrnt').on('hidden.bs.modal', function (e) {

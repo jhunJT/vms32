@@ -77,19 +77,19 @@ class grantController extends Controller
 
     public function getgrantType(Request $request){
         $dist = $request->dist;
-        $muncit2 = $request->muncit2;
-        $barangay = $request->barangay;
+        $muncit = Auth::user()->muncit;
+        // $barangay = $request->barangay;
         $search = $request->search;
 
-        $datagrant = grantDetails::select('grant')
+        $datagrant = grantsdrp::select('grant_title')
             ->where(
                 [
-                    ['district','=',$dist,],
-                    ['muncit','=',$muncit2,],
-                    ['grant','like','%'.$search.'%']
+                    ['grant_muncit','=',$muncit],
+                    ['isEnabled','=', 1],
+                    ['grant_title','like','%'.$search.'%']
                 ])
-             ->orderBy('grant')
-             ->pluck('grant','grant');
+             ->orderBy('grant_title')
+             ->pluck('grant_title','grant_title');
         return response()->json(['items'=>$datagrant]);
     }
 

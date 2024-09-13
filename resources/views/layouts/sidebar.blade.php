@@ -217,7 +217,8 @@
                             <i class="ri-stack-line me-2"></i>Fix Records<div class="arrow-down"></div>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-components">
-                            <a href="{{ route('fixhl-member.index') }}" class="dropdown-item" target="_blank">CV Records Fix</a>
+                            {{-- <a href="{{ route('fixhl-member.index') }}" class="dropdown-item" target="_blank">CV Records Fix</a> --}}
+                            <a href="{{ route('fixhl.fixhlindex') }}" class="dropdown-item" target="_blank">HL Records Fix</a>
                         </div>
                     </li>
                     {{-- <li class="nav-item dropdown">

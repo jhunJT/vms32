@@ -390,11 +390,13 @@ class encoderController extends Controller
                 return response()->json(['success' => 'Grant Updated!'], 201);
             }else if(!$vcheck && !$gcheck){
                 // dd(4);
-                if($request->grant !==''){
-                    return response()->json(['message' => 'Checkbox not set!'],400);
-                }
+                // if($request->grant !==''){
+                //     return response()->json(['message' => 'Checkbox not set!'], 400);
+                // }
                 d1nle2023::where('id',$empid)->update($updateVoterDetailsAlways);
                 return response()->json(['success' => 'Record/Grant Recorded!'], 201);
+
+
             }
             // else{
             //     d1nle2023::where('id',$empid)->update($updateVoterDetailsOnly);
