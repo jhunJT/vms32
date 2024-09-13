@@ -12,6 +12,9 @@ class grantsdrp extends Model
         'grant_type',
         'date_of_grant',
         'grant_amount',
-        'g_remarks'
+        'g_remarks',
+        'grant_agency',
+        'grant_title',
+        'grant_muncit'
     ];
 }

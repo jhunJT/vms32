@@ -172,6 +172,8 @@
                     <input class="form-control" type="hidden" name="vuid" id="vuid">
                     <input class="form-control" type="hidden" name="vuname" id="vuname">
                     <input class="form-control" type="hidden" name="grnt_type" id="grnt_type">
+                    <input class="form-control" type="hidden" name="grttype" id="grttype">
+                    <input class="form-control" type="hidden" name="grtagency" id="grtagency">
                     <input class="form-control" type="hidden" name="grnt_dist" id="grnt_dist" value="{{ Auth::user()->district}}">
                     <input class="form-control" type="hidden" name="grnt_muncit" id="grnt_muncit" value="{{ Auth::user()->muncit}}">
                     <input class="form-control" type="hidden" name="grnt_brgy" id="grnt_brgy">
@@ -316,18 +318,40 @@
             <div class="modal-body">
                 <form id="frmGrantType">
                     <div class="row mb-3">
-                        <div class="col-sm-2 col-form-label">
+                        <div class="col-sm-3 col-form-label">
                             <label for="granttype">Grant Type</label>
                         </div>
-                        <div class="col-sm-10">
-                            <input type="text" name="granttype" id="granttype" class="form-control" style="text-transform:uppercase">
+                        <div class="col-sm-9">
+                            <select name="granttype" id="granttype" class="form-control" style="text-transform:uppercase">
+                                <option value="AICS">AICS</option>
+                                <option value="AKAP">AKAP</option>
+                                <option value="CARD">CARD</option>
+                                <option value="HEA">HEA</option>
+                                <option value="SKOLAR">SKOLAR</option>
+                                <option value="TUPAD">TUPAD</option>
+                            </select>
+                            {{-- <input type="text" name="granttype" id="granttype" class="form-control" style="text-transform:uppercase"> --}}
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-sm-2 col-form-label">
+                        <div class="col-sm-3 col-form-label">
+                            <label for="granttype">Agency</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <select name="grant_agency" id="grant_agency" class="form-control" style="text-transform:uppercase">
+                                <option value="PROVINCE">PROVINCE</option>
+                                <option value="LGU">LGU</option>
+                                <option value="DOLE">DOLE</option>
+                            </select>
+
+                            {{-- <input type="text" name="granttype" id="granttype" class="form-control" style="text-transform:uppercase"> --}}
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3 col-form-label">
                             <label for="ggdate">Date</label>
                         </div>
-                        <div class="col-sm-10">
+                        <div class="col-sm-9">
                             {{-- <input type="text" name="gdate" id="gdate" class="form-control"> --}}
                             <div class="input-group" id="datepicker2">
                                 <input type="text" class="form-control" placeholder="dd M, yyyy" data-provide="datepicker"
@@ -337,18 +361,18 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-sm-2 col-form-label">
+                        <div class="col-sm-3 col-form-label">
                             <label for="gname">Amount</label>
                         </div>
-                        <div class="col-sm-10">
-                            <input type="number" name="ggamount" id="ggamount" class="form-control">
+                        <div class="col-sm-9">
+                            <input type="number" name="ggamount" id="ggamount" class="form-control" min="0">
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-sm-2 col-form-label">
+                        <div class="col-sm-3 col-form-label">
                             <label for="gname">Remarks</label>
                         </div>
-                        <div class="col-sm-10">
+                        <div class="col-sm-9">
                             <textarea class="form-control" name="ggremarks" id="ggremarks" cols="10" rows="2"></textarea>
                         </div>
                     </div>
@@ -602,10 +626,12 @@
                 var granttypes = data.items.map(function(item) {
                     return {
                         id: item.id,
-                        text: item.grant_type,
+                        text: item.grant_title,
                         date: item.date_of_grant,
                         gtype: item.grant_amount,
-                        gremarks: item.g_remarks
+                        gremarks: item.g_remarks,
+                        grttype: item.grant_type,
+                        grtagency: item.grant_agency,
                     }
                 });
                 return {
@@ -692,6 +718,20 @@
         templateResult: formatState
     });
 
+   $('#granttype').select2({
+        placeholder: "Select Grant Type",
+        dropdownParent: $(".addgrnttype"),
+        tags:true,
+        allowClear: true
+   });
+
+   $('#grant_agency').select2({
+        placeholder: "Select Agency",
+        dropdownParent: $(".addgrnttype"),
+        tags:true,
+        allowClear: true,
+   });
+
     function formatState (emp_n) {
     if (!emp_n.id) {
             return emp_n.text;
@@ -726,11 +766,15 @@
             $('#gdate').val(selectedData.date);
             $('#gamount').val(selectedData.gtype);
             $('#gremarks').val(selectedData.gremarks);
+            $('#grttype').val(selectedData.grttype);
+            $('#grtagency').val(selectedData.grtagency);
         } else {
             $('#grnt_type').val('');
             $('#gdate').val('');
             $('#gamount').val('');
             $('#gremarks').val('');
+            $('#grttype').val('');
+            $('#grtagency').val('');
         }
     });
 
@@ -1046,6 +1090,8 @@
 
     $('.btngrnttype').click(function(){
         $('.addgrnttype').modal('show');
+        $('#granttype').val('').trigger('change');
+        $('#grant_agency').val('').trigger('change');
     });
 
     var formGT = $('#frmGrantType')[0];
@@ -1130,6 +1176,8 @@
         var grantList = $('#grntviewtbl').DataTable({
                 destroy: true, // Allows reinitializing the DataTable
                 processing: true,
+                searching: false,
+                lengthChange: false,
                 serverSide: false, // Assuming client-side processing
                 data: [], // Initial empty data
                 columns: [

@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\d1nle2023;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Models\grantDetails;
+use App\Models\grantsdrp;
 
 
 
@@ -308,7 +309,7 @@ class encoderController extends Controller
             'survey_stat' => '1', //
             'sethl' => $ishl, //
             'is_member' => $ismember, //
-            'grant_rv' => $request->grant, //
+            'grant_rv' => $request->ggrant, //
             'HL' => $request->hlnameeditmodal, // separate table
             'PL' => $request->pl, // separate table
             'remarks' => $request->remarks, //text area
@@ -345,13 +346,18 @@ class encoderController extends Controller
             'district' => $request->district, //
             'muncit' => $request->muncit, //
             'barangay' => $request->barangay, //
-            'grant' => $request->grant, //
+            'grant' => $request->ggrant, //
             'date' => $request->gdate, // separate table
             'amount' => $request->amount, // separate table
             'remarks' => $request->gremarks, // separate table
+            'grant_type' => $request->grnt_type, // separate table
+            'grant_agency' => $request->grnt_agency, // separate table
+            'grant_title' => $request->grnt_muncit, // separate table
             'vid' =>$request->vid,
             'uid' =>$request->userid,
         ]);
+
+        // dd($grantCreate);
 
         // 1 1 AB
         // 1 0 A
@@ -382,8 +388,11 @@ class encoderController extends Controller
                 // dd('3');
                 grantDetails::create($grantCreate);
                 return response()->json(['success' => 'Grant Updated!'], 201);
-            }else if($vcheck == false && $gcheck == false){
-                // dd('4');
+            }else if(!$vcheck && !$gcheck){
+                // dd(4);
+                if($request->grant !==''){
+                    return response()->json(['message' => 'Checkbox not set!'],400);
+                }
                 d1nle2023::where('id',$empid)->update($updateVoterDetailsAlways);
                 return response()->json(['success' => 'Record/Grant Recorded!'], 201);
             }
@@ -520,6 +529,17 @@ class encoderController extends Controller
 
         // Return QR code image as response
         return response($qrCode)->header('Content-Type', 'image/png');
+    }
+
+    public function selGrant(Request $request){
+        $muncit = Auth::user()->muncit;
+        $search = $request->search;
+        $datangrants = grantsdrp::where([
+            ['grant_muncit','=', $muncit],
+            ['grant_title','like','%'.$search.'%']])
+            ->orderBy('grant_title','asc')
+            ->get();
+        return response()->json(['items'=>$datangrants]);
     }
 
 }

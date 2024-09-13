@@ -452,12 +452,12 @@
                                         <input class="form-check-input" type="checkbox" id="grant_check" name="grant_check">
                                         <label for="grant" class="form-label"> Grant</label>
                                         <select class="form-control" id="grant" name="grant">
-                                            <option selected disabled value="">Choose...</option>
+                                            {{-- <option selected disabled value="">Choose...</option>
                                             <option value="AICS">AICS</option>
                                             <option value="Cash">Cash</option>
                                             <option value="Scholarship">Scholarship</option>
                                             <option value="TUPAD">TUPAD</option>
-                                            <option value="MSME GRANT">MSME Grant</option>
+                                            <option value="MSME GRANT">MSME Grant</option> --}}
                                         </select>
                                     </div>
                                 </div>
@@ -491,6 +491,10 @@
                                             <x-input-error :messages="$errors->get('remarks')" class="mt-2" />
                                         </div>
                                     </div>
+                                    <input type="hidden" name="ggrant" id="ggrant">
+                                    <input type="hidden" name="grnt_type" id="grnt_type">
+                                    <input type="hidden" name="grnt_agency" id="grnt_agency">
+                                    <input type="hidden" name="grnt_muncit" id="grnt_muncit">
                                 </div>
                             </div><hr>
 
@@ -613,6 +617,7 @@
     var encoderDataUpdate = "{{ route("encoder.storeorupdate") }}";
     var encoderDataVMdelete = "{{ route("encoder.vmdelete","") }}";
     var encoderDataSaveSelda = "{{ route('encoder.save-silda') }}";
+    var encoderSelectGrant = "{{ route('encoder.selGrant') }}";
     var authuser = {{ auth::user()->role }};
 
     // $(document).ready(function({

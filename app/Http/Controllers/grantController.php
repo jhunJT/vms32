@@ -42,11 +42,12 @@ class grantController extends Controller
             DB::raw('sum(case when grant_details.grant = "TUPAD" then 1 else 0 end) as TUPAD'),
             DB::raw('sum(case when grant_details.grant = "MSME GRANT" then 1 else 0 end) as MSME'))
             ->where('muncit','=', $municipality)
-            ->groupBy('barangay')
-            ->get();
+            ->groupBy('barangay');
         if($request->ajax()){
             return DataTables::of($grantssumm )->make(true);
         }
+        // $colsth = grantDetails::select('grant')->where('muncit','=', $municipality)->distinct()->get();
+        //     return view('district.grants',compact('colsth'));
     }
 
     public function getHLmuncit(Request $request){
@@ -75,16 +76,6 @@ class grantController extends Controller
     }
 
     public function getgrantType(Request $request){
-        // dd($request->all());
-
-        // if(Auth::user()->role == 'encoder'){
-        //     $dist = $request->dist;
-        //     $muncit = $request->muncit2;
-        // }else{
-        //     $dist = $request->dist2;
-        //     $muncit = $request->muncit1;
-        // }
-
         $dist = $request->dist;
         $muncit2 = $request->muncit2;
         $barangay = $request->barangay;
@@ -183,17 +174,19 @@ class grantController extends Controller
     }
 
     public function grantfetch(Request $request){
+        $municipality = Auth::user()->muncit;
         $search = $request->search;
             $grnttypes = DB::table('grantsdrps')
                 ->where(
-                [['grant_type','like', "%$search%"]])
+                [   ['grant_muncit','=', $municipality],
+                    ['grant_title','like', "%$search%"]])
             ->latest()
             ->get();
         return response()->json(['items'=>$grnttypes]);
     }
 
     public function granttypeadd(Request $request){
-
+        $municipality = Auth::user()->muncit;
         $request->validate([
             'granttype' => 'required',
         ]);
@@ -205,12 +198,16 @@ class grantController extends Controller
         abort_if($ifExsist,400, 'Grant already exist');
 
         $date = new DateTime($request->ggdate);
-
+        $grnt_title = $request->granttype . " (" . $request->grant_agency . ")";
         grantsdrp::create([
             'grant_type' => strtoupper($request->granttype),
             'date_of_grant' => date_format($date ,"d M, Y" ) ,
             'grant_amount' =>  $request->ggamount,
             'g_remarks' => $request->ggremarks,
+            'grant_agency' =>$request->grant_agency,
+            'grant_title' => $grnt_title,
+            'grant_muncit' =>$municipality,
+
         ]);
 
         return response()->json([
@@ -242,6 +239,8 @@ class grantController extends Controller
             'grant' => $request->grnt_type,
             'date' => $request->gdate,
             'amount' => $request->gamount,
+            'grant_agency' => $request->grtagency,
+            'grant_type' => $request->grttype,
             'remarks' => $request->gremarks,
             'vid' => $request->vuid,
             'uid' => $uid
@@ -254,8 +253,8 @@ class grantController extends Controller
     }
 
     public function viewrecords(Request $request){
-        $grantlist = grantsdrp::all();
-
+        $municipality = Auth::user()->muncit;
+        $grantlist = grantsdrp::where('grant_muncit',$municipality);
         if($request->ajax()){
             return DataTables::of($grantlist)
 

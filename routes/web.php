@@ -142,6 +142,7 @@ Route::middleware('auth')->controller(encoderController::class)->group(function 
     Route::get('/dashboard/encoder/profile/view/{id}', 'viewInfo')->name('encoder.view-info');
     Route::get('/dashboard/encoder/profile/view-details/', 'viewDetails')->name('encoder.view-details');
     Route::get('/generate-qrcode/{id}','generateQRCode')->name('generate.qrcode');
+    Route::post('/dashboard/encoder/select-grant','selGrant')->name('encoder.selGrant');
 });
 
 Route::middleware('auth')->controller(userManagementController::class)->group(function () {

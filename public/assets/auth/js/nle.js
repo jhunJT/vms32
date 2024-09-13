@@ -481,7 +481,6 @@ $(document).ready(function(e) {
                     $("[id='survey_stat']").prop({'checked':false});
                 }
 
-
                 $('#survey_stat').val(ifchecked);
                 $('#name').val(response.Name);
                 $('#sip').val(response.SIP).change();
@@ -531,17 +530,18 @@ $(document).ready(function(e) {
                     $('#occup').val(response.occupation).change();
 
                 }
-
+                $('#grant').val('').trigger('change');
                 $('#grant_check').attr('disabled', false);
                 $('#grant').attr('disabled', false);
                 $('#gdate').attr('readonly', false);
                 $('#amount').attr('readonly', false);
                 $('#gremarks').attr('readonly', false);
+
             },
             error: function(xhr, status, error){
                 //console.log(error);
                 if(error) {
-                    var err = eval("(" + xhr.responseText + ")");
+                    var err = eval("(" + xhr.response + ")");
                     toastr.error(err.message);
                 }
             }
@@ -1199,6 +1199,69 @@ $(document).ready(function(e) {
         })
 
     });
+
+    $('#grant').select2({
+        placeholder: "Select Grant",
+        dropdownParent: $("#formModal"),
+        allowClear: true,
+        maximumSelectionLength: 1,
+        ajax:{
+            url:encoderSelectGrant,
+            type:"POST",
+            dataType:"json",
+            delay:250,
+            quietMillis: 100,
+            data: function(params){
+                return{
+                    search: params.term
+                };
+            },
+            processResults: function (data) {
+
+                var houseleaders = data.items.map(function(item) {
+                    return {
+                        id: item.id,
+                        text: item.grant_title,
+                        gdate: item.date_of_grant,
+                        gtype: item.grant_type,
+                        gagency: item.grant_agency,
+                        gamount: item.grant_amount,
+                        gremarks: item.g_remarks,
+                        gmuncit: item.grant_muncit
+                    }
+                });
+
+                return {
+                    results: houseleaders
+                };
+            },
+            cache: true
+        }
+    });
+
+    $('#grant').on('change', function(){
+        var selectedData = $(this).select2('data')[0];
+        if (selectedData) {
+            $('#ggrant').val(selectedData.text);
+            $('#gdate').val(selectedData.gdate);
+            $('#amount').val(selectedData.gamount);
+            $('#gremarks').val(selectedData.gremarks);
+            $('#grnt_type').val(selectedData.gtype);
+            $('#grnt_agency').val(selectedData.gagency);
+            $('#grnt_muncit').val(selectedData.gmuncit)
+        } else {
+            $('#ggrant').val('');
+            $('#grnt_type').val('');
+            $('#gdate').val('');
+            $('#gamount').val('');
+            $('#gremarks').val('');
+            $('#grttype').val('');
+            $('#grnt_agency').val('');
+            $('#grnt_muncit').val('');
+        }
+
+    });
+
 
     // sq muncit code - brgy code - numbering er calbayog: 0201-1
     // sq muncit code - brgy code - numbering er calbayog: 0201-1
