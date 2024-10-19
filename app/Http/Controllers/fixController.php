@@ -14,7 +14,7 @@ class fixController extends Controller
         $municipality = Auth::user()->muncit;
         $district = Auth::user()->district;
             $cvrecord = d1nle2023::select('Name','Barangay','HL','purok_rv','sqn','sethl','Municipality','vstatus','is_member')
-                ->where([['district','=', $district],['survey_stat','=', 1]])
+                ->where([['district','=', $district],['survey_stat','=', 1],['Municipality',$municipality]])
                 // ->orderby()
                 ->orderByRaw ('Municipality, Barangay, purok_rv, Name asc, position(Name IN HL) desc');
 
@@ -28,8 +28,9 @@ class fixController extends Controller
     }
 
     public function fixhlindex(Request $request){
-        $hlrecords = houseleader::
-            select('houseleader','muncit','barangay','purok','sqn','id')->orderBy('houseleader','asc');
+        $municipality = '';
+        $hlrecords = houseleader::select('houseleader','muncit','barangay','purok','sqn','id')
+                ->where('muncit','=',$municipality)->orderBy('houseleader','asc');
 
         if($request->ajax()){
             return DataTables::of($hlrecords)

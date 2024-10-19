@@ -110,6 +110,216 @@
     </div>
 </div>
 
+<div id="vtransfer-modal-lg" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Transfer Voter</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body">
+
+                        <form  id="ajaxForm" name="ajaxForm" class="needs-validation" novalidate>
+                            <div id="error"></div>
+                            <input type="hidden" value="{{ Auth::user()->username }}" name="user">
+                            <input type="hidden" value="{{ Auth::user()->id }}" id="userid" name="userid">
+                            <input type="hidden" value="{{ Auth::user()->muncit }}" id="getMuncit">
+                            <input type="hidden" value="{{ Auth::user()->district }}" id="getDistrict">
+                            <input type="hidden" name="vid" id="vid">
+                            <input type="hidden" name="plids" id="plids">
+                            <input type="hidden" name="hlnameeditmodal" id="hlnameeditmodal">
+
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Full Name</label>
+                                        <input type="text" class="form-control text-uppercase" id="name"
+                                            placeholder="Dalisay, Cardo Dela Cruz" name="name"  required>
+                                        <span id="nameError" class="text-danger error-message"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label for="occup" class="form-label">Occupation</label>
+                                        <select class="form-select" id="occup" name="occup" required>
+                                            <option selected value="None">None</option>
+                                            <option value="Aquaculture">Aquaculture</option>
+                                            <option value="Farming">Farming</option>
+                                            <option value="Skilled">Skilled</option>
+                                            <option value="Professional">Professional</option>
+                                            <option value="MSME">MSME</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label for="contno" class="form-label">Contact No</label>
+                                        <input type="text" class="form-control" id="contno"
+                                            placeholder="Contact No" name="contno" required>
+                                        <div class="valid-feedback">
+                                            <x-input-error :messages="$errors->get('contno')" class="mt-2" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label for="sip" class="form-label">SIP</label>
+                                        <select class="form-select" id="sip" name="sip" required>
+                                            <option selected disabled value="">Choose...</option>
+                                            <option value="None">None</option>
+                                            <option value="Senior Citizen">Senior Citizen</option>
+                                            <option value="Illiterate">Illiterate</option>
+                                            <option value="PWD">PWD</option>
+                                            <option value="18-30(SK)">18-30(SK)</option>
+                                            <option value="SK/Illitirate">SK/Illitirate</option>
+                                            <option value="SK/PWD">SK/PWD</option>
+                                            <option value="SK/Illitirate/PWD">SK/Illitirate/PWD</option>
+                                            <option value="Illitirate/Senior">Illitirate/Senior</option>
+                                            <option value="Illiterate/PWD">Illiterate/PWD</option>
+                                            <option value="PWD/Senior">PWD/Senior</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label class="form-label">Status</label>
+                                        <select class="form-control" id="vstat2" name="vstat2" required>
+                                            <option selected disabled>None</option>
+                                            <option value="OBWC">OBWC</option>
+                                            <option value="Deceased">Deceased</option>
+                                            <option value="Transfer">Transfer</option>
+                                            <option value="IB">IB</option>
+                                            <option value="Out of Town">Out of Town</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label for="district" class="form-label" readonly>District</label>
+                                        <input type="text" id="district" name="district" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="muncit" class="form-label">Municipality/City</label>
+                                        {{-- <select class="form-control" id="muncit" tabindex="-1" aria-hidden="true" name="muncit"></select> --}}
+                                        <input type="text" class="form-control" id="muncit" name="muncit">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label for="barangay" class="form-label">Barangay</label>
+                                        <input type="text" class="form-control" id="barangay"
+                                            placeholder="Barangay" name="barangay" required>
+                                            <div id="brgyList2"></div>
+                                        <div class="valid-feedback">
+                                            <x-input-error :messages="$errors->get('barangay')" class="mt-2" />
+                                        </div>
+                                        <span id="brgyError" class="text-danger error-message"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label for="precno" class="form-label">Precinct No</label>
+                                        <input type="text" class="form-control" id="precno"
+                                            placeholder="Precinct No" name="precno" required>
+                                        <div class="valid-feedback">
+                                            <x-input-error :messages="$errors->get('precno')" class="mt-2" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="mb-3">
+                                        <label for="purok" class="form-label">Purok</label>
+                                        <input type="text" class="form-control" id="purok"
+                                            placeholder="Purok" name="purok">
+                                        <div class="valid-feedback">
+                                            <x-input-error :messages="$errors->get('purok')" class="mt-2" />
+                                        </div>
+                                    </div>
+                                </div><hr>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <input class="form-check-input" type="checkbox" id="grant_check" name="grant_check">
+                                        <label for="grant" class="form-label"> Grant</label>
+                                        <select class="form-control" id="grant" name="grant">
+                                            {{-- <option selected disabled value="">Choose...</option>
+                                            <option value="AICS">AICS</option>
+                                            <option value="Cash">Cash</option>
+                                            <option value="Scholarship">Scholarship</option>
+                                            <option value="TUPAD">TUPAD</option>
+                                            <option value="MSME GRANT">MSME Grant</option> --}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Date</label>
+                                        <div class="input-group" id="datepicker2">
+                                            <input type="text" class="form-control" placeholder="dd M, yyyy" name="gdate" id="gdate"
+                                                data-date-format="dd M, yyyy" data-date-container='#datepicker2' data-provide="datepicker"
+                                                data-date-autoclose="true">
+                                            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="mb-3">
+                                        <label for="amount" class="form-label">Amount</label>
+                                        <input type="text" class="form-control" id="amount"
+                                            placeholder="Amount" name="amount" required>
+                                        <div class="valid-feedback">
+                                            <x-input-error :messages="$errors->get('amount')" class="mt-2" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="remarks" class="form-label">Grant Remarks</label>
+                                        <input type="text" class="form-control" id="gremarks"
+                                            placeholder="Remarks" name="gremarks" required>
+                                        <div class="valid-feedback">
+                                            <x-input-error :messages="$errors->get('remarks')" class="mt-2" />
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="ggrant" id="ggrant">
+                                    <input type="hidden" name="grnt_type" id="grnt_type">
+                                    <input type="hidden" name="grnt_agency" id="grnt_agency">
+                                    <input type="hidden" name="grnt_muncit" id="grnt_muncit">
+                                </div>
+                            </div><hr>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Voter Remarks</label>
+                                    <div>
+                                        <textarea required class="form-control" rows="2" name="remarks" id="remarks"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            </div><!-- end modal body-->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="saveBtn"></button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
 <div id="cvsumm-modal-lg" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">

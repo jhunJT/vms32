@@ -31,6 +31,9 @@
                                     <div class="col-3">
                                         <select id="selbrgysu" style="width: 100%;" class="form-control" name="selbrgysu"></select>
                                     </div>
+                                    <div class="col-3">
+                                        <button id="loadData" class="btn btn-success" name="loadData"><span><i class="mdi mdi-checkbox-marked-circle-outline"></i></span> GO</button>
+                                    </div>
                                     {{-- <div class="col-3">
                                         <select id="selHL" style="width: 100%;" class="form-control" name="selHL"></select>
                                     </div> --}}
@@ -120,31 +123,6 @@
                 "hideMethod": "fadeOut"
         }
 
-    var cvrec = $('#fixhl_tb').DataTable({
-        "ordering": false,
-        "autoWidth" : true,
-        "lengthMenu": [[15,25,50, -1], [15,25,50, "All"]],
-        "pageLength": 15,
-        "processing": true,
-        "serverSide": true,
-        "ajax": "{{ route('fixhl.fixhlindex') }}",
-        "columns": [
-            {"data": "cid", "searchable":false,
-                render: function (data, type, row, meta) {
-                    return meta.row + meta.settings._iDisplayStart + 1;}}, //0
-            {"data": "houseleader"}, //1
-            {"data": "purok"},//2
-            {"data": "sqn"},//3
-            {"data": "action", "searchable":false, "orderable":false },//4
-            {"data": "barangay"},//5
-            {"data": "muncit"}, //6
-        ],
-        "columnDefs": [
-            {"className": "text-center", "targets": [0,2,3,4]},
-            {"targets": [5,6], "visible": false, "searchable": true }
-        ]
-    });
-
     $('#selDistsu').select2({
         minimumResultsForSearch: -1
     });
@@ -165,7 +143,7 @@
             delay:250,
             quietMillis: 100,
             data: function(params){
-                dist = $('#selDistsu').val();
+                dist = $('#selDistsu').val(); selectMuncitsu
                 return{
                     search: params.term,
                     dist: dist
@@ -435,6 +413,34 @@
     $('.dataTables_filter input[type="search"]').css(
         {'width':'350px','height':'40px','display':'inline-block'}
     );
+
+    $('#loadData').on('click', function(){
+
+        var cvrec = $('#fixhl_tb').DataTable({
+            "ordering": false,
+            "autoWidth" : true,
+            "lengthMenu": [[15,25,50, -1], [15,25,50, "All"]],
+            "pageLength": 15,
+            "processing": true,
+            "serverSide": true,
+            "ajax": '{{ route('fixhl.fixhlindex') }}',
+            "columns": [
+                {"data": "cid", "searchable":false,
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;}}, //0
+                {"data": "houseleader"}, //1
+                {"data": "purok"},//2
+                {"data": "sqn"},//3
+                {"data": "action", "searchable":false, "orderable":false },//4
+                {"data": "barangay"},//5
+                {"data": "muncit"}, //6
+            ],
+            "columnDefs": [
+                {"className": "text-center", "targets": [0,2,3,4]},
+                {"targets": [5,6], "visible": false, "searchable": true }
+            ]
+        });
+    });
 
 });
 </script>

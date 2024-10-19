@@ -41,6 +41,9 @@ class encoderController extends Controller
                        class="btn btn-info btn-rounded waves-effect gview" ><i class="mdi mdi-gift"></i></a>
 
                        <a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
+                       class="btn btn-warning btn-rounded waves-effect vtransfer"><i class="mdi mdi-priority-high"></i></a>
+
+                       <a href="javascript:void(0)" type="button" data-id="'.$row->id.'"
                        class="btn btn-primary btn-rounded waves-effect vedit " ><i class="mdi mdi-account-edit"></i></a>';
                 })
                 ->addColumn('checkbox', '<input type="checkbox" name="newSildaCheckBox[]"

@@ -903,7 +903,6 @@ $(document).ready(function(e) {
         $('#plList2').fadeOut();
     });
 
-    // pllist2
 
     $('.mbHL').on('click', function(){
             $('#hlBrgy').on('change', function(){
@@ -1262,6 +1261,10 @@ $(document).ready(function(e) {
 
     });
 
+
+    $('body').on('click','.vtransfer', function(){
+        $('#vtransfer-modal-lg').modal('show');
+    });
 
 
 
