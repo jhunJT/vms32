@@ -184,6 +184,10 @@ Route::middleware('auth')->controller(cvrecordController::class)->group(function
     Route::post('/cvrecord/brgy', 'cvrecordbrgy')->name('cvrecord.brgy');
     Route::post('/cvrecord/selHL', 'selHL')->name('cvrecord.selHL');
     Route::post('/cvrecord/sortPurok', 'sortPurok')->name('cvrecord.sortPurok');
+
+    Route::get('/cvrecord/match-depedemployees', 'depedemployees')->name('match-depedemployees');
+    Route::post('/cvrecord/select2-muncit', 'smuncit')->name('cvrecord.smuncit');
+    Route::post('/cvrecord/select2-brgy', 'sbrgy')->name('cvrecord.sbrgy');
 });
 
 Route::middleware('auth')->controller(latlongController::class)->group(function () {

@@ -218,7 +218,8 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-components">
                             {{-- <a href="{{ route('fixhl-member.index') }}" class="dropdown-item" target="_blank">CV Records Fix</a> --}}
-                            <a href="{{ route('fixhl.fixhlindex') }}" class="dropdown-item" target="_blank">HL Records Fix</a>
+                            {{-- <a href="{{ route('fixhl.fixhlindex') }}" class="dropdown-item" target="_blank" >HL Records Fix</a> --}}
+                            <a href="{{ route('match-depedemployees') }}" class="dropdown-item" target="_blank">Match Records - DEPED</a>
                         </div>
                     </li>
                     {{-- <li class="nav-item dropdown">
