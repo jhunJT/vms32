@@ -127,26 +127,29 @@ class cvrecordController extends Controller
     public function depedemployees(Request $request){
         $municipality = Auth::user()->muncit;
         $district = Auth::user()->district;
-            $cvrecord = DB::table('master_list_nle2022s')->select('id_main','Name','Barangay','purok_rv','Municipality','HL','survey_stat','district')
+            $cvrecord = DB::table('master_list_nle2022s')->select('id_main','Name','Barangay','is_depedEmployee','Municipality','HL',
+                'survey_stat','district','school','level')
             ->where('man_add','0')
             ->orderByRaw ('District,Municipality,Barangay, purok_rv,HL asc, position(Name IN HL) desc');
 
             if($request->ajax()){
                 return DataTables::of($cvrecord)
                 ->addColumn('action', function($row){
-                    return '<a href="javascript:void(0)" type="button" data-id="'.$row->id_main.'"
-                        class="btn btn-success btn-rounded waves-effect depEdEmployee " ><i class="mdi mdi-account-edit"></i></a>';
+                    return '<div class="btn-group mt-2" role="group">
+                                <button type="button" class="btn btn-danger depEmp" data-id="'.$row->id_main.'" title="DEPED"><i class="fa fas fa-heart" style="font-size: 1.5em;"></i></button>
+                                <button type="button" class="btn btn-warning notSupp" data-id="'.$row->id_main.'" title="Not Supporter"><i class="fas fa-times" style="font-size: 1.5em;"></i></button>
+                            </div>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
             }
         return view('forms.depedemployees');
     }
-
+    // <button type="button" class="btn btn-danger suppEmp" data-id="'.$row->id_main.'" title="Supporter"><i class="fa fas fa-heart" style="font-size: 1.5em;"></i></button>
     public function smuncit(Request $request){
         // dd($request->all());
         $search = $request->search;
-        $dataMuncit = d1nle2023::where([
+        $dataMuncit = DB::table('master_list_nle2022s')->where([
                 ['District','=',$request->dist],
                 ['Municipality','like','%'.$search.'%']])
              ->orderBy('Municipality')
@@ -158,7 +161,7 @@ class cvrecordController extends Controller
     public function sbrgy(Request $request){
         // dd($request->all());
         $search = $request->search;
-        $dataMuncit = d1nle2023::where([
+        $dataMuncit = DB::table('master_list_nle2022s')->where([
                 ['District','=',$request->dist],
                 ['Municipality','=', $request->muncit],
                 ['Barangay','like','%'.$search.'%']])
@@ -167,4 +170,21 @@ class cvrecordController extends Controller
 
         return response()->json(['items'=>$dataMuncit]);
     }
+
+    public function employeeSave(Request $request){
+        DB::table('master_list_nle2022s')->where('id_main',$request->dataId )->update(['is_depedEmployee' => 1]);
+        return response()->json(['success' => 'Record Updated!']);
+    }
+
+    public function notsupporterSave(Request $request){
+        DB::table('master_list_nle2022s')->where('id_main',$request->dataId )->update(['is_depedEmployee' => 0]);
+        return response()->json(['success' => 'Record Updated!']);
+    }
+
+    public function levelSave(Request $request){
+        dd($request->all());
+        DB::table('master_list_nle2022s')->where('id_main',$request->selectedRowId )->update(['level' => $request->selectedLevelVal]);
+        return response()->json(['success' => 'Record Updated!']);
+    }
+
 }

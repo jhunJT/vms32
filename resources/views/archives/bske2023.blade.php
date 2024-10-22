@@ -165,8 +165,6 @@
             var rowData = bske2023.row(closestRow).data();
             var selectedRowId = rowData.id;
 
-            // console.log(selectedPartyVal, selectedRowId);
-
             $.ajax({
                 url: '{{ route("archives.updtparty") }}' ,
                 method: 'POST',

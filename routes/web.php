@@ -188,6 +188,11 @@ Route::middleware('auth')->controller(cvrecordController::class)->group(function
     Route::get('/cvrecord/match-depedemployees', 'depedemployees')->name('match-depedemployees');
     Route::post('/cvrecord/select2-muncit', 'smuncit')->name('cvrecord.smuncit');
     Route::post('/cvrecord/select2-brgy', 'sbrgy')->name('cvrecord.sbrgy');
+    Route::post('/cvrecord/deped-employee-save', 'employeeSave')->name('cvrecord.employeeSave');
+    Route::post('/cvrecord/deped-supporter-save', 'supporterSave')->name('cvrecord.supporterSave');
+    Route::post('/cvrecord/deped-notsupporter-save', 'notsupporterSave')->name('cvrecord.notsupporterSave');
+    Route::post('/cvrecord/deped-level-save', 'levelSave')->name('cvrecord.levelSave');
+    Route::post('/cvrecord/deped-school-save', 'schoolSave')->name('cvrecord.schoolSave');
 });
 
 Route::middleware('auth')->controller(latlongController::class)->group(function () {
