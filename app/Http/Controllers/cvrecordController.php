@@ -136,8 +136,8 @@ class cvrecordController extends Controller
                 return DataTables::of($cvrecord)
                 ->addColumn('action', function($row){
                     return '<div class="btn-group mt-2" role="group">
-                                <button type="button" class="btn btn-danger depEmp" data-id="'.$row->id_main.'" title="DEPED"><i class="fa fas fa-heart" style="font-size: 1.5em;"></i></button>
-                                <button type="button" class="btn btn-warning notSupp" data-id="'.$row->id_main.'" title="Not Supporter"><i class="fas fa-times" style="font-size: 1.5em;"></i></button>
+                                <button type="button" class="btn btn-danger depEmp" data-id="'.$row->id_main.'" title="DEPED"><i class="fa fas fa-check" style="font-size: 1.5em;"></i></button>
+                                <button type="button" class="btn btn-warning notSupp" data-id="'.$row->id_main.'" title="Not Supporter"><i class="fa fas fa-times" style="font-size: 1.5em;"></i></button>
                             </div>';
                 })
                 ->rawColumns(['action'])
@@ -145,9 +145,8 @@ class cvrecordController extends Controller
             }
         return view('forms.depedemployees');
     }
-    // <button type="button" class="btn btn-danger suppEmp" data-id="'.$row->id_main.'" title="Supporter"><i class="fa fas fa-heart" style="font-size: 1.5em;"></i></button>
+
     public function smuncit(Request $request){
-        // dd($request->all());
         $search = $request->search;
         $dataMuncit = DB::table('master_list_nle2022s')->where([
                 ['District','=',$request->dist],
@@ -159,7 +158,6 @@ class cvrecordController extends Controller
     }
 
     public function sbrgy(Request $request){
-        // dd($request->all());
         $search = $request->search;
         $dataMuncit = DB::table('master_list_nle2022s')->where([
                 ['District','=',$request->dist],
@@ -172,7 +170,8 @@ class cvrecordController extends Controller
     }
 
     public function employeeSave(Request $request){
-        DB::table('master_list_nle2022s')->where('id_main',$request->dataId )->update(['is_depedEmployee' => 1]);
+        DB::table('master_list_nle2022s')->where('id_main',$request->dataId )
+            ->update(['is_depedEmployee' => 1,'school' => $request->school, 'level' => $request->level]);
         return response()->json(['success' => 'Record Updated!']);
     }
 

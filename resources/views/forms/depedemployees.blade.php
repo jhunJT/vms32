@@ -33,7 +33,7 @@
                                         <select id="select2-brgy" style="width: 100%;" class="form-control select2-brgy" name="select2-brgy"></select>
                                     </div>
                                     <div class="col-5">
-                                        <input type="text" class="form-control" placeholder="Search..." id="customSearch" name="customSearch">
+                                        <input type="text" class="form-control" placeholder="Search..." id="customSearch" name="customSearch" >
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                                 <th>Status</th>
                                 <th>CV</th>
                                 <th style="width: 140px;">Level</th>
-                                <th style="width: 150px;">School</th>
+                                <th style="width: 180px;">School</th>
                                 <th>Tag</th>
                                 <th>Houseleader</th>
                                 <th>District</th>
@@ -165,13 +165,13 @@
                         return '';
                     }
                 },//5
-                { "data": "level", "className": "text-center align-middle",
+                { "data": "level", "className": "text-center align-middle","searchable": false, "orderable": false,
                     "defaultContent": '',
                     "render": function (data, type, row, meta) {
                         // console.log(row);
                         if (type === 'display') {
                             var selectOptions = '<select class="form-select btnLevel" style="width: 140px;" data-id="">';
-                            selectOptions += '<option selected>NONE</option>';
+                            selectOptions += '<option value="NONE" selected>NONE</option>';
                             selectOptions += '<option value="PRIMARY">PRIMARY</option>';
                             selectOptions += '<option value="SECONDARY">SECONDARY</option>';
                             selectOptions += '</select>';
@@ -190,7 +190,7 @@
                     "defaultContent": '',
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {
-                            var selectOptions = '<select class="form-select btnSchool" style="width: 150px;">';
+                            var selectOptions = '<select class="form-select btnSchool" style="width: 180px;">';
                             selectOptions += '<option selected>NONE</option>';
                             selectOptions += '<option value="ALMAGRO">Almagro</option>';
                             selectOptions += '<option value="GANDARA I">GANDARA I</option>';
@@ -360,6 +360,11 @@
 
     $(document).on('click', '.depEmp', function(){
         const dataId = $(this).data('id');
+        var $row = $(this).closest('tr');
+
+        var school = $row.find('.btnSchool').val();
+        var level = $row.find('.btnLevel').val();
+        console.log(school,level);
         Swal.fire({
             title:"Are you sure?",
             text:"You won't be able to revert this!",
@@ -373,7 +378,7 @@
                 $.ajax({
                     url: '{{ route("cvrecord.employeeSave") }}' ,
                     method: 'post',
-                    data: {dataId:dataId},
+                    data: {dataId:dataId,school:school, level:level},
                     success:function(res){
                         Swal.fire({
                             position: "top-end",
@@ -455,34 +460,34 @@
         customSearch(this.value);
     }, 300));
 
-    $(document).on('change','.btnLevel', function(){
-        const dataId = $(this).data('id');
-        var selectedLevelVal = $(this).val();
-        $.ajax({
-            url: '{{ route("cvrecord.levelSave") }}' ,
-            method: 'post',
-            data: {dataId:dataId, selectedLevelVal:selectedLevelVal},
-            success:function(res){
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Your work has been saved",
-                    showConfirmButton: false,
-                    timer: 1500
-                    }
-                )
-                cvrec.ajax.reload();
+    // $(document).on('change','.btnLevel', function(){
+    //     const dataId = $(this).data('id');
+    //     var selectedLevelVal = $(this).val();
+    //     $.ajax({
+    //         url: '{{ route("cvrecord.levelSave") }}' ,
+    //         method: 'post',
+    //         data: {dataId:dataId, selectedLevelVal:selectedLevelVal},
+    //         success:function(res){
+    //             Swal.fire({
+    //                 position: "top-end",
+    //                 icon: "success",
+    //                 title: "Your work has been saved",
+    //                 showConfirmButton: false,
+    //                 timer: 1500
+    //                 }
+    //             )
+    //             cvrec.ajax.reload();
 
-            },
-            error: function(xhr, status, error){
-                console.log(error);
-                if(error) {
-                    var err = eval("(" + xhr.responseText + ")");
-                    toastr.error(err.message);
-                }
-            }
-        });
-    });
+    //         },
+    //         error: function(xhr, status, error){
+    //             console.log(error);
+    //             if(error) {
+    //                 var err = eval("(" + xhr.responseText + ")");
+    //                 toastr.error(err.message);
+    //             }
+    //         }
+    //     });
+    // });
 
 });
 
