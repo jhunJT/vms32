@@ -129,6 +129,8 @@
                             <a href="{{ route('district.grants') }}" class="dropdown-item" target="_blank">Grants Records</a>
                             <a href="{{ route('hlrecords.index') }}" class="dropdown-item" target="_blank">HL Records</a>
                             <a href="{{ route('pbpcrecords.index') }}" class="dropdown-item" target="_blank">PB/PC Records</a>
+                            <a href="{{ route('match-depedemployees') }}" class="dropdown-item" target="_blank">Match Records - DEPED</a>
+
                         </div>
                     </li>
 
