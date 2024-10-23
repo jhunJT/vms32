@@ -171,6 +171,7 @@
                             <a href="{{ route('hlrecords.index') }}" class="dropdown-item" target="_blank">HL Records</a>
                             <a href="{{ route('pbpcrecords.index') }}" class="dropdown-item" target="_blank">PB/PC Records</a>
                             <a href="{{ route('unsurveyed.index') }}" class="dropdown-item" target="_blank">Unsurveyed</a>
+                            <a href="{{ route('match-depedemployees') }}" class="dropdown-item" target="_blank">Match Records - DEPED</a>
                         </div>
                     </li>
                 @elseif (Auth::user()->role == 'superuser')

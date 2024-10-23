@@ -136,8 +136,9 @@ class cvrecordController extends Controller
                 return DataTables::of($cvrecord)
                 ->addColumn('action', function($row){
                     return '<div class="btn-group mt-2" role="group">
-                                <button type="button" class="btn btn-danger depEmp" data-id="'.$row->id_main.'" title="Supporter"><i class="fa fa-check" style="font-size: 1.5em;"></i></button>
+                                <button type="button" class="btn btn-success depEmp" data-id="'.$row->id_main.'" title="Supporter"><i class="fa fa-check" style="font-size: 1.5em;"></i></button>
                                 <button type="button" class="btn btn-warning notSupp" data-id="'.$row->id_main.'" title="Not Supporter"><i class="fa fas fa-times" style="font-size: 1.5em;"></i></button>
+                                <button type="button" class="btn btn-danger depClear" data-id="'.$row->id_main.'" title="Clear"><i class="fa fa-eraser" style="font-size: 1.5em;"></i></button>
                             </div>';
                 })
                 ->rawColumns(['action'])
@@ -176,13 +177,12 @@ class cvrecordController extends Controller
     }
 
     public function notsupporterSave(Request $request){
-        DB::table('master_list_nle2022s')->where('id_main',$request->dataId )->update(['is_depedEmployee' => 0,'school' => 'NONE', 'level' => 'NONE']);
+        DB::table('master_list_nle2022s')->where('id_main',$request->dataId )->update(['is_depedEmployee' => 2,'school' => $request->school, 'level' => $request->level]);
         return response()->json(['success' => 'Record Updated!']);
     }
 
-    public function levelSave(Request $request){
-        dd($request->all());
-        DB::table('master_list_nle2022s')->where('id_main',$request->selectedRowId )->update(['level' => $request->selectedLevelVal]);
+    public function depClear(Request $request){
+        DB::table('master_list_nle2022s')->where('id_main',$request->dataId )->update(['is_depedEmployee' => 0,'school' => 'NONE', 'level' => 'NONE']);
         return response()->json(['success' => 'Record Updated!']);
     }
 

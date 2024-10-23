@@ -145,10 +145,12 @@
                     "defaultContent": '',
                     "render": function (data, type, row, meta)
                     {
-                        if(data){
+                        if(data == 1){
                             return '<button type="button" class="btn btn-danger btn-rounded waves-effect waves-light">Supporter</button>'
+                        }else if(data == 2){
+                            return '<button type="button" class="btn btn-warning btn-rounded waves-effect waves-light">Not Supporter</button>'
                         }else{
-                            return '<button type="button" class="btn btn-warning btn-rounded waves-effect waves-light">No Supporter</button>'
+                            return ''
                         }
                         return '';
                     }
@@ -460,34 +462,33 @@
         customSearch(this.value);
     }, 300));
 
-    // $(document).on('change','.btnLevel', function(){
-    //     const dataId = $(this).data('id');
-    //     var selectedLevelVal = $(this).val();
-    //     $.ajax({
-    //         url: '{{ route("cvrecord.levelSave") }}' ,
-    //         method: 'post',
-    //         data: {dataId:dataId, selectedLevelVal:selectedLevelVal},
-    //         success:function(res){
-    //             Swal.fire({
-    //                 position: "top-end",
-    //                 icon: "success",
-    //                 title: "Your work has been saved",
-    //                 showConfirmButton: false,
-    //                 timer: 1500
-    //                 }
-    //             )
-    //             cvrec.ajax.reload();
+    $(document).on('change','.btnLevel', function(){
+        const dataId = $(this).data('id');
+        $.ajax({
+            url: '{{ route("cvrecord.depclear") }}' ,
+            method: 'post',
+            data: {dataId:dataId},
+            success:function(res){
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Your work has been saved",
+                    showConfirmButton: false,
+                    timer: 1500
+                    }
+                )
+                cvrec.ajax.reload();
 
-    //         },
-    //         error: function(xhr, status, error){
-    //             console.log(error);
-    //             if(error) {
-    //                 var err = eval("(" + xhr.responseText + ")");
-    //                 toastr.error(err.message);
-    //             }
-    //         }
-    //     });
-    // });
+            },
+            error: function(xhr, status, error){
+                console.log(error);
+                if(error) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    toastr.error(err.message);
+                }
+            }
+        });
+    });
 
 });
 
