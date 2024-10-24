@@ -386,7 +386,7 @@
 
         var school = $row.find('.btnSchool').val();
         var level = $row.find('.btnLevel').val();
-        console.log(school,level);
+        // console.log(school,level);
         Swal.fire({
             title:"Are you sure?",
             text:"You won't be able to revert this!",
@@ -428,6 +428,10 @@
     $(document).on('click', '.notSupp', function(){
 
         const dataId = $(this).data('id');
+        var $row = $(this).closest('tr');
+
+        var school = $row.find('.btnSchool').val();
+        var level = $row.find('.btnLevel').val();
         Swal.fire({
             title:"Are you sure?",
             text:"You won't be able to revert this!",
@@ -441,7 +445,7 @@
                 $.ajax({
                     url: '{{ route("cvrecord.notsupporterSave") }}' ,
                     method: 'post',
-                    data: {dataId:dataId},
+                    data: {dataId:dataId,school:school,level:level},
                     success:function(res){
                         Swal.fire({
                             position: "top-end",
@@ -514,19 +518,19 @@
     //     $('#depedEmployeeCount').modal('show');
     // });
 
-    $("#cvrectbl tfoot th").each( function ( i ) {
-        var select = $('<select><option value=""></option></select>')
-            .appendTo( $(this).empty() )
-            .on( 'change', function () {
-                table.column( i )
-                    .search( $(this).val() )
-                    .draw();
-            } );
+    // $("#cvrectbl tfoot th").each( function ( i ) {
+    //     var select = $('<select><option value=""></option></select>')
+    //         .appendTo( $(this).empty() )
+    //         .on( 'change', function () {
+    //             table.column( i )
+    //                 .search( $(this).val() )
+    //                 .draw();
+    //         } );
 
-            cvrec.column( i ).data().unique().sort().each( function ( d, j ) {
-            select.append( '<option value="'+d+'">'+d+'</option>' )
-        } );
-    } );
+    //         cvrec.column( i ).data().unique().sort().each( function ( d, j ) {
+    //         select.append( '<option value="'+d+'">'+d+'</option>' )
+    //     } );
+    // } );
 
 });
 
