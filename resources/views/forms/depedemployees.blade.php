@@ -35,6 +35,12 @@
                                     <div class="col-5">
                                         <input type="text" class="form-control" placeholder="Search..." id="customSearch" name="customSearch" >
                                     </div>
+                                    {{-- <div class="col-2">
+                                        <div class="btn-group" role="group">
+                                            <button type="submit" class="btn btn-success" id="filterSupp" value="Supporter"><i class="fas fa-user-alt"></i></button>
+                                            <button type="submit" class="btn btn-warning" id="filterSupp" value="Not Supporter"><i class="fas fa-user-alt-slash"></i></button>
+                                        </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -68,20 +74,20 @@
     <button onclick="$('#popup').hide()">Close</button>
 </div>
 
-<div id="hlsumm-modal-lg" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div id="depedEmployeeCount" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">CV Summary</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Summary</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <table id="hlsumm" class="table table-bordered dt-responsive nowrap grantTbl" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                     <thead>
                     <tr>
-                        <th style="width:15rem;">Barangay</th>
-                        <th>HL</th>
-                        <th>Members</th>
+                        <th style="width:15rem;">Name</th>
+                        <th>Barangay</th>
+                        <th>School  </th>
                         <th>Total CV</th>
                     </tr>
                     </thead>
@@ -152,7 +158,7 @@
                         }else{
                             return ''
                         }
-                        return '';
+                        return data;
                     }
                 },//4
                 {"data": "survey_stat", "className": "text-center align-middle",
@@ -360,6 +366,20 @@
         cvrec.draw();
     });
 
+    $('#filterSupp').on('click', function(){
+        var filtSupp = $(this).val();
+        console.log(filtSupp);
+        // if(filtSupp == "Supporter"){
+        //     cvrec.coulmn(4).search().draw();
+        // }
+
+        // var filtSupp = []
+        // $.each($('#filterSupp'), function(i,elem){
+        //     filtSupp.push($(this).val())
+        // })
+        // grantTbl.column(4).search(filtSupp).draw();
+    });
+
     $(document).on('click', '.depEmp', function(){
         const dataId = $(this).data('id');
         var $row = $(this).closest('tr');
@@ -462,33 +482,51 @@
         customSearch(this.value);
     }, 300));
 
-    $(document).on('change','.btnLevel', function(){
-        const dataId = $(this).data('id');
-        $.ajax({
-            url: '{{ route("cvrecord.depclear") }}' ,
-            method: 'post',
-            data: {dataId:dataId},
-            success:function(res){
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Your work has been saved",
-                    showConfirmButton: false,
-                    timer: 1500
-                    }
-                )
-                cvrec.ajax.reload();
+    // $(document).on('change','.btnLevel', function(){
+    //     const dataId = $(this).data('id');
+    //     $.ajax({
+    //         url: '{{ route("cvrecord.depclear") }}' ,
+    //         method: 'post',
+    //         data: {dataId:dataId},
+    //         success:function(res){
+    //             Swal.fire({
+    //                 position: "top-end",
+    //                 icon: "success",
+    //                 title: "Your work has been saved",
+    //                 showConfirmButton: false,
+    //                 timer: 1500
+    //                 }
+    //             )
+    //             cvrec.ajax.reload();
 
-            },
-            error: function(xhr, status, error){
-                console.log(error);
-                if(error) {
-                    var err = eval("(" + xhr.responseText + ")");
-                    toastr.error(err.message);
-                }
-            }
-        });
-    });
+    //         },
+    //         error: function(xhr, status, error){
+    //             console.log(error);
+    //             if(error) {
+    //                 var err = eval("(" + xhr.responseText + ")");
+    //                 toastr.error(err.message);
+    //             }
+    //         }
+    //     });
+    // });
+
+    // $('#modalSummary').on('click', function(){
+    //     $('#depedEmployeeCount').modal('show');
+    // });
+
+    $("#cvrectbl tfoot th").each( function ( i ) {
+        var select = $('<select><option value=""></option></select>')
+            .appendTo( $(this).empty() )
+            .on( 'change', function () {
+                table.column( i )
+                    .search( $(this).val() )
+                    .draw();
+            } );
+
+            cvrec.column( i ).data().unique().sort().each( function ( d, j ) {
+            select.append( '<option value="'+d+'">'+d+'</option>' )
+        } );
+    } );
 
 });
 
