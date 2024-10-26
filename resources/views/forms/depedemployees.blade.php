@@ -36,14 +36,24 @@
                                         <input type="text" class="form-control" placeholder="Search..." id="customSearch" name="customSearch" >
                                     </div>
                                 </div>
+
+                                <div class="row">
                                     <div class="col-2 mt-3">
                                         <div class="btn-group" role="group">
                                             <button type="submit" class="btn btn-success"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" id="filterSupp" value="Supporter"><i class="fas fa-user-alt"></i> Show Summary</button>
-                                            <button type="submit" class="btn btn-warning" id="filterSupp" value="Not Supporter"><i class="fas fa-user-alt-slash"></i></button>
+                                            <button type="submit" class="btn btn-warning" id="filterSupp" value="Not Supporter"><i class="fas fa-user-alt-slash"></i></button>                                        </div>
+                                        </div>
+                                        <div class="col-4 mt-3">
+                                            <select id="select2-school-filter" style="width: 100%;" class="form-control" name="select2-school-filter"></select>
+                                        </div>
+                                        <div class="col-3 mt-4 align-middle">
+                                            <h3>Total Supporter:<span> 123</span></h3>
+                                        </div>
+                                        <div class="col-3 mt-4 align-middle">
+                                            <h3>Total Not Supporter:<span> 123</span></h3>
                                         </div>
                                     </div>
-
-                            </div>
+                                </div>
 
                         </div>
 
@@ -61,6 +71,8 @@
                                 <th>Tag</th>
                                 <th>Houseleader</th>
                                 <th>District</th>
+                                <th>School2</th>
+                                <th>status</th>
                             </tr>
                             </thead>
                         </table>
@@ -82,34 +94,16 @@
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-
+        <div class="row">
+            <div class="col-12">
+                <select name="school" id="sschool">
+                    <option value="111">11</option>
+                </select>
+            </div>
+        </div>
     </div>
 </div>
 
-
-<div id="depedEmployeeCount" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Summary</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table id="hlsumm" class="table table-bordered dt-responsive nowrap grantTbl" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                    <thead>
-                    <tr>
-                        <th style="width:15rem;">Name</th>
-                        <th>Barangay</th>
-                        <th>School  </th>
-                        <th>Total CV</th>
-                    </tr>
-                    </thead>
-                </table>
-
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -142,6 +136,7 @@
                'processing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading..n.</span>'
             },
             "ordering": true,
+            "order": [[12,'asc']],
             "autoWidth" : true,
             "lengthMenu": [[15,25,50, -1], [15,25,50, "All"]],
             "dom": 'lrt',
@@ -151,16 +146,10 @@
             "ajax": "{{ route('match-depedemployees') }}",
             "columns": [
                 {"data": "id_main", "className": "text-center align-middle"}, //0
-                {"data": "Name", "className": "align-middle",
-                    render: function (data, type, row, meta) {
-                    var prefix = "HL: ";
-                        if(data == row.HL){
-                            return prefix + data;
-                        }
-                            return data;}}, //1
+                {"data": "Name", "className": "align-middle"}, //1
                 {"data": "Municipality", "className": "text-center align-middle"}, //2
                 {"data": "Barangay", "className": "text-center align-middle"}, //3
-                {"data": "is_depedEmployee", "className": "text-center align-middle",
+                {"data": "is_depedEmployee", "className": "text-center align-middle", "orderable":true,
                     "defaultContent": '',
                     "render": function (data, type, row, meta)
                     {
@@ -186,7 +175,7 @@
                         return '';
                     }
                 },//5
-                { "data": "level", "className": "text-center align-middle","searchable": false, "orderable": false,
+                { "data": "level", "className": "text-center align-middle","searchable": true, "orderable": true,
                     "defaultContent": '',
                     "render": function (data, type, row, meta) {
                         // console.log(row);
@@ -207,7 +196,7 @@
                         }
                     }
                 }, //6
-                {"data": "school", "className": "align-middle", "searchable": false, "orderable": false,
+                {"data": "school", "className": "align-middle", "searchable": false, "orderable": true,
                     "defaultContent": '',
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {
@@ -235,6 +224,11 @@
                             selectOptions += '<option value="CATB DIV-8">CATB DIV-8</option>';
                             selectOptions += '<option value="CATB DIV-9">CATB DIV-9</option>';
                             selectOptions += '<option value="CATB DIV-10">CATB DIV-10</option>';
+                            selectOptions += '<option value="CCS">CCS</option>';
+                            selectOptions += '<option value="DORCAS">DORCAS</option>';
+                            selectOptions += '<option value="SMCDC">SMCDC</option>';
+                            selectOptions += '<option value="Samar College">Samar College</option>';
+                            selectOptions += '<option value="Samar Division Office">Samar Division Office</option>';
                             selectOptions += '</select>';
 
                             if (data) {
@@ -254,13 +248,14 @@
                         $(td).find('.btnSchool').select2({
                             width: '100%',  // Customize width or other options
                             tags: true,
-
                         });
                     }
                  }, //7
                 {"data": "action", "className": "text-center align-middle"}, //8
                 {"data": "HL"},//9
-                {"data": "district", "visible": false, "searchable": true}//10
+                {"data": "district", "visible": false, "searchable": true},//10
+                {"data": "school", "visible": false, "searchable": true }, //11
+                {"data": "is_depedEmployee", "visible": false, "searchable": true } //12
             ],
             "columnDefs": [
                 {"className": "text-center", "targets": [0,2,3,4,5]},
@@ -404,7 +399,7 @@
         var selectDist = $('#dist').val();
         var selectMuncit = $(this).val();
 
-        console.log(selectDist,selectMuncit);
+        // console.log(selectDist,selectMuncit);
 
         if(selectMuncit){
             cvrec.column(2).search('^' + selectMuncit + '$', true, false).draw();
@@ -682,7 +677,60 @@
     //         select.append( '<option value="'+d+'">'+d+'</option>' )
     //     } );
     // } );
+    $(document).on('select2:open', () => {
+        document.querySelector('.select2-search__field').focus();
+    });
 
+    $('#select2-school-filter').select2({
+        placeholder: "Select School",
+        allowClear: true,
+        ajax:{
+            url:"{{ route('cvrecord.schoolList') }}",
+            type:"POST",
+            dataType:"json",
+            delay:250,
+            quietMillis: 100,
+            data: function(params){
+                return{
+                    search: params.term
+                };
+            },
+            processResults: function(data){
+                console.log(data);
+                return{
+                    results: $.map(data.items, function(obj,i) {
+                        return {
+                        id:i, text:obj
+                        };
+                    })
+                }
+            }
+        }
+    });
+
+    $('#select2-school-filter').on('change', function() {
+        var selectSchool = $(this).val();
+
+        // Show loading indicator
+        $('#loading').show();
+
+        // Reset search to show all entries before applying the new filter
+        cvrec.search('').columns().search('').draw();
+
+        // Apply new filter based on selected school
+        if (selectSchool) {
+            cvrec.column(11).search('^' + selectSchool + '$', true, false);
+        }
+
+        cvrec.draw();
+
+        // Count entries in column 12 where the value is 1
+        var count1 = cvrec.column(12).search(1).rows({ search: '1' }).count();
+        console.log(count1);
+
+        // Hide loading indicator after update
+        $('#loading').hide();
+    })
 });
 
 

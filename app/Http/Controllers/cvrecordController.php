@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use App\Models\d1nle2023;
+use Illuminate\Container\RewindableGenerator;
 use Illuminate\Support\Facades\Redis;
 
 class cvrecordController extends Controller
@@ -130,7 +131,7 @@ class cvrecordController extends Controller
             $cvrecord = DB::table('master_list_nle2022s')->select('id_main','Name','Barangay','is_depedEmployee','Municipality','HL',
                 'survey_stat','district','school','level')
             ->where('man_add','0')
-            ->orderByRaw ('District,Municipality,Barangay, purok_rv,HL asc, position(Name IN HL) desc');
+            ->orderByRaw ('is_depedEmployee asc, Name');
 
             if($request->ajax()){
                 return DataTables::of($cvrecord)
@@ -184,6 +185,16 @@ class cvrecordController extends Controller
     public function depClear(Request $request){
         DB::table('master_list_nle2022s')->where('id_main',$request->dataId )->update(['is_depedEmployee' => 0,'school' => 'NONE', 'level' => 'NONE']);
         return response()->json(['success' => 'Record Updated!']);
+    }
+
+    public function schoolList(Request $request){
+        $search = $request->search;
+        $dataSchool = DB::table('master_list_nle2022s')
+             ->where('school','like','%'.$search.'%')
+             ->orderBy('school')
+             ->pluck('school','school');
+        return response()->json(['items'=>$dataSchool]);
+
     }
 
 }
