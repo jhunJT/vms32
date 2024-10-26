@@ -638,33 +638,32 @@
     //     $('.btnSchool').trigger('change');
     // });
 
-    // $(document).on('change','.btnLevel', function(){
-    //     const dataId = $(this).data('id');
-    //     $.ajax({
-    //         url: '{{ route("cvrecord.depclear") }}' ,
-    //         method: 'post',
-    //         data: {dataId:dataId},
-    //         success:function(res){
-    //             Swal.fire({
-    //                 position: "top-end",
-    //                 icon: "success",
-    //                 title: "Your work has been saved",
-    //                 showConfirmButton: false,
-    //                 timer: 1500
-    //                 }
-    //             )
-    //             cvrec.ajax.reload();
-
-    //         },
-    //         error: function(xhr, status, error){
-    //             console.log(error);
-    //             if(error) {
-    //                 var err = eval("(" + xhr.responseText + ")");
-    //                 toastr.error(err.message);
-    //             }
-    //         }
-    //     });
-    // });
+    $(document).on('click','.depClear', function(){
+        const dataId = $(this).data('id');
+        $.ajax({
+            url: '{{ route("cvrecord.depclear") }}' ,
+            method: 'post',
+            data: {dataId:dataId},
+            success:function(res){
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Your work has been saved",
+                    showConfirmButton: false,
+                    timer: 1500
+                    }
+                )
+                cvrec.ajax.reload();
+            },
+            error: function(xhr, status, error){
+                console.log(error);
+                if(error) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    toastr.error(err.message);
+                }
+            }
+        });
+    });
 
     // $('#modalSummary').on('click', function(){
     //     $('#depedEmployeeCount').modal('show');
