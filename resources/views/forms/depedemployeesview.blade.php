@@ -38,13 +38,12 @@
                                 </div>
                                     <div class="col-2 mt-3">
                                         <div class="btn-group" role="group">
-                                            <button type="submit" class="btn btn-success"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" id="filterSupp" value="Supporter"><i class="fas fa-user-alt"></i> Show Summary</button>
+                                            <button type="submit" class="btn btn-success" id="filterSupp" value="Supporter"><i class="fas fa-user-alt"></i> Summary</button>
                                             <button type="submit" class="btn btn-warning" id="filterSupp" value="Not Supporter"><i class="fas fa-user-alt-slash"></i></button>
                                         </div>
                                     </div>
 
                             </div>
-
                         </div>
 
                         <table id="cvrectbl" class="table table-bordered nowrap cvrectbl" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -75,17 +74,6 @@
     <p id="popupMessage"></p>
     <button onclick="$('#popup').hide()">Close</button>
 </div>
-
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" aria-modal="true" role="dialog">
-    <div class="offcanvas-header">
-      <h5 id="offcanvasRightLabel">SUMMARY</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-
-    </div>
-</div>
-
 
 <div id="depedEmployeeCount" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -252,8 +240,7 @@
                     "createdCell": function (td, cellData, rowData, row, col) {
                         // Initialize Select2 after the cell is created
                         $(td).find('.btnSchool').select2({
-                            width: '100%',  // Customize width or other options
-                            tags: true,
+                            width: '100%'  // Customize width or other options
 
                         });
                     }
@@ -272,45 +259,43 @@
                     $(row).addClass('green');
                 }
             },
-            // "drawCallback": function () {
-            //     // Reinitialize Select2 for any newly drawn rows
-            //     $('.btnSchool').select2({
-            //         width: '100%'
-            //     });
+            "drawCallback": function () {
+                // Reinitialize Select2 for any newly drawn rows
+                $('.btnSchool').select2({
+                    width: '100%'
+                });
 
-            //     $('.btnLevel').on('change', function() {
-            //     var rowId = $(this).data('id');  // Get row id (from the data-id attribute)
-            //     var selectedLevel = $(this).val();
+                $('.btnLevel').on('change', function() {
+                var rowId = $(this).data('id');  // Get row id (from the data-id attribute)
+                var selectedLevel = $(this).val();
 
-            //     // Find the corresponding school select
-            //     var schoolSelect = $('.btnSchool[data-id="' + rowId + '"]');
-            //     schoolSelect.empty();  // Clear existing options
+                // Find the corresponding school select
+                var schoolSelect = $('.btnSchool[data-id="' + rowId + '"]');
+                schoolSelect.empty();  // Clear existing options
 
-            //     if (selectedLevel === 'SECONDARY') {
-            //         // Add Secondary school options
-            //         const secondarySchools = [
-            //             { id: 'Bagacay National High School', text: 'Bagacay National High School - Daram I' },
-            //             { id: 'Daram National High School', text: 'Daram National High School - Daram I' }
-            //         ];
+                if (selectedLevel === 'SECONDARY') {
+                    // Add Secondary school options
+                    const secondarySchools = [
+                        { id: 'Bagacay National High School', text: 'Bagacay National High School - Daram I' },
+                        { id: 'Daram National High School', text: 'Daram National High School - Daram I' }
+                    ];
 
-            //         secondarySchools.forEach(function(school) {
-            //             var newOption = new Option(school.text, school.id, false, false);
-            //             schoolSelect.append(newOption);
-            //         });
-            //     } else if (selectedLevel === 'PRIMARY') {
-            //         // Add Primary options (if needed)
-            //         schoolSelect.append('<option value="">Select a schoolss</option>');
-            //     }
+                    secondarySchools.forEach(function(school) {
+                        var newOption = new Option(school.text, school.id, false, false);
+                        schoolSelect.append(newOption);
+                    });
+                } else if (selectedLevel === 'PRIMARY') {
+                    // Add Primary options (if needed)
+                    schoolSelect.append('<option value="">Select a schoolss</option>');
+                }
 
-            //     // Refresh the Select2 dropdown
-            //     schoolSelect.trigger('change');
-            // });
+                // Refresh the Select2 dropdown
+                schoolSelect.trigger('change');
+            });
 
 
-            // }
+            }
         });
-
-
 
     $('.dataTables_filter input[type="search"]').css(
         {'width':'350px','height':'40px', 'display':'inline-block'}
@@ -516,15 +501,7 @@
 
         var school = $row.find('.btnSchool').val();
         var level = $row.find('.btnLevel').val();
-
-        if(school === "NONE" || level === "NONE"){
-            Swal.fire({
-                icon: "error",
-                title: "Oops!Something went wrong!",
-                text: "Please select LEVEL and SCHOOL",
-            });
-        }else{
-            Swal.fire({
+        Swal.fire({
             title:"Are you sure?",
             text:"You won't be able to revert this!",
             icon:"warning",
@@ -532,37 +509,34 @@
             confirmButtonColor:"#1cbb8c",
             cancelButtonColor:"#f32f53",
             confirmButtonText:"Yes, submit it!"
-            }).then((result) => {
-                if (result.isConfirmed){
-                    $.ajax({
-                        url: '{{ route("cvrecord.notsupporterSave") }}' ,
-                        method: 'post',
-                        data: {dataId:dataId,school:school,level:level},
-                        success:function(res){
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: "Your work has been saved",
-                                showConfirmButton: false,
-                                timer: 1500
-                                }
-                            )
-                            cvrec.ajax.reload();
-
-                        },
-                        error: function(xhr, status, error){
-                            console.log(error);
-                            if(error) {
-                                var err = eval("(" + xhr.responseText + ")");
-                                toastr.error(err.message);
+        }).then((result) => {
+            if (result.isConfirmed){
+                $.ajax({
+                    url: '{{ route("cvrecord.notsupporterSave") }}' ,
+                    method: 'post',
+                    data: {dataId:dataId,school:school,level:level},
+                    success:function(res){
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Your work has been saved",
+                            showConfirmButton: false,
+                            timer: 1500
                             }
+                        )
+                        cvrec.ajax.reload();
+
+                    },
+                    error: function(xhr, status, error){
+                        console.log(error);
+                        if(error) {
+                            var err = eval("(" + xhr.responseText + ")");
+                            toastr.error(err.message);
                         }
-                    });
-                }
-            });
-        }
-
-
+                    }
+                });
+            }
+        });
     });
 
     function debounce(func, delay) {
@@ -581,108 +555,6 @@
         customSearch(this.value);
     }, 300));
 
-    // const secondarySchools = [
-    //     { id: 'Bagacay National High School', text: 'Bagacay National High School - Daram I' },
-    //     { id: 'Daram National High School', text: 'Daram National High School - Daram I' }
-    // ];
-
-    // $('.btnLevel').off('change').on('change', function() {
-    //     var rowId = $(this).data('id');
-    //     var selectedLevel = $(this).val();
-
-    //     // Find the matching school select for the same row
-    //     var schoolSelect = $('.btnSchool[data-id="' + rowId + '"]');
-
-    //     // Clear the current options in the school select
-    //     schoolSelect.empty();
-
-    //     if (selectedLevel === 'SECONDARY') {
-    //         // Populate secondary schools
-    //         const secondarySchools = [
-    //             { id: 'Bagacay National High School', text: 'Bagacay National High School - Daram I' },
-    //             { id: 'Daram National High School', text: 'Daram National High School - Daram I' }
-    //         ];
-
-    //         secondarySchools.forEach(function(school) {
-    //             var newOption = new Option(school.text, school.id, false, false);
-    //             schoolSelect.append(newOption);
-    //         });
-    //     } else if (selectedLevel === 'PRIMARY') {
-    //         // You can also add primary schools or leave it blank.
-    //         schoolSelect.append('<option value="">Select a school</option>');
-    //     }
-
-    //     // Trigger Select2 to refresh
-    //     schoolSelect.trigger('change');
-    // });
-
-
-
-    // $('.btnLevel').change(function() {
-    //     const selectedLevel = $(this).val();
-    //     console.log(selectedLevel);
-    //     $('.btnSchool').empty(); // Clear current options
-
-    //     if (selectedLevel === 'secondary') {
-    //         // Add Secondary options
-    //         secondarySchools.forEach(function(school) {
-    //             const newOption = new Option(school.text, school.id, false, false);
-    //             $('.btnSchool').append(newOption);
-    //         });
-    //     } else {
-    //         // Default or primary options (if needed)
-    //         $('.btnSchool').append('<option value="">Select a school</option>');
-    //     }
-
-    //     // Refresh Select2
-    //     $('.btnSchool').trigger('change');
-    // });
-
-    // $(document).on('change','.btnLevel', function(){
-    //     const dataId = $(this).data('id');
-    //     $.ajax({
-    //         url: '{{ route("cvrecord.depclear") }}' ,
-    //         method: 'post',
-    //         data: {dataId:dataId},
-    //         success:function(res){
-    //             Swal.fire({
-    //                 position: "top-end",
-    //                 icon: "success",
-    //                 title: "Your work has been saved",
-    //                 showConfirmButton: false,
-    //                 timer: 1500
-    //                 }
-    //             )
-    //             cvrec.ajax.reload();
-
-    //         },
-    //         error: function(xhr, status, error){
-    //             console.log(error);
-    //             if(error) {
-    //                 var err = eval("(" + xhr.responseText + ")");
-    //                 toastr.error(err.message);
-    //             }
-    //         }
-    //     });
-    // });
-
-    // $('#modalSummary').on('click', function(){
-    //     $('#depedEmployeeCount').modal('show');
-    // });
-
-    // $("#cvrectbl tfoot th").each( function ( i ) {
-    //     var select = $('<select><option value=""></option></select>')
-    //         .appendTo( $(this).empty() )
-    //         .on( 'change', function () {
-    //             table.column( i )
-    //                 .search( $(this).val() )
-    //                 .draw();
-    //         } );
-
-    //         cvrec.column( i ).data().unique().sort().each( function ( d, j ) {
-    //         select.append( '<option value="'+d+'">'+d+'</option>' )
-    //     } );
-    // } );
 
 });
 
