@@ -1188,6 +1188,7 @@
 
     $('.btngrntview').on('click', function(){
         $('.grntViewModal').modal('show');
+
         var grantList = $('#grntviewtbl').DataTable({
                 destroy: true, // Allows reinitializing the DataTable
                 processing: true,
@@ -1213,7 +1214,7 @@
                 $('.grntViewModal').modal('show');
 
             },
-        error: function(xhr, status, error){
+            error: function(xhr, status, error){
             if(error) {
                 var err = eval("(" + xhr.responseText + ")");
                     grantList.error(err.message);

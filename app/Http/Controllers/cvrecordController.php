@@ -194,7 +194,22 @@ class cvrecordController extends Controller
              ->orderBy('school')
              ->pluck('school','school');
         return response()->json(['items'=>$dataSchool]);
-
     }
+
+    public function techearsRecord(Request $request){
+        // dd($request->all());
+        $cvrecord = DB::table('master_list_nle2022s')->select('Name','is_depedEmployee','survey_stat','school')
+        // ->where('man_add','0')
+        ->where([['is_depedEmployee',$request->status],['school',$request->school]])
+        ->orderByRaw ('is_depedEmployee asc, Name');
+
+        if($request->ajax()){
+            return DataTables::of($cvrecord)
+            ->make(true);
+        }
+    }
+
+
+
 
 }

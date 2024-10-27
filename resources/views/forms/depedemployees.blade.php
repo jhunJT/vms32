@@ -40,10 +40,11 @@
                                 <div class="row">
                                     <div class="col-2 mt-3">
                                         <div class="btn-group" role="group">
-                                            <button type="submit" class="btn btn-success"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" id="filterSupp" value="Supporter"><i class="fas fa-user-alt"></i> Show Summary</button>
-                                            <button type="submit" class="btn btn-warning" id="filterSupp" value="Not Supporter"><i class="fas fa-user-alt-slash"></i></button>                                        </div>
+                                            <button type="submit" class="btn btn-success offcanvastb"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" id="filterSupp" value="Supporter"><i class="fas fa-user-alt"></i> Show Summary</button>
+                                            <button type="submit" class="btn btn-warning" id="filterSupp" value="Not Supporter"><i class="fas fa-user-alt-slash"></i></button>
                                         </div>
-                                        <div class="col-4 mt-3">
+                                        </div>
+                                        {{-- <div class="col-4 mt-3">
                                             <select id="select2-school-filter" style="width: 100%;" class="form-control" name="select2-school-filter"></select>
                                         </div>
                                         <div class="col-3 mt-4 align-middle">
@@ -51,7 +52,7 @@
                                         </div>
                                         <div class="col-3 mt-4 align-middle">
                                             <h3>Total Not Supporter:<span> 123</span></h3>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
 
@@ -96,10 +97,26 @@
     <div class="offcanvas-body">
         <div class="row">
             <div class="col-12">
-                <select name="school" id="sschool">
-                    <option value="111">11</option>
+                <select name="status" id="sstatus" class="form-select">
+                    <option disabled selected>Select Status</option>
+                    <option value="1">SUPPORTER</option>
+                    <option value="2">NOT SUPPORTER</option>
                 </select>
             </div>
+            <div class="col-12 mt-2">
+                <select name="school" id="sschool" class="form-select"></select>
+                <hr>
+            </div>
+            <table class="table nowrap" id="teacherSumm">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>is_depEmp</th>
+                        <th>CV</th>
+                        <th>school</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
 </div>
@@ -229,6 +246,87 @@
                             selectOptions += '<option value="SMCDC">SMCDC</option>';
                             selectOptions += '<option value="Samar College">Samar College</option>';
                             selectOptions += '<option value="Samar Division Office">Samar Division Office</option>';
+                            selectOptions += '<option value="Almagro National High School">Almagro National High School</option>';
+                            selectOptions += '<option value="Anibongon Integrated School">Anibongon Integrated School</option>';
+                            selectOptions += '<option value="Apolonia Integrated School">Apolonia Integrated School</option>';
+                            selectOptions += '<option value="Astorga Integrated School">Astorga Integrated School</option>';
+                            selectOptions += '<option value="Babaclayon Integrated School">Babaclayon Integrated School</option>';
+                            selectOptions += '<option value="Baclayan National High School">Baclayan National High School</option>';
+                            selectOptions += '<option value="Bagacay National High School">Bagacay National High School</option>';
+                            selectOptions += '<option value="Bakhaw National High School">Bakhaw National High School</option>';
+                            selectOptions += '<option value="Balocawe Integrated School">Balocawe Integrated School</option>';
+                            selectOptions += '<option value="Baquiw National High School">Baquiw National High School</option>';
+                            selectOptions += '<option value="Baras National High School">Baras National High School</option>';
+                            selectOptions += '<option value="Basey National High School">Basey National High School</option>';
+                            selectOptions += '<option value="Bioso Integrated School">Bioso Integrated School</option>';
+                            selectOptions += '<option value="Bonga National High School">Bonga National High School</option>';
+                            selectOptions += '<option value="Buao Integrated School">Buao Integrated School</option>';
+                            selectOptions += '<option value="Buenos Aires Integrated School">Buenos Aires Integrated School</option>';
+                            selectOptions += '<option value="Cabiton-An National High School">Cabiton-An National High School</option>';
+                            selectOptions += '<option value="Cabunga-An Integrated School">Cabunga-An Integrated School</option>';
+                            selectOptions += '<option value="Calapi National High School">Calapi National High School</option>';
+                            selectOptions += '<option value="Calbiga National High School">Calbiga National High School</option>';
+                            selectOptions += '<option value="Camayse Integrated School">Camayse Integrated School</option>';
+                            selectOptions += '<option value="Caparangasan Integrated School">Caparangasan Integrated School</option>';
+                            selectOptions += '<option value="Casapa National High School">Casapa National High School</option>';
+                            selectOptions += '<option value="Clarencio Calagos Memorial School Of Fisheries">Clarencio Calagos Memorial School Of Fisheries</option>';
+                            selectOptions += '<option value="Curry National High School">Curry National High School</option>';
+                            selectOptions += '<option value="Dampigan National High School">Dampigan National High School</option>';
+                            selectOptions += '<option value="Daram National High School">Daram National High School</option>';
+                            selectOptions += '<option value="Guintarcan National High School">Guintarcan National High School</option>';
+                            selectOptions += '<option value="Hampton Integrated School">Hampton Integrated School</option>';
+                            selectOptions += '<option value="Hinabangan National High School">Hinabangan National High School</option>';
+                            selectOptions += '<option value="Hinangutdan National High School">Hinangutdan National High School</option>';
+                            selectOptions += '<option value="Jiabong National High School">Jiabong National High School</option>';
+                            selectOptions += '<option value="Kerikite Integrated School">Kerikite Integrated School</option>';
+                            selectOptions += '<option value="Lamingao National High School">Lamingao National High School</option>';
+                            selectOptions += '<option value="Lokilokon Integrated School">Lokilokon Integrated School</option>';
+                            selectOptions += '<option value="Mabini National High School">Mabini National High School</option>';
+                            selectOptions += '<option value="Majacob Integrated School">Majacob Integrated School</option>';
+                            selectOptions += '<option value="Marabut National High School">Marabut National High School</option>';
+                            selectOptions += '<option value="Matuguinao National High School">Matuguinao National High School</option>';
+                            selectOptions += '<option value="Motiong National High School">Motiong National High School</option>';
+                            selectOptions += '<option value="Napuro National High School">Napuro National High School</option>';
+                            selectOptions += '<option value="Oeste National High School">Oeste National High School</option>';
+                            selectOptions += '<option value="Old San Agustin National High School">Old San Agustin National High School</option>';
+                            selectOptions += '<option value="Osmena National High School">Osmena National High School</option>';
+                            selectOptions += '<option value="Pagsanghan National High School">Pagsanghan National High School</option>';
+                            selectOptions += '<option value="Parasan National High School">Parasan National High School</option>';
+                            selectOptions += '<option value="Parasanon National High School">Parasanon National High School</option>';
+                            selectOptions += '<option value="Patong National High School">Patong National High School</option>';
+                            selectOptions += '<option value="Pinabacdao National High School">Pinabacdao National High School</option>';
+                            selectOptions += '<option value="Pinaplata Integrated School">Pinaplata Integrated School</option>';
+                            selectOptions += '<option value="Primitivo T. Torrechiva National High School">Primitivo T. Torrechiva National High School</option>';
+                            selectOptions += '<option value="Quintin Quijano Sr. Agricultural School">Quintin Quijano Sr. Agricultural School</option>';
+                            selectOptions += '<option value="Ramon T. Diaz National High School">Ramon T. Diaz National High School</option>';
+                            selectOptions += '<option value="Rizal Integrated School">Rizal Integrated School</option>';
+                            selectOptions += '<option value="Sabang Integrated School">Sabang Integrated School</option>';
+                            selectOptions += '<option value="San Andres National High School">San Andres National High School</option>';
+                            selectOptions += '<option value="San Fernando National High School">San Fernando National High School</option>';
+                            selectOptions += '<option value="San Isidro National High School">San Isidro National High School</option>';
+                            selectOptions += '<option value="San Jorge National High School">San Jorge National High School</option>';
+                            selectOptions += '<option value="San Jose De Buan National High School">San Jose De Buan National High School</option>';
+                            selectOptions += '<option value="San Sebastian National High School">San Sebastian National High School</option>';
+                            selectOptions += '<option value="Sevilla Integrated School">Sevilla Integrated School</option>';
+                            selectOptions += '<option value="Simeon Ocdol National High School">Simeon Ocdol National High School</option>';
+                            selectOptions += '<option value="Sta. Elena Integrated School">Sta. Elena Integrated School</option>';
+                            selectOptions += '<option value="Sta. Margarita National High School">Sta. Margarita National High School</option>';
+                            selectOptions += '<option value="Sta. Rita National High School">Sta. Rita National High School</option>';
+                            selectOptions += '<option value="Sto. Nino Integrated School">Sto. Nino Integrated School</option>';
+                            selectOptions += '<option value="Sto. Nino National High School">Sto. Nino National High School</option>';
+                            selectOptions += '<option value="Sua National High School">Sua National High School</option>';
+                            selectOptions += '<option value="Tagapul-An National High School">Tagapul-An National High School</option>';
+                            selectOptions += '<option value="Talalora National High School">Talalora National High School</option>';
+                            selectOptions += '<option value="Tarangnan National High School">Tarangnan National High School</option>';
+                            selectOptions += '<option value="Tatabunan Integrated School">Tatabunan Integrated School</option>';
+                            selectOptions += '<option value="Tizon National High School">Tizon National High School</option>';
+                            selectOptions += '<option value="Tominamos Integrated School">Tominamos Integrated School</option>';
+                            selectOptions += '<option value="Valeriano C. Yancha Mas">Valeriano C. Yancha Mas</option>';
+                            selectOptions += '<option value="Villahermosa Integrated School">Villahermosa Integrated School</option>';
+                            selectOptions += '<option value="Villahermosa National High School">Villahermosa National High School</option>';
+                            selectOptions += '<option value="Villareal National High School">Villareal National High School</option>';
+                            selectOptions += '<option value="Wright National High School">Wright National High School</option>';
+                            selectOptions += '<option value="Zumarraga National High School">Zumarraga National High School</option>';
                             selectOptions += '</select>';
 
                             if (data) {
@@ -304,8 +402,6 @@
 
             // }
         });
-
-
 
     $('.dataTables_filter input[type="search"]').css(
         {'width':'350px','height':'40px', 'display':'inline-block'}
@@ -435,7 +531,7 @@
 
     $('#filterSupp').on('click', function(){
         var filtSupp = $(this).val();
-        console.log(filtSupp);
+        // console.log(filtSupp);
         // if(filtSupp == "Supporter"){
         //     cvrec.coulmn(4).search().draw();
         // }
@@ -500,8 +596,6 @@
                 }
             });
         }
-
-
     });
 
     $(document).on('click', '.notSupp', function(){
@@ -660,23 +754,6 @@
         });
     });
 
-    // $('#modalSummary').on('click', function(){
-    //     $('#depedEmployeeCount').modal('show');
-    // });
-
-    // $("#cvrectbl tfoot th").each( function ( i ) {
-    //     var select = $('<select><option value=""></option></select>')
-    //         .appendTo( $(this).empty() )
-    //         .on( 'change', function () {
-    //             table.column( i )
-    //                 .search( $(this).val() )
-    //                 .draw();
-    //         } );
-
-    //         cvrec.column( i ).data().unique().sort().each( function ( d, j ) {
-    //         select.append( '<option value="'+d+'">'+d+'</option>' )
-    //     } );
-    // } );
     $(document).on('select2:open', () => {
         document.querySelector('.select2-search__field').focus();
     });
@@ -731,9 +808,95 @@
         // Hide loading indicator after update
         $('#loading').hide();
     })
+
+    $('#sstatus').select2({
+        placeholder: "Select Status",
+        dropdownParent: $('#offcanvasRight'),
+        minimumResultsForSearch: -1
+    });
+
+    $('#sschool').select2({
+        placeholder: "Select School/District",
+        allowClear: true,
+        dropdownParent: $('#offcanvasRight'),
+        ajax:{
+            url:"{{ route('cvrecord.schoolList') }}",
+            type:"POST",
+            dataType:"json",
+            delay:250,
+            quietMillis: 100,
+            data: function(params){
+                return{
+                    search: params.term
+                };
+            },
+            processResults: function(data){
+                console.log(data);
+                return{
+                    results: $.map(data.items, function(obj,i) {
+                        return {
+                        id:i, text:obj
+                        };
+                    })
+                }
+            }
+        }
+    });
+
+
+// Trigger DataTable load when school filter is selected
+let teachRecords = $('#teacherSumm').DataTable({
+    scrollY: true,
+    searching: false,
+    paging: false,
+    ordering: false,
+    dom: 'rtip',
+    data: [], // Initially empty
+    columns: [
+        { "data": "Name", "className": "align-middle" },
+        { "data": "is_depedEmployee", "visible": false, "searchable": true },
+        { "data": "survey_stat", "visible": false, "searchable": true },
+        { "data": "school", "visible": false, "searchable": true }
+    ]
 });
 
+// Trigger DataTable load when school filter is selected
+    // $('#sschool').on('change', function() {
+    // const selectStatus = $('#sstatus').val();
+    // const selectSchool = $(this).val();
 
+    // // Check if Status is selected
+    // if (!selectStatus) {
+    //     Swal.fire({
+    //         icon: "error",
+    //         title: "Oops...",
+    //         text: "Please select Status!"
+    //     });
+    //     return;
+    // }
+
+    // // Fetch data based on selected filters and load into DataTable
+    // $.ajax({
+
+    //     data: { selectStatus: selectStatus, selectSchool: selectSchool },
+    //     method: 'GET',
+    //     success: function(response) {
+    //         // Clear existing data and add new data to the DataTable
+    //         teachRecords.clear().rows.add(response.data).draw();
+    //     },
+    //     error: function(xhr, status, error) {
+    //         Swal.fire({
+    //             icon: "error",
+    //             title: "Error",
+    //             text: "An error occurred while loading data. Please try again."
+    //         });
+    //     }
+    // });
+    // });
+    // $('#offcanvasRight').on('shown.bs.offcanvas', function() {
+
+    // });
+});
 </script>
 
 @include('layouts.script')
