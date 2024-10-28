@@ -117,7 +117,6 @@
                             <th style="width:15%;">Status</th>
                             <th>CV</th>
                             <th>school</th>
-                            <th>Status2</th>
                         </tr>
                     </thead>
                 </table>
@@ -890,8 +889,7 @@
                 }
             },
             { "data": "survey_stat", "visible": false, "searchable": true },
-            { "data": "school", "visible": false, "searchable": true },
-            { "data": "is_depedEmployee", "visible": true}
+            { "data": "school", "visible": false, "searchable": true }
         ]
     });
 
