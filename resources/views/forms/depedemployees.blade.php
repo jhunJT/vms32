@@ -40,7 +40,7 @@
                                 <div class="row">
                                     <div class="col-2 mt-3">
                                         <div class="btn-group" role="group">
-                                            <button type="button" class="btn btn-success offcanvastb" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" id="filterSupp" value="Supporter"><i class="fas fa-user-alt"></i> Show Summary</button>
+                                            <button type="button" class="btn btn-success offcanvastb" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" id="filterSupp" value="Supporter"><i class="fas fa-user-alt"></i> Show Records</button>
                                             <button type="button" class="btn btn-info" id="notfound"><i class="fas fa-user-alt-slash"></i>Not Found</button>
                                         </div>
                                     </div>
