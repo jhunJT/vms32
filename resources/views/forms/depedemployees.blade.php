@@ -831,7 +831,6 @@
                 };
             },
             processResults: function(data){
-                console.log(data);
                 return{
                     results: $.map(data.items, function(obj,i) {
                         return {
@@ -844,58 +843,55 @@
     });
 
 
-// Trigger DataTable load when school filter is selected
-let teachRecords = $('#teacherSumm').DataTable({
-    scrollY: true,
-    searching: false,
-    paging: false,
-    ordering: false,
-    dom: 'rtip',
-    data: [], // Initially empty
-    columns: [
-        { "data": "Name", "className": "align-middle" },
-        { "data": "is_depedEmployee", "visible": false, "searchable": true },
-        { "data": "survey_stat", "visible": false, "searchable": true },
-        { "data": "school", "visible": false, "searchable": true }
-    ]
-});
+    // Trigger DataTable load when school filter is selected
+    let teachRecords = $('#teacherSumm').DataTable({
+        scrollY: true,
+        searching: false,
+        paging: false,
+        ordering: false,
+        dom: 'rtip',
+        data: [],
+        columns: [
+            { "data": "Name", "className": "align-middle" },
+            { "data": "is_depedEmployee", "visible": false, "searchable": true },
+            { "data": "survey_stat", "visible": false, "searchable": true },
+            { "data": "school", "visible": false, "searchable": true }
+        ]
+    });
 
-// Trigger DataTable load when school filter is selected
-    // $('#sschool').on('change', function() {
-    // const selectStatus = $('#sstatus').val();
-    // const selectSchool = $(this).val();
+    $('#sschool').on('change', function() {
+        const selectStatus = $('#sstatus').val();
+        const selectSchool = $(this).val();
 
-    // // Check if Status is selected
-    // if (!selectStatus) {
-    //     Swal.fire({
-    //         icon: "error",
-    //         title: "Oops...",
-    //         text: "Please select Status!"
-    //     });
-    //     return;
-    // }
+        if (!selectStatus) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please select Status!"
+            });
+            return;
+        }
 
-    // // Fetch data based on selected filters and load into DataTable
-    // $.ajax({
+        $.ajax({
+            url: "{{ route('cvrecord.techearsRecord') }}",
+            data: { selectStatus: selectStatus, selectSchool: selectSchool },
+            method: 'GET',
+            success: function(response) {
+                teachRecords.clear().rows.add(response.data).draw();
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "An error occurred while loading data. Please try again."
+                });
+            }
+        });
+    });
 
-    //     data: { selectStatus: selectStatus, selectSchool: selectSchool },
-    //     method: 'GET',
-    //     success: function(response) {
-    //         // Clear existing data and add new data to the DataTable
-    //         teachRecords.clear().rows.add(response.data).draw();
-    //     },
-    //     error: function(xhr, status, error) {
-    //         Swal.fire({
-    //             icon: "error",
-    //             title: "Error",
-    //             text: "An error occurred while loading data. Please try again."
-    //         });
-    //     }
-    // });
-    // });
-    // $('#offcanvasRight').on('shown.bs.offcanvas', function() {
+    $('#offcanvasRight').on('shown.bs.offcanvas', function() {
 
-    // });
+    });
 });
 </script>
 

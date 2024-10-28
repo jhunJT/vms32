@@ -197,10 +197,8 @@ class cvrecordController extends Controller
     }
 
     public function techearsRecord(Request $request){
-        // dd($request->all());
         $cvrecord = DB::table('master_list_nle2022s')->select('Name','is_depedEmployee','survey_stat','school')
-        // ->where('man_add','0')
-        ->where([['is_depedEmployee',$request->status],['school',$request->school]])
+        ->where([['is_depedEmployee',$request->selectStatus],['school',$request->selectSchool]])
         ->orderByRaw ('is_depedEmployee asc, Name');
 
         if($request->ajax()){
