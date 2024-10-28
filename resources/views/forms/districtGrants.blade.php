@@ -1181,7 +1181,7 @@
         });
     });
 
-    $('.addgrnt').modal({backdrop: 'static', keyboard: false})
+    $('.addgrnt').modal({backdrop: 'static', keyboard: false});
 
     $('.btngrntview').on('click', function(){
         $('.grntViewModal').modal('show');

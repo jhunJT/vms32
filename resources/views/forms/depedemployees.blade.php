@@ -89,7 +89,7 @@
     <button onclick="$('#popup').hide()">Close</button>
 </div>
 
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" aria-modal="true" role="dialog" style="width: 1000px;">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" data-bs-scroll="false" data-bs-backdrop="false" aria-labelledby="offcanvasRightLabel" aria-modal="true" role="dialog" style="width: 1000px;">
     <div class="offcanvas-header">
       <h5 id="offcanvasRightLabel">SUMMARY</h5>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -127,10 +127,10 @@
 </div>
 
 <div class="modal fade" id="modalAddmanual" tabindex="-1" aria-labelledby="modalAddmanualLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalAddmanualLabel">Add Manual</h5>
+                <h5 class="modal-title" id="modalAddmanualLabel">Add Not Found</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -158,7 +158,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="addManualEMployee">Save changes</button>
+                <button type="button" class="btn btn-primary" id="addManualEMployee">Add record</button>
             </div>
         </div>
     </div>
@@ -683,22 +683,25 @@
 
     function loadReloadData() {
         const selectSchool = $('#sschool').val();
+        if(selectSchool)
+        {
+            $.ajax({
+                url: "{{ route('cvrecord.techearsRecord') }}",
+                data: { selectSchool: selectSchool },
+                method: 'GET',
+                success: function(response) {
+                    teachRecords.clear().rows.add(response.data).draw();
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "An error occurred while loading data. Please try again."
+                    });
+                }
+            });
+        }
 
-        $.ajax({
-            url: "{{ route('cvrecord.techearsRecord') }}",
-            data: { selectSchool: selectSchool },
-            method: 'GET',
-            success: function(response) {
-                teachRecords.clear().rows.add(response.data).draw();
-            },
-            error: function(xhr, status, error) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: "An error occurred while loading data. Please try again."
-                });
-            }
-        });
     }
 
     $('#customSearch').on('input', debounce(function() {
@@ -830,6 +833,7 @@
         placeholder: "Select School/District",
         allowClear: true,
         dropdownParent: $('#modalAddmanual'),
+        tags: true,
         ajax:{
             url:"{{ route('cvrecord.schoolList') }}",
             type:"POST",
@@ -946,30 +950,43 @@
     });
 
     $('#sstatus').on('select2:select', function(){
-
         var empschool = $('#sschool').val();
         var empstatus = $(this).val();
-
-        $.ajax({
-            url: "{{ route('cvrecord.techearsRecordFiltered') }}",
-            data: { empschool: empschool, empstatus:empstatus },
-            method: 'GET',
-            success: function(response) {
-                teachRecords.clear().rows.add(response.data).draw();
-            },
-            error: function(xhr, status, error) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: "An error occurred while loading data. Please try again."
-                });
-            }
-        });
+        if(!empschool)
+        {
+            Swal.fire({
+                icon: "error",
+                title: "Oops!Something went wrong!",
+                text: "Please select SCHOOL"
+            });
+            $('#sstatus').val('').trigger('change');
+        }else
+        {
+            $.ajax({
+                url: "{{ route('cvrecord.techearsRecordFiltered') }}",
+                data: { empschool: empschool, empstatus:empstatus },
+                method: 'GET',
+                success: function(response) {
+                    teachRecords.clear().rows.add(response.data).draw();
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "An error occurred while loading data. Please try again."
+                    });
+                }
+            });
+        }
     });
 
     $('#offcanvasRight').on('hide.bs.offcanvas', function (e) {
+        $('#sschool').val('').trigger('change');
+        $('#sstatus').val('').trigger('change');
         teachRecords.clear().draw();
-    })
+    });
+
+    $('#modalAddmanual').modal({backdrop: 'static', keyboard: false});
 
     // var columnData = teachRecords.column(1).data().toArray();
     // console.log('Column 5 Data:', columnData);
