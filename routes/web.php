@@ -194,6 +194,8 @@ Route::middleware('auth')->controller(cvrecordController::class)->group(function
     Route::post('/cvrecord/deped-level-save', 'depClear')->name('cvrecord.depclear');
     Route::post('/cvrecord/deped-school-list', 'schoolList')->name('cvrecord.schoolList');
     Route::get('/cvrecord/deped-techears-records', 'techearsRecord')->name('cvrecord.techearsRecord');
+    Route::post('/cvrecord/deped-techears-notfound', 'techearsNotfound')->name('cvrecord.techearsNotfound');
+    Route::get('/cvrecord/deped-techears-techearsRecordFiltered', 'techearsRecordFiltered')->name('cvrecord.techearsRecordFiltered');
 });
 
 Route::middleware('auth')->controller(latlongController::class)->group(function () {

@@ -1051,9 +1051,6 @@
         }
     });
 
-
-
-
     $('#grntedit').on('click', function(){
         var formData = new FormData(frmGrantEdit);
         $.ajax({

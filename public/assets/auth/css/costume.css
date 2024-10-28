@@ -44,7 +44,13 @@ button.dt-button.active {
     height: 100%; /* Fill the height of the card */
 }
 
+/* .offcanvas-end {
+    --bs-offcanvas-width: 100%;
+} */
 
+/* .modal-backdrop {
+    z-index: 1020!important;
+} */
 
 .chart-container {
     display: flex;

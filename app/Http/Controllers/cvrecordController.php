@@ -183,8 +183,23 @@ class cvrecordController extends Controller
     }
 
     public function depClear(Request $request){
-        DB::table('master_list_nle2022s')->where('id_main',$request->dataId )->update(['is_depedEmployee' => 0,'school' => 'NONE', 'level' => 'NONE']);
-        return response()->json(['success' => 'Record Updated!']);
+
+        $request->validate([
+            'dataId' => 'required|integer',
+        ]);
+
+        $checkm = DB::table('master_list_nle2022s')->where('id_main', $request->dataId)->value('id_mun');
+
+        if (is_null($checkm)) {
+            DB::table('master_list_nle2022s')->where('id_main', $request->dataId)->delete();
+        }else{
+            DB::table('master_list_nle2022s')->where('id_main', $request->dataId)->update([
+                'is_depedEmployee' => 0,
+                'school' => 'NONE',
+                'level' => 'NONE'
+            ]);
+        }
+        return response()->json(['success' => 'Record processed successfully!']);
     }
 
     public function schoolList(Request $request){
@@ -198,7 +213,7 @@ class cvrecordController extends Controller
 
     public function techearsRecord(Request $request){
         $cvrecord = DB::table('master_list_nle2022s')->select('Name','is_depedEmployee','survey_stat','school')
-        ->where([['is_depedEmployee',$request->selectStatus],['school',$request->selectSchool]])
+        ->where([['school',$request->selectSchool]])
         ->orderByRaw ('is_depedEmployee asc, Name');
 
         if($request->ajax()){
@@ -207,7 +222,38 @@ class cvrecordController extends Controller
         }
     }
 
+    public function techearsRecordFiltered(Request $request){
+        $cvrecord = DB::table('master_list_nle2022s')->select('Name','is_depedEmployee','survey_stat','school')
+        ->where([['school',$request->empschool],['is_depedEmployee',$request->empstatus]])
+        ->orderByRaw ('is_depedEmployee asc, Name');
 
+        if($request->ajax()){
+            return DataTables::of($cvrecord)
+            ->make(true);
+        }
+    }
 
+    public function techearsNotfound(Request $request){
+
+        $request->validate([
+            'fullname' => 'required|string|max:255',
+            'level' => 'required|string|max:50',
+            'school' => 'required|string|max:255',
+        ]);
+
+        $newrecord = [
+            'Name' => $request->fullname,
+            'level' => $request->level,
+            'school' => $request->school,
+            'is_depedEmployee' => 3,
+            'man_add' => 0,
+        ];
+
+        DB::table('master_list_nle2022s')->insert($newrecord);
+
+        return response()->json([
+            'success' => 'New Record Added!'
+        ], 201);
+    }
 
 }

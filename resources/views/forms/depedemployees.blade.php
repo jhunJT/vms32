@@ -40,10 +40,10 @@
                                 <div class="row">
                                     <div class="col-2 mt-3">
                                         <div class="btn-group" role="group">
-                                            <button type="submit" class="btn btn-success offcanvastb"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" id="filterSupp" value="Supporter"><i class="fas fa-user-alt"></i> Show Summary</button>
-                                            <button type="submit" class="btn btn-warning" id="filterSupp" value="Not Supporter"><i class="fas fa-user-alt-slash"></i></button>
+                                            <button type="button" class="btn btn-success offcanvastb" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" id="filterSupp" value="Supporter"><i class="fas fa-user-alt"></i> Show Summary</button>
+                                            <button type="button" class="btn btn-info" id="notfound"><i class="fas fa-user-alt-slash"></i>Not Found</button>
                                         </div>
-                                        </div>
+                                    </div>
                                         {{-- <div class="col-4 mt-3">
                                             <select id="select2-school-filter" style="width: 100%;" class="form-control" name="select2-school-filter"></select>
                                         </div>
@@ -53,8 +53,8 @@
                                         <div class="col-3 mt-4 align-middle">
                                             <h3>Total Not Supporter:<span> 123</span></h3>
                                         </div> --}}
-                                    </div>
                                 </div>
+                            </div>
 
                         </div>
 
@@ -89,7 +89,7 @@
     <button onclick="$('#popup').hide()">Close</button>
 </div>
 
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" aria-modal="true" role="dialog">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" aria-modal="true" role="dialog" style="width: 1000px;">
     <div class="offcanvas-header">
       <h5 id="offcanvasRightLabel">SUMMARY</h5>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -97,26 +97,69 @@
     <div class="offcanvas-body">
         <div class="row">
             <div class="col-12">
+                <div class="col-12 mb-3">
+                    <select name="school" id="sschool" class="form-select"></select>
+                </div>
                 <select name="status" id="sstatus" class="form-select">
                     <option disabled selected>Select Status</option>
                     <option value="1">SUPPORTER</option>
                     <option value="2">NOT SUPPORTER</option>
+                    <option value="3">NOT FOUND</option>
                 </select>
-            </div>
-            <div class="col-12 mt-2">
-                <select name="school" id="sschool" class="form-select"></select>
                 <hr>
             </div>
-            <table class="table nowrap" id="teacherSumm">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>is_depEmp</th>
-                        <th>CV</th>
-                        <th>school</th>
-                    </tr>
-                </thead>
-            </table>
+            <div class="col-12">
+                <table class="table nowrap table-hover" id="teacherSumm" >
+                    <thead>
+                        <tr>
+                            <th style="width:5%;">#</th>
+                            <th style="width:80%;">Name</th>
+                            <th style="width:15%;">Status</th>
+                            <th>CV</th>
+                            <th>school</th>
+                            <th>Status2</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAddmanual" tabindex="-1" aria-labelledby="modalAddmanualLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAddmanualLabel">Add Manual</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form id="manForm">
+                        <div class="col-12">
+                            <label for="addName">Fullname</label>
+                            <input type="text" id="addName" name="fullname" class="form-control" placeholder="surename, firstname middle name -->Dela Cruz, Juan Dalisay">
+                        </div>
+                        <div class="col-12">
+                            <label for="level">Level</label>
+                            <select name="level" id="level" class="form-select">
+                                <option selected disabled>Select level</option>
+                                <option value="PRIMARY">PRIMARY</option>
+                                <option value="SECONDARY">SECONDARY</option>
+                                <option value="PRIVATE">PRIVATE</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <label for="school">School/School District</label>
+                            <select type="text" id="ssschool" name="school" class="form-select"></select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="addManualEMployee">Save changes</button>
+            </div>
         </div>
     </div>
 </div>
@@ -219,17 +262,41 @@
                         if (type === 'display') {
                             var selectOptions = '<select class="form-select btnSchool" style="width: 180px;">';
                             selectOptions += '<option selected>NONE</option>';
-                            selectOptions += '<option value="ALMAGRO">Almagro</option>';
+                            selectOptions += '<option value="Almagro">Almagro</option>';
+                            selectOptions += '<option value="Basey I">Basey I</option>';
+                            selectOptions += '<option value="Basey II">Basey II</option>';
+                            selectOptions += '<option value="Calbiga I">Calbiga I</option>';
+                            selectOptions += '<option value="Calbiga II">Calbiga II</option>';
+                            selectOptions += '<option value="Daram I">Daram I</option>';
+                            selectOptions += '<option value="Tarangnan">Tarangnan</option>';
+                            selectOptions += '<option value="Tagapul-an">Tagapul-an</option>';
+                            selectOptions += '<option value="Sto. Nino">Sto. Nino</option>';
+                            selectOptions += '<option value="Daram II">Daram II</option>';
+                            selectOptions += '<option value="Hinabangan I">Hinabangan I</option>';
+                            selectOptions += '<option value="Hinabangan II">Hinabangan II</option>';
+                            selectOptions += '<option value="Sta. Margarita I">Sta. Margarita I</option>';
+                            selectOptions += '<option value="Sta. Margarita II">Sta. Margarita II</option>';
+                            selectOptions += '<option value="Jiabong">Jiabong</option>';
+                            selectOptions += '<option value="San Jorge">San Jorge</option>';
+                            selectOptions += '<option value="Pagsanghan">Pagsanghan</option>';
+                            selectOptions += '<option value="Marabut">Marabut</option>';
+                            selectOptions += '<option value="Matuguinao">Matuguinao</option>';
+                            selectOptions += '<option value="Motiong">Motiong</option>';
+                            selectOptions += '<option value="Pinabacdao I">Pinabacdao I</option>';
+                            selectOptions += '<option value="Pinabacdao II">Pinabacdao II</option>';
+                            selectOptions += '<option value="San Sebastian">San Sebastian</option>';
+                            selectOptions += '<option value="Sta. Rita I">Sta. Rita I</option>';
+                            selectOptions += '<option value="Gandara II">Gandara II</option>';
+                            selectOptions += '<option value="Gandara I">Gandara I</option>';
+                            selectOptions += '<option value="Sta. Rita II">Sta. Rita II</option>';
+                            selectOptions += '<option value="Sta. Rita III">Sta. Rita III</option>';
+                            selectOptions += '<option value="Talalora">Talalora</option>';
+                            selectOptions += '<option value="Villareal I">Villareal I</option>';
+                            selectOptions += '<option value="Villareal II">Villareal II</option>';
+                            selectOptions += '<option value="Wright I">Wright I</option>';
+                            selectOptions += '<option value="Wright II">Wright II</option>';
+                            selectOptions += '<option value="Zumarraga">Zumarraga</option>';
                             selectOptions += '<option value="CALBAYOG CITY">CALBAYOG CITY</option>';
-                            selectOptions += '<option value="GANDARA I">GANDARA I</option>';
-                            selectOptions += '<option value="GANDARA II">GANDARA II</option>';
-                            selectOptions += '<option value="PAGSANGHAN">PAGSANGHAN</option>';
-                            selectOptions += '<option value="SAN JORGE">SAN JORGE</option>';
-                            selectOptions += '<option value="STA. MARGARITA I">STA. MARGARITA I</option>';
-                            selectOptions += '<option value="STA. MARGARITA II">STA. MARGARITA II</option>';
-                            selectOptions += '<option value="STO. NINO">STO. NINO</option>';
-                            selectOptions += '<option value="TARANGNAN">TARANGNAN</option>';
-                            selectOptions += '<option value="TAGAPUL-AN">TAGAPUL-AN</option>';
                             selectOptions += '<option value="FUN AND LEARN SCHOOL INC">FUN AND LEARN SCHOOL INC</option>';
                             selectOptions += '<option value="CATB DIV-1">CATB DIV-1</option>';
                             selectOptions += '<option value="CATB DIV-2">CATB DIV-2</option>';
@@ -364,43 +431,7 @@
                 if  (data.Name  === data.HL) {
                     $(row).addClass('green');
                 }
-            },
-            // "drawCallback": function () {
-            //     // Reinitialize Select2 for any newly drawn rows
-            //     $('.btnSchool').select2({
-            //         width: '100%'
-            //     });
-
-            //     $('.btnLevel').on('change', function() {
-            //     var rowId = $(this).data('id');  // Get row id (from the data-id attribute)
-            //     var selectedLevel = $(this).val();
-
-            //     // Find the corresponding school select
-            //     var schoolSelect = $('.btnSchool[data-id="' + rowId + '"]');
-            //     schoolSelect.empty();  // Clear existing options
-
-            //     if (selectedLevel === 'SECONDARY') {
-            //         // Add Secondary school options
-            //         const secondarySchools = [
-            //             { id: 'Bagacay National High School', text: 'Bagacay National High School - Daram I' },
-            //             { id: 'Daram National High School', text: 'Daram National High School - Daram I' }
-            //         ];
-
-            //         secondarySchools.forEach(function(school) {
-            //             var newOption = new Option(school.text, school.id, false, false);
-            //             schoolSelect.append(newOption);
-            //         });
-            //     } else if (selectedLevel === 'PRIMARY') {
-            //         // Add Primary options (if needed)
-            //         schoolSelect.append('<option value="">Select a schoolss</option>');
-            //     }
-
-            //     // Refresh the Select2 dropdown
-            //     schoolSelect.trigger('change');
-            // });
-
-
-            // }
+            }
         });
 
     $('.dataTables_filter input[type="search"]').css(
@@ -440,7 +471,7 @@
                 };
             },
             processResults: function(data){
-                console.log(data);
+                // console.log(data);
                 return{
                     results: $.map(data.items, function(obj,i) {
                         return {
@@ -529,20 +560,6 @@
         cvrec.draw();
     });
 
-    $('#filterSupp').on('click', function(){
-        var filtSupp = $(this).val();
-        // console.log(filtSupp);
-        // if(filtSupp == "Supporter"){
-        //     cvrec.coulmn(4).search().draw();
-        // }
-
-        // var filtSupp = []
-        // $.each($('#filterSupp'), function(i,elem){
-        //     filtSupp.push($(this).val())
-        // })
-        // grantTbl.column(4).search(filtSupp).draw();
-    });
-
     $(document).on('click', '.depEmp', function(){
         const dataId = $(this).data('id');
         var $row = $(this).closest('tr');
@@ -586,7 +603,7 @@
 
                         },
                         error: function(xhr, status, error){
-                            console.log(error);
+                            // console.log(error);
                             if(error) {
                                 var err = eval("(" + xhr.responseText + ")");
                                 toastr.error(err.message);
@@ -640,7 +657,6 @@
 
                         },
                         error: function(xhr, status, error){
-                            console.log(error);
                             if(error) {
                                 var err = eval("(" + xhr.responseText + ")");
                                 toastr.error(err.message);
@@ -650,7 +666,6 @@
                 }
             });
         }
-
 
     });
 
@@ -666,92 +681,71 @@
         cvrec.column(1).search(value).draw();
     }
 
+    function loadReloadData() {
+        const selectSchool = $('#sschool').val();
+
+        $.ajax({
+            url: "{{ route('cvrecord.techearsRecord') }}",
+            data: { selectSchool: selectSchool },
+            method: 'GET',
+            success: function(response) {
+                teachRecords.clear().rows.add(response.data).draw();
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "An error occurred while loading data. Please try again."
+                });
+            }
+        });
+    }
+
     $('#customSearch').on('input', debounce(function() {
         customSearch(this.value);
     }, 300));
 
-    // const secondarySchools = [
-    //     { id: 'Bagacay National High School', text: 'Bagacay National High School - Daram I' },
-    //     { id: 'Daram National High School', text: 'Daram National High School - Daram I' }
-    // ];
-
-    // $('.btnLevel').off('change').on('change', function() {
-    //     var rowId = $(this).data('id');
-    //     var selectedLevel = $(this).val();
-
-    //     // Find the matching school select for the same row
-    //     var schoolSelect = $('.btnSchool[data-id="' + rowId + '"]');
-
-    //     // Clear the current options in the school select
-    //     schoolSelect.empty();
-
-    //     if (selectedLevel === 'SECONDARY') {
-    //         // Populate secondary schools
-    //         const secondarySchools = [
-    //             { id: 'Bagacay National High School', text: 'Bagacay National High School - Daram I' },
-    //             { id: 'Daram National High School', text: 'Daram National High School - Daram I' }
-    //         ];
-
-    //         secondarySchools.forEach(function(school) {
-    //             var newOption = new Option(school.text, school.id, false, false);
-    //             schoolSelect.append(newOption);
-    //         });
-    //     } else if (selectedLevel === 'PRIMARY') {
-    //         // You can also add primary schools or leave it blank.
-    //         schoolSelect.append('<option value="">Select a school</option>');
-    //     }
-
-    //     // Trigger Select2 to refresh
-    //     schoolSelect.trigger('change');
-    // });
-
-
-
-    // $('.btnLevel').change(function() {
-    //     const selectedLevel = $(this).val();
-    //     console.log(selectedLevel);
-    //     $('.btnSchool').empty(); // Clear current options
-
-    //     if (selectedLevel === 'secondary') {
-    //         // Add Secondary options
-    //         secondarySchools.forEach(function(school) {
-    //             const newOption = new Option(school.text, school.id, false, false);
-    //             $('.btnSchool').append(newOption);
-    //         });
-    //     } else {
-    //         // Default or primary options (if needed)
-    //         $('.btnSchool').append('<option value="">Select a school</option>');
-    //     }
-
-    //     // Refresh Select2
-    //     $('.btnSchool').trigger('change');
-    // });
-
     $(document).on('click','.depClear', function(){
         const dataId = $(this).data('id');
-        $.ajax({
-            url: '{{ route("cvrecord.depclear") }}' ,
-            method: 'post',
-            data: {dataId:dataId},
-            success:function(res){
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Your work has been saved",
-                    showConfirmButton: false,
-                    timer: 1500
+        Swal.fire({
+            title:"Are you sure?",
+            text:"You won't be able to revert this!",
+            icon:"warning",
+            showCancelButton:!0,
+            confirmButtonColor:"#1cbb8c",
+            cancelButtonColor:"#f32f53",
+            confirmButtonText:"Yes, CLEAR and DELETE it!"
+        }).then((result) => {
+            if (result.isConfirmed){
+                $.ajax({
+                    url: '{{ route("cvrecord.depclear") }}' ,
+                    method: 'post',
+                    data: {dataId:dataId},
+                    success:function(res){
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Your work has been saved",
+                            showConfirmButton: false,
+                            timer: 1500
+                            }
+                        )
+                        cvrec.ajax.reload();
+                    },
+                    error: function(xhr, status, error){
+                           if(error) {
+                            var err = eval("(" + xhr.responseText + ")");
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: err.message
+                            });
+                        }
                     }
-                )
-                cvrec.ajax.reload();
-            },
-            error: function(xhr, status, error){
-                console.log(error);
-                if(error) {
-                    var err = eval("(" + xhr.responseText + ")");
-                    toastr.error(err.message);
-                }
+                });
             }
         });
+
     });
 
     $(document).on('select2:open', () => {
@@ -773,7 +767,6 @@
                 };
             },
             processResults: function(data){
-                console.log(data);
                 return{
                     results: $.map(data.items, function(obj,i) {
                         return {
@@ -787,29 +780,20 @@
 
     $('#select2-school-filter').on('change', function() {
         var selectSchool = $(this).val();
-
-        // Show loading indicator
         $('#loading').show();
-
-        // Reset search to show all entries before applying the new filter
         cvrec.search('').columns().search('').draw();
 
-        // Apply new filter based on selected school
         if (selectSchool) {
             cvrec.column(11).search('^' + selectSchool + '$', true, false);
         }
 
         cvrec.draw();
-
-        // Count entries in column 12 where the value is 1
         var count1 = cvrec.column(12).search(1).rows({ search: '1' }).count();
-        console.log(count1);
-
-        // Hide loading indicator after update
         $('#loading').hide();
     })
 
     $('#sstatus').select2({
+        allowClear: true,
         placeholder: "Select Status",
         dropdownParent: $('#offcanvasRight'),
         minimumResultsForSearch: -1
@@ -842,39 +826,133 @@
         }
     });
 
+    $('#ssschool').select2({
+        placeholder: "Select School/District",
+        allowClear: true,
+        dropdownParent: $('#modalAddmanual'),
+        ajax:{
+            url:"{{ route('cvrecord.schoolList') }}",
+            type:"POST",
+            dataType:"json",
+            delay:250,
+            quietMillis: 100,
+            data: function(params){
+                return{
+                    search: params.term
+                };
+            },
+            processResults: function(data){
+                return{
+                    results: $.map(data.items, function(obj,i) {
+                        return {
+                        id:i, text:obj
+                        };
+                    })
+                }
+            }
+        }
+    });
 
-    // Trigger DataTable load when school filter is selected
+
     let teachRecords = $('#teacherSumm').DataTable({
         scrollY: true,
         searching: false,
         paging: false,
         ordering: false,
         dom: 'rtip',
+        autoWidth : false,
         data: [],
         columns: [
+            { "data": "id_main", "className": "align-middle text-center",
+                render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;}
+            },
             { "data": "Name", "className": "align-middle" },
-            { "data": "is_depedEmployee", "visible": false, "searchable": true },
+            { "data": "is_depedEmployee", "visible": true, "searchable": true,
+                "className": "align-middle text-center",
+                "defaultContent": '',
+                "render": function (data, type, row, meta)
+                {
+                    if(data == 1){
+                        return '<button type="button" class="btn btn-danger btn-rounded waves-effect waves-light">Supporter</button>'
+                    }else if(data == 2){
+                        return '<button type="button" class="btn btn-warning btn-rounded waves-effect waves-light">Not Supporter</button>'
+                    }else if(data == 3){
+                        return '<button type="button" class="btn btn-info btn-rounded waves-effect waves-light">Not Found</button>'
+                    }else{
+                        return ''
+                    }
+                    return data;
+                }
+            },
             { "data": "survey_stat", "visible": false, "searchable": true },
-            { "data": "school", "visible": false, "searchable": true }
+            { "data": "school", "visible": false, "searchable": true },
+            { "data": "is_depedEmployee", "visible": true}
         ]
     });
 
     $('#sschool').on('change', function() {
-        const selectStatus = $('#sstatus').val();
         const selectSchool = $(this).val();
+        loadReloadData();
+    });
 
-        if (!selectStatus) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Please select Status!"
-            });
-            return;
-        }
+    $('#sschool').on('select2:clearing', function(e){
+        $('#sstatus').val('').trigger('change');
+        teachRecords.clear().draw();
+        loadReloadData();
+    });
+
+    $('#sstatus').on('select2:clearing', function(e){
+        loadReloadData();
+    });
+
+    $(document).on('click', '#notfound', function(){
+        $('#modalAddmanual').modal('show')
+    });
+
+
+    var manForms = $('#manForm')[0];
+    $('#addManualEMployee').on('click', function(){
+        var formAddManual = new FormData(manForms);
+        $.ajax({
+            url:"{{ route('cvrecord.techearsNotfound') }}" ,
+            method: 'POST',
+            processData: false,
+            contentType: false,
+            data: formAddManual,
+            success: function(response) {
+                $('#manForm')[0].reset();
+                $('#modalAddmanual').modal('toggle');
+                if(response.success) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        showConfirmButton: false,
+                        title: "Record Added!"
+                    });
+                }
+            },
+            error: function(xhr, status, error){
+                if(error) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: err.message
+                    });
+                }
+            }
+        });
+    });
+
+    $('#sstatus').on('select2:select', function(){
+
+        var empschool = $('#sschool').val();
+        var empstatus = $(this).val();
 
         $.ajax({
-            url: "{{ route('cvrecord.techearsRecord') }}",
-            data: { selectStatus: selectStatus, selectSchool: selectSchool },
+            url: "{{ route('cvrecord.techearsRecordFiltered') }}",
+            data: { empschool: empschool, empstatus:empstatus },
             method: 'GET',
             success: function(response) {
                 teachRecords.clear().rows.add(response.data).draw();
@@ -889,9 +967,14 @@
         });
     });
 
-    $('#offcanvasRight').on('shown.bs.offcanvas', function() {
+    $('#offcanvasRight').on('hide.bs.offcanvas', function (e) {
+        teachRecords.clear().draw();
+    })
 
-    });
+    // var columnData = teachRecords.column(1).data().toArray();
+    // console.log('Column 5 Data:', columnData);
+
+
 });
 </script>
 
