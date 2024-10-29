@@ -468,7 +468,7 @@ $(document).ready(function(e) {
             url: encoderDataView + '/' + id,
             method:'GET',
             success: function(response){
-                // console.log(id);
+                console.log(response);
                 $('.ajaxForm').modal('show');
                 $('.modal-title').html('Voter Information Update');
 
