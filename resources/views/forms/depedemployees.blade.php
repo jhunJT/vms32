@@ -105,14 +105,14 @@
                 <div class="col-12 mb-3">
                     <select name="school" id="sschool" class="form-select"></select>
                 </div>
-                <select name="status" id="sstatus" class="form-select">
-                    <option disabled selected>Select Status</option>
+                <select name="status" id="sstatus[]" class="form-select sstatus" data-placeholder="Select Status" multiple>
                     <option value="1">SUPPORTER</option>
-                    <option value="2">NOT SUPPORTER</option>
                     <option value="3">NOT FOUND</option>
+                    <option value="2">NOT SUPPORTER</option>
                 </select>
                 <hr>
             </div>
+
             <div class="col-12">
                 <table class="table nowrap table-hover" id="teacherSumm" >
                     <thead>
@@ -537,10 +537,6 @@
     });
 
 
-
-
-
-
     // $('#dist').on('change', function(){
     //     var selectDist = $('#dist').val();
     //     cvrec.column(8).search('^' + selectDist + '$', true, false).draw();
@@ -707,7 +703,6 @@
         cvrec.column(1).search(value).draw();
     }
 
-
     $('#customSearch').on('input', debounce(function() {
         const searchTerm = this.value;
         if(searchTerm){
@@ -846,11 +841,12 @@
         $('#loading').hide();
     })
 
-    $('#sstatus').select2({
+    $('.sstatus').select2({
         allowClear: true,
-        placeholder: "Select Status",
+        placeholder:  function(){
+            $(this).data('placeholder')
+        },
         dropdownParent: $('#offcanvasRight'),
-        minimumResultsForSearch: -1
     });
 
     $('#sschool').select2({
@@ -908,21 +904,20 @@
         }
     });
 
-
     let teachRecords = $('#teacherSumm').DataTable({
         scrollY: true,
-        searching: false,
+        searching: true,
         paging: false,
         ordering: false,
-        dom: 'Bfrtip',
+        dom: '<"top"lBfr>t',
         autoWidth : false,
         data: [],
         columns: [
             { "data": "id_main", "className": "align-middle text-center",
                 render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;}
-            },
-            { "data": "Name", "className": "align-middle" },
+            }, //0
+            { "data": "Name", "className": "align-middle" }, //1
             { "data": "is_depedEmployee", "visible": true, "searchable": true,
                 "className": "align-middle text-center",
                 "defaultContent": '',
@@ -939,16 +934,14 @@
                     }
                     return data;
                 }
-            },
-            { "data": "survey_stat", "visible": false, "searchable": true },
-            { "data": "school", "visible": false, "searchable": true }
+            }, //2
+            { "data": "is_depedEmployee", "visible": false, "searchable": true }, //3
+            { "data": "school", "visible": false, "searchable": true } //4
         ],
         buttons: [
             {
                 text: 'Copy to clipboard',
                 extend: 'copyHtml5',
-                orientation:'portrait',
-                pageSize: 'LEGAL',
                 exportOptions: {
                     columns: [0,1,2]
                 },
@@ -962,7 +955,7 @@
                             icon: "success",
                             title: "Successfully copied to clipboard!",
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 2000
                         });
                     }
                     else{
@@ -970,13 +963,62 @@
                             icon: "error",
                             title: "Please select school!",
                             showConfirmButton: false,
-                            timer: 1000
+                            timer: 2000
                         });
                     };
                 }
+            },
+            {
+                text: 'Export to Excel',
+                extend: 'excelHtml5',
+                title: $('#sschool option:selected').text(),
+                filename: function() {
+                    return fileExportFileName();
+                },
+                className: 'btn btn-success waves-effect waves-light',
+                exportOptions: {
+                    columns: ':visible:not(.not-export-col)'
+                },
+                action: function(e, dt, button, config) {
+                    var ifschool = $('#sschool').val();
+
+                    if (ifschool) {
+                        // Call the export action
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(this, e, dt, button, config);
+
+                        // Show success message
+                        Swal.fire({
+                            icon: "success",
+                            title: "Successfully exported to Excel!",
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    } else {
+                        // Show error message
+                        Swal.fire({
+                            icon: "error",
+                            title: "Please select a school!",
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    }
+                }
             }
-        ]
+
+        ],
+        language: {
+        search: '' // Remove the default search label
+        },
+        initComplete: function() {
+            // Add placeholder to the search input
+            $('.dataTables_filter input').attr('placeholder', 'Search...');
+        }
     });
+
+    $('.dataTables_filter input[type="search"]').css(
+        {'width':'400px', 'height':'50px'}
+    );
+
 
     $('#sschool').on('change', function() {
         const selectSchool = $(this).val();
@@ -984,19 +1026,18 @@
     });
 
     $('#sschool').on('select2:clearing', function(e){
-        $('#sstatus').val('').trigger('change');
+        $('.sstatus').val('').trigger('change');
         teachRecords.clear().draw();
         loadReloadData();
     });
 
-    $('#sstatus').on('select2:clearing', function(e){
-        loadReloadData();
-    });
+    // $('#sstatus').on('select2:clearing', function(e){
+    //     loadReloadData();
+    // });
 
     $(document).on('click', '#notfound', function(){
         $('#modalAddmanual').modal('show')
     });
-
 
     var manForms = $('#manForm')[0];
     $('#addManualEMployee').on('click', function(){
@@ -1032,34 +1073,14 @@
         });
     });
 
-    $('#sstatus').on('select2:select', function(){
-        var empschool = $('#sschool').val();
-        var empstatus = $(this).val();
-        if(!empschool)
-        {
-            Swal.fire({
-                icon: "error",
-                title: "Oops!Something went wrong!",
-                text: "Please select SCHOOL"
-            });
-            $('#sstatus').val('').trigger('change');
-        }else
-        {
-            $.ajax({
-                url: "{{ route('cvrecord.techearsRecordFiltered') }}",
-                data: { empschool: empschool, empstatus:empstatus },
-                method: 'GET',
-                success: function(response) {
-                    teachRecords.clear().rows.add(response.data).draw();
-                },
-                error: function(xhr, status, error) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Error",
-                        text: "An error occurred while loading data. Please try again."
-                    });
-                }
-            });
+    $('.sstatus').on('change', function(){
+        let selectedStatus = $(this).val();
+        if (selectedStatus && selectedStatus.length) {
+            // Join the selected statuses with a pipe (|) for regex search
+            teachRecords.column(3).search(selectedStatus.join('|'), true, false).draw();
+        } else {
+            // Clear the search if no statuses are selected
+            teachRecords.column(3).search('').draw();
         }
     });
 
@@ -1070,6 +1091,13 @@
     // });
 
     $('#modalAddmanual').modal({backdrop: 'static', keyboard: false});
+
+    function fileExportFileName() {
+        var myfile = $('#sschool option:selected').val(); // Get the selected option's value
+        var d = new Date();
+        var formattedDate = d.toISOString().split('T')[0];
+        return formattedDate + "-" + myfile;
+    }
 
     // var columnData = teachRecords.column(1).data().toArray();
     // console.log('Column 5 Data:', columnData);

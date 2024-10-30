@@ -1,0 +1,28 @@
+// var empschool = $('#sschool').val();
+        // var empstatus = $(this).val();
+        // if(!empschool)
+        // {
+        //     Swal.fire({
+        //         icon: "error",
+        //         title: "Oops!Something went wrong!",
+        //         text: "Please select SCHOOL"
+        //     });
+        //     $('#sstatus').val('').trigger('change');
+        // }else
+        // {
+        //     $.ajax({
+        //         url: "{{ route('cvrecord.techearsRecordFiltered') }}",
+        //         data: { empschool: empschool, empstatus:empstatus },
+        //         method: 'GET',
+        //         success: function(response) {
+        //             teachRecords.clear().rows.add(response.data).draw();
+        //         },
+        //         error: function(xhr, status, error) {
+        //             Swal.fire({
+        //                 icon: "error",
+        //                 title: "Error",
+        //                 text: "An error occurred while loading data. Please try again."
+        //             });
+        //         }
+        //     });
+        // }

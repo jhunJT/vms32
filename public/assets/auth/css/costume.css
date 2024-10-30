@@ -112,6 +112,35 @@ td.tcenter{
   }
 
 
+.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.top .dt-button {
+    margin-right: 10px; /* Space between button and search input */
+}
+
+.dataTables_filter {
+    margin-left: auto; /* Push the filter to the right */
+}
+
+.dataTables_filter input {
+    margin-left: 10px; /* Space between button and search input */
+    padding: 8px; /* Increase padding for better usability */
+    border: 1px solid #ccc; /* Add border */
+    border-radius: 4px; /* Optional: rounded corners */
+    font-size: 20px; /* Increase font size */
+    cursor: pointer; /* Change cursor to pointer */
+}
+
+.dataTables_filter input:focus {
+    border-color: #007bff; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
+
+
 /* .modal-backdrop {
     z-index: -1;
 } */
