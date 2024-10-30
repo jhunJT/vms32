@@ -196,6 +196,8 @@ Route::middleware('auth')->controller(cvrecordController::class)->group(function
     Route::get('/cvrecord/deped-techears-records', 'techearsRecord')->name('cvrecord.techearsRecord');
     Route::post('/cvrecord/deped-techears-notfound', 'techearsNotfound')->name('cvrecord.techearsNotfound');
     Route::get('/cvrecord/deped-techears-techearsRecordFiltered', 'techearsRecordFiltered')->name('cvrecord.techearsRecordFiltered');
+    Route::post('/cvrecord/deped-techears-datajson', 'datajson')->name('cvrecord.datajson');
+    Route::get('/cvrecord/deped-techears-loadDistrictData', 'loadDistrictData')->name('cvrecord.loadDistrictData');
 });
 
 Route::middleware('auth')->controller(latlongController::class)->group(function () {

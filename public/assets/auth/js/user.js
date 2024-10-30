@@ -234,15 +234,12 @@ $(document).ready(function() {
         }
 
         $('#muncit').change(function() {
-            // alert();
             const coordselected = muncitList.filter(m=>m.muncit == $("#muncit").val());
             coordselected.forEach(element => {
                 $('#tbname').val(element.tbname);
                 $('#u_lat').val(element.lat);
                 $('#u_long').val(element.long);
-
             });
-
         });
 
 });

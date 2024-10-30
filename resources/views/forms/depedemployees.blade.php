@@ -30,7 +30,12 @@
                                         <select id="select2-muncit" class="form-control select2-muncit" name="select2-muncit"></select>
                                     </div>
                                     <div class="col-3">
-                                        <select id="select2-brgy" style="width: 100%;" class="form-control select2-brgy" name="select2-brgy"></select>
+                                        <div class="input-group" >
+                                            <select id="select2-brgy" style="width: 80%;" class="form-control select2-brgy" name="select2-brgy"></select>
+                                            <span class="">
+                                                <a class="btn btn-success searchdata"><i class="fas fa-search-location" style="width: 50px;"></i></a>
+                                            </span>
+                                        </div>
                                     </div>
                                     <div class="col-5">
                                         <input type="text" class="form-control" placeholder="Search..." id="customSearch" name="customSearch" >
@@ -190,10 +195,9 @@
                 "hideMethod": "fadeOut"
         }
 
-    var cvrec = $('#cvrectbl').DataTable({
+    let cvrec = $('#cvrectbl').DataTable({
             "language":{
-               'processing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading..n.</span>'
-            },
+               'processing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading..n.</span>'},
             "ordering": true,
             "order": [[12,'asc']],
             "autoWidth" : true,
@@ -201,8 +205,8 @@
             "dom": 'lrt',
             "pageLength": 15,
             "processing": true,
-            "serverSide": true,
-            "ajax": "{{ route('match-depedemployees') }}",
+            "data": [],
+            "deferRender": true,
             "columns": [
                 {"data": "id_main", "className": "text-center align-middle"}, //0
                 {"data": "Name", "className": "align-middle"}, //1
@@ -452,15 +456,14 @@
         allowClear: true
     });
 
-
     $('#select2-muncit').select2({
         placeholder: "Select Municipality/City",
         allowClear: true,
         ajax:{
-            url:"{{ route('cvrecord.smuncit') }}",
-            type:"POST",
+            url:"{{ route('cvrecord.datajson') }}",
+            type:"post",
             dataType:"json",
-            delay:250,
+            delay:150,
             quietMillis: 100,
             data: function(params){
                 dist = $('#dist').val();
@@ -469,8 +472,7 @@
                     dist: dist
                 };
             },
-            processResults: function(data){
-                // console.log(data);
+            processResults: function(data) {
                 return{
                     results: $.map(data.items, function(obj,i) {
                         return {
@@ -512,52 +514,77 @@
         }
     });
 
-    $('#dist').on('change', function(){
+    $('.searchdata').on('click', function(){
         var selectDist = $('#dist').val();
-        cvrec.column(8).search('^' + selectDist + '$', true, false).draw();
-    });
-
-    $('#dist').on('select2:clear', function(){
-        cvrec.ajax.reload();
-    });
-
-    $('#select2-muncit').on('change', function(){
-        var selectDist = $('#dist').val();
-        var selectMuncit = $(this).val();
-
-        // console.log(selectDist,selectMuncit);
-
-        if(selectMuncit){
-            cvrec.column(2).search('^' + selectMuncit + '$', true, false).draw();
-        }else{
-            cvrec.column(2).search('');
-        }
-
-        if (selectDist) {
-            cvrec.search(selectDist);
-        } else {
-            cvrec.search('');
-        };
-        cvrec.draw();
-    });
-
-    $('#select2-brgy').on('change', function(e){
         var selectMuncit = $('#select2-muncit').val();
-        var selectBrgy = $(this).val();
+        var selectBrgy = $('#select2-brgy').val();
 
-        if(selectBrgy){
-            cvrec.column(3).search('^' + selectBrgy + '$', true, false).draw();
-        }else{
-            cvrec.column(3).search('');
-        }
-
-        if (selectMuncit) {
-            cvrec.search(selectMuncit);
-        } else {
-            cvrec.search('');
-        }
-        cvrec.draw();
+        $.ajax({
+            url: "{{ route('cvrecord.techearsRecord') }}",
+            data: { selectSchool: selectSchool },
+            method: 'GET',
+            success: function(response) {
+                teachRecords.clear().rows.add(response.data).draw();
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "An error occurred while loading data. Please try again."
+                });
+            }
+        });
     });
+
+
+
+
+
+
+    // $('#dist').on('change', function(){
+    //     var selectDist = $('#dist').val();
+    //     cvrec.column(8).search('^' + selectDist + '$', true, false).draw();
+    // });
+
+    // $('#dist').on('select2:clear', function(){
+    //     cvrec.ajax.reload();
+    // });
+
+    // $('#select2-muncit').on('change', function(){
+    //     var selectDist = $('#dist').val();
+    //     var selectMuncit = $(this).val();
+
+    //     if(selectMuncit){
+    //         cvrec.column(2).search('^' + selectMuncit + '$', true, false).draw();
+    //     }else{
+    //         cvrec.column(2).search('');
+    //     }
+
+    //     if (selectDist) {
+    //         cvrec.search(selectDist);
+    //     } else {
+    //         cvrec.search('');
+    //     };
+    //     cvrec.draw();
+    // });
+
+    // $('#select2-brgy').on('change', function(e){
+    //     var selectMuncit = $('#select2-muncit').val();
+    //     var selectBrgy = $(this).val();
+
+    //     if(selectBrgy){
+    //         cvrec.column(3).search('^' + selectBrgy + '$', true, false).draw();
+    //     }else{
+    //         cvrec.column(3).search('');
+    //     }
+
+    //     if (selectMuncit) {
+    //         cvrec.search(selectMuncit);
+    //     } else {
+    //         cvrec.search('');
+    //     }
+    //     cvrec.draw();
+    // });
 
     $(document).on('click', '.depEmp', function(){
         const dataId = $(this).data('id');
@@ -680,6 +707,36 @@
         cvrec.column(1).search(value).draw();
     }
 
+
+    $('#customSearch').on('input', debounce(function() {
+        const searchTerm = this.value;
+        if(searchTerm){
+            loadDistrictData(searchTerm);
+        }else{
+            cvrec.clear().draw();
+        }
+
+    }, 300));
+
+    function loadDistrictData(searchTerm) {
+        $.ajax({
+            url: "{{ route('cvrecord.loadDistrictData') }}",
+            method: 'GET',
+            data: { search: searchTerm }, // Pass the search term as a parameter
+            success: function(response) {
+                cvrec.clear().rows.add(response.data).draw();
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: error
+                });
+            }
+        });
+    }
+
+
     function loadReloadData() {
         const selectSchool = $('#sschool').val();
         if(selectSchool)
@@ -700,12 +757,7 @@
                 }
             });
         }
-
     }
-
-    $('#customSearch').on('input', debounce(function() {
-        customSearch(this.value);
-    }, 300));
 
     $(document).on('click','.depClear', function(){
         const dataId = $(this).data('id');
@@ -862,7 +914,7 @@
         searching: false,
         paging: false,
         ordering: false,
-        dom: 'rtip',
+        dom: 'Bfrtip',
         autoWidth : false,
         data: [],
         columns: [
@@ -890,6 +942,39 @@
             },
             { "data": "survey_stat", "visible": false, "searchable": true },
             { "data": "school", "visible": false, "searchable": true }
+        ],
+        buttons: [
+            {
+                text: 'Copy to clipboard',
+                extend: 'copyHtml5',
+                orientation:'portrait',
+                pageSize: 'LEGAL',
+                exportOptions: {
+                    columns: [0,1,2]
+                },
+                className: 'btn btn-success waves-effect waves-light',
+                action: function(e, dt, button, config){
+                    ifschool = $('#sschool').val();
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(this, e, dt, button, config);
+                    if(ifschool)
+                    {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Successfully copied to clipboard!",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                    else{
+                        Swal.fire({
+                            icon: "error",
+                            title: "Please select school!",
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    };
+                }
+            }
         ]
     });
 
@@ -978,11 +1063,11 @@
         }
     });
 
-    $('#offcanvasRight').on('hide.bs.offcanvas', function (e) {
-        $('#sschool').val('').trigger('change');
-        $('#sstatus').val('').trigger('change');
-        teachRecords.clear().draw();
-    });
+    // $('#offcanvasRight').on('hide.bs.offcanvas', function (e) {
+    //     $('#sschool').val('').trigger('change');
+    //     $('#sstatus').val('').trigger('change');
+    //     teachRecords.clear().draw();
+    // });
 
     $('#modalAddmanual').modal({backdrop: 'static', keyboard: false});
 

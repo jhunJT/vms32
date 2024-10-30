@@ -126,26 +126,27 @@ class cvrecordController extends Controller
     }
 
     public function depedemployees(Request $request){
-        $municipality = Auth::user()->muncit;
-        $district = Auth::user()->district;
-            $cvrecord = DB::table('master_list_nle2022s')->select('id_main','Name','Barangay','is_depedEmployee','Municipality','HL',
-                'survey_stat','district','school','level')
-            ->where('man_add','0')
-            ->orderByRaw ('is_depedEmployee asc, Name');
-
-            if($request->ajax()){
-                return DataTables::of($cvrecord)
-                ->addColumn('action', function($row){
-                    return '<div class="btn-group mt-2" role="group">
-                                <button type="button" class="btn btn-success depEmp" data-id="'.$row->id_main.'" title="Supporter"><i class="fa fa-check" style="font-size: 1.5em;"></i></button>
-                                <button type="button" class="btn btn-warning notSupp" data-id="'.$row->id_main.'" title="Not Supporter"><i class="fa fas fa-times" style="font-size: 1.5em;"></i></button>
-                                <button type="button" class="btn btn-danger depClear" data-id="'.$row->id_main.'" title="Clear"><i class="fa fa-eraser" style="font-size: 1.5em;"></i></button>
-                            </div>';
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-            }
         return view('forms.depedemployees');
+    }
+
+    public function loadDistrictData(Request $request){
+        $cvrecord = DB::table('master_list_nle2022s')->select('id_main','Name','Barangay','is_depedEmployee','Municipality','HL',
+            'survey_stat','district','school','level')
+        ->where([['man_add','0'],['Name','like','%'.$request->search.'%']])
+        ->orderByRaw ('is_depedEmployee asc, Name');
+
+        if($request->ajax()){
+            return DataTables::of($cvrecord)
+            ->addColumn('action', function($row){
+                return '<div class="btn-group mt-2" role="group">
+                            <button type="button" class="btn btn-success depEmp" data-id="'.$row->id_main.'" title="Supporter"><i class="fa fa-check" style="font-size: 1.5em;"></i></button>
+                            <button type="button" class="btn btn-warning notSupp" data-id="'.$row->id_main.'" title="Not Supporter"><i class="fa fas fa-times" style="font-size: 1.5em;"></i></button>
+                            <button type="button" class="btn btn-danger depClear" data-id="'.$row->id_main.'" title="Clear"><i class="fa fa-eraser" style="font-size: 1.5em;"></i></button>
+                        </div>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+        }
     }
 
     public function smuncit(Request $request){
@@ -256,4 +257,15 @@ class cvrecordController extends Controller
         ], 201);
     }
 
+    public function datajson(Request $request){
+        $search = $request->search;
+        $datasamar = DB::table('samardata')
+             ->where([
+                    ['district',$request->dist],
+                    ['muncit','like','%'.$search.'%']
+                ])
+             ->orderBy('muncit', 'asc')
+             ->pluck('muncit','muncit');
+        return response()->json(['items'=>$datasamar]);
+    }
 }
