@@ -779,7 +779,8 @@
                             timer: 1500
                             }
                         )
-                        cvrec.ajax.reload();
+                        cvrec.clear().draw();
+                        $('#customSearch').val('');
                     },
                     error: function(xhr, status, error){
                            if(error) {
