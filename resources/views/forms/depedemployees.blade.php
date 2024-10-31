@@ -909,7 +909,7 @@
         scrollY: true,
         searching: true,
         paging: false,
-        ordering: false,
+        ordering: true,
         dom: '<"top"lBfr>t',
         autoWidth : false,
         data: [],
@@ -918,7 +918,7 @@
                 render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;}
             }, //0
-            { "data": "Name", "className": "align-middle" }, //1
+            { "data": "Name", "className": "align-middle"}, //1
             { "data": "is_depedEmployee", "visible": true, "searchable": true,
                 "className": "align-middle text-center",
                 "defaultContent": '',
