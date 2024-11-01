@@ -96,7 +96,7 @@
 
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" data-bs-scroll="false" data-bs-backdrop="false" aria-labelledby="offcanvasRightLabel" aria-modal="true" role="dialog" style="width: 1000px;">
     <div class="offcanvas-header">
-      <h5 id="offcanvasRightLabel">SUMMARY</h5>
+      <h5 id="offcanvasRightLabel">TEACHER - RECORDS</h5>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
@@ -731,7 +731,6 @@
         });
     }
 
-
     function loadReloadData() {
         const selectSchool = $('#sschool').val();
         if(selectSchool)
@@ -906,6 +905,7 @@
     });
 
     let teachRecords = $('#teacherSumm').DataTable({
+        destroy: true,
         scrollY: true,
         searching: true,
         paging: false,
@@ -1051,7 +1051,10 @@
             data: formAddManual,
             success: function(response) {
                 $('#manForm')[0].reset();
+                $('#ssschool').val('').trigger('change');
                 $('#modalAddmanual').modal('toggle');
+                $('.teacherSumm').dataTable().fnDestroy();
+                // $('#teacherSumm').DataTable().clear().destroy();
                 if(response.success) {
                     Swal.fire({
                         position: "top-end",
@@ -1060,6 +1063,8 @@
                         title: "Record Added!"
                     });
                 }
+                // $('.teacherSumm').DataTable().ajax.reload(null, false);
+                loadReloadData();
             },
             error: function(xhr, status, error){
                 if(error) {
