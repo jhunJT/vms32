@@ -51,13 +51,7 @@
                                     </div>
                                         {{-- <div class="col-4 mt-3">
                                             <select id="select2-school-filter" style="width: 100%;" class="form-control" name="select2-school-filter"></select>
-                                        </div>
-                                        <div class="col-3 mt-4 align-middle">
-                                            <h3>Total Supporter:<span> 123</span></h3>
-                                        </div>
-                                        <div class="col-3 mt-4 align-middle">
-                                            <h3>Total Not Supporter:<span> 123</span></h3>
-                                        </div> --}}
+                                        </div>--}}
                                 </div>
                             </div>
 
@@ -103,18 +97,27 @@
         <div class="row">
             <div class="col-12">
                 <div class="col-12 mb-3">
-                    <select name="school" id="sschool" class="form-select"></select>
+                    <select name="school" id="sschool" style="width: 100%;" class="form-select"></select>
                 </div>
-                <select name="status" id="sstatus[]" class="form-select sstatus" data-placeholder="Select Status" multiple>
-                    <option value="1">SUPPORTER</option>
-                    <option value="3">NOT FOUND</option>
-                    <option value="2">NOT SUPPORTER</option>
-                </select>
-                <hr>
+                <div class="col-12 mb-3">
+                    <select id="select2-level-filter" style="width: 100%;" class="form-control ssfilter"  name="select2-level-filter" >
+                        <option disabled selected>Filter Level</option>
+                        <option value="PRIMARY">PRIMARY</option>
+                        <option value="SECONDARY">SECONDARY</option>
+                    </select>
+                </div>
+                <div class="col-12 mb-3">
+                    <select name="status" id="sstatus[]" style="width: 100%;" class="form-select sstatus" data-placeholder="Select Status" multiple>
+                        <option value="1">SUPPORTER</option>
+                        <option value="3">NOT FOUND</option>
+                        <option value="2">NOT SUPPORTER</option>
+                    </select>
+                </div>
             </div>
 
+
             <div class="col-12">
-                <table class="table nowrap table-hover" id="teacherSumm" >
+                <table class="table nowrap table-hover teacherSumm" id="teacherSumm" >
                     <thead>
                         <tr>
                             <th style="width:5%;">#</th>
@@ -122,9 +125,11 @@
                             <th style="width:15%;">Status</th>
                             <th>CV</th>
                             <th>school</th>
+                            <th>level</th>
                         </tr>
                     </thead>
                 </table>
+                <div id="totalRecords" style="padding: 10px; font-weight: bold;"></div>
             </div>
         </div>
     </div>
@@ -298,7 +303,7 @@
                             selectOptions += '<option value="Villareal II">Villareal II</option>';
                             selectOptions += '<option value="Wright I">Wright I</option>';
                             selectOptions += '<option value="Wright II">Wright II</option>';
-                            selectOptions += '<option value="Zumarraga">Zumarraga</option>';
+                            selectOptions += '<option value="ZUMARRAGA">ZUMARRAGA</option>';
                             selectOptions += '<option value="CALBAYOG CITY">CALBAYOG CITY</option>';
                             selectOptions += '<option value="FUN AND LEARN SCHOOL INC">FUN AND LEARN SCHOOL INC</option>';
                             selectOptions += '<option value="CATB DIV-1">CATB DIV-1</option>';
@@ -622,7 +627,7 @@
                                 timer: 1500
                                 }
                             )
-                            cvrec.ajax.reload();
+                            $('.cvrectbl').ajax.reload(null, false);
                         },
                         error: function(xhr, status, error){
                             // console.log(error);
@@ -913,12 +918,15 @@
         scrollY: true,
         searching: true,
         paging: false,
+        processing: true,
         ordering: true,
-        dom: '<"top"lBfr>t',
+        info: true,
+        // dom: 'lrt',
         autoWidth : false,
+        deferRender: true,
         data: [],
         columns: [
-            { "data": "id_main", "className": "align-middle text-center",
+            { "data": null, "className": "align-middle text-center",
                 render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;}
             }, //0
@@ -928,11 +936,11 @@
                 "defaultContent": '',
                 "render": function (data, type, row, meta)
                 {
-                    if(data == 1){
+                    if(data === 1){
                         return '<button type="button" class="btn btn-danger btn-rounded waves-effect waves-light">Supporter</button>'
-                    }else if(data == 2){
+                    }else if(data === 2){
                         return '<button type="button" class="btn btn-warning btn-rounded waves-effect waves-light">Not Supporter</button>'
-                    }else if(data == 3){
+                    }else if(data === 3){
                         return '<button type="button" class="btn btn-info btn-rounded waves-effect waves-light">Not Found</button>'
                     }else{
                         return ''
@@ -941,7 +949,8 @@
                 }
             }, //2
             { "data": "is_depedEmployee", "visible": false, "searchable": true }, //3
-            { "data": "school", "visible": false, "searchable": true } //4
+            { "data": "school", "visible": false, "searchable": true }, //4
+            { "data": "level", "visible": false, "searchable": true } //4
         ],
         buttons: [
             {
@@ -960,7 +969,7 @@
                             icon: "success",
                             title: "Successfully copied to clipboard!",
                             showConfirmButton: false,
-                            timer: 2000
+                            timer: 1500
                         });
                     }
                     else{
@@ -968,7 +977,7 @@
                             icon: "error",
                             title: "Please select school!",
                             showConfirmButton: false,
-                            timer: 2000
+                            timer: 1500
                         });
                     };
                 }
@@ -1012,7 +1021,8 @@
 
         ],
         language: {
-        search: '' // Remove the default search label
+            'search': '', // Remove the default search label
+            'processing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading..n.</span>'
         },
         initComplete: function() {
             // Add placeholder to the search input
@@ -1032,6 +1042,7 @@
 
     $('#sschool').on('select2:clearing', function(e){
         $('.sstatus').val('').trigger('change');
+        $('.ssfilter').val('').trigger('change');
         teachRecords.clear().draw();
         loadReloadData();
     });
@@ -1114,7 +1125,35 @@
     // var columnData = teachRecords.column(1).data().toArray();
     // console.log('Column 5 Data:', columnData);
 
+    $('.ssfilter').select2({
+        allowClear: true,
+        placeholder: "Filter Level",
+        dropdownParent: $('#offcanvasRight'),
+    });
 
+    $('.ssfilter').on('change', function(){
+        var flevel = []
+        $.each($('.ssfilter '), function(i,elem){
+            flevel.push($(this).val())
+        })
+        teachRecords.column(5).search(flevel).draw();
+
+        var filteredDataCount = teachRecords.rows({ filter: 'applied' }).count();
+
+        Swal.fire({
+        title: 'Total Filtered Data',
+            text: 'Total: ' + filteredDataCount,
+            icon: 'info',
+            confirmButtonText: 'OK'
+        });
+
+    });
+
+
+    //  $('.ssfilter').on('select2:clearing', function(e){
+    //     const selectSchool = $('#sschool').val();
+    //     $('.sstatus').val('').trigger('change');
+    // });
 });
 </script>
 

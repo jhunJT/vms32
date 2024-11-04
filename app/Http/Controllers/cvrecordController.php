@@ -213,7 +213,7 @@ class cvrecordController extends Controller
     }
 
     public function techearsRecord(Request $request){
-        $cvrecord = DB::table('master_list_nle2022s')->select('Name','is_depedEmployee','survey_stat','school')
+        $cvrecord = DB::table('master_list_nle2022s')->select('Name','is_depedEmployee','survey_stat','school','level')
         ->where([['school',$request->selectSchool]])
         ->orderByRaw ('is_depedEmployee asc, Name');
 
@@ -224,7 +224,7 @@ class cvrecordController extends Controller
     }
 
     public function techearsRecordFiltered(Request $request){
-        $cvrecord = DB::table('master_list_nle2022s')->select('Name','is_depedEmployee','survey_stat','school')
+        $cvrecord = DB::table('master_list_nle2022s')->select('Name','is_depedEmployee','survey_stat','school','level')
         ->where([['school',$request->empschool],['is_depedEmployee',$request->empstatus]])
         ->orderByRaw ('is_depedEmployee asc, Name');
 
