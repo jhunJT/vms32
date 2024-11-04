@@ -316,6 +316,7 @@
                             selectOptions += '<option value="SMCDC">SMCDC</option>';
                             selectOptions += '<option value="Samar College">Samar College</option>';
                             selectOptions += '<option value="Samar Division Office">Samar Division Office</option>';
+                            selectOptions += '<option value="Samar Division Office - Personnel">Samar Division Office - Personnel</option>';
                             selectOptions += '<option value="Almagro National High School">Almagro National High School</option>';
                             selectOptions += '<option value="Anibongon Integrated School">Anibongon Integrated School</option>';
                             selectOptions += '<option value="Apolonia Integrated School">Apolonia Integrated School</option>';
@@ -622,7 +623,6 @@
                                 }
                             )
                             cvrec.ajax.reload();
-
                         },
                         error: function(xhr, status, error){
                             // console.log(error);
@@ -675,6 +675,7 @@
                                 timer: 1500
                                 }
                             )
+                            $('.cvrectbl').ajax.reload();
                             cvrec.ajax.reload();
 
                         },
@@ -731,6 +732,7 @@
         });
     }
 
+
     function loadReloadData() {
         const selectSchool = $('#sschool').val();
         if(selectSchool)
@@ -779,6 +781,8 @@
                             }
                         )
                         cvrec.clear().draw();
+                        loadReloadData();
+                        cvrec.ajax.reload();
                         $('#customSearch').val('');
                     },
                     error: function(xhr, status, error){
@@ -1060,11 +1064,13 @@
                         position: "top-end",
                         icon: "success",
                         showConfirmButton: false,
-                        title: "Record Added!"
+                        title: "Record Added!",
+                        timer: 1000
                     });
                 }
                 // $('.teacherSumm').DataTable().ajax.reload(null, false);
                 loadReloadData();
+                $('.cvrectbl').ajax.reload();
             },
             error: function(xhr, status, error){
                 if(error) {
