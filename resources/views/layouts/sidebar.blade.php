@@ -130,6 +130,7 @@
                             <a href="{{ route('hlrecords.index') }}" class="dropdown-item" target="_blank">HL Records</a>
                             <a href="{{ route('pbpcrecords.index') }}" class="dropdown-item" target="_blank">PB/PC Records</a>
                             <a href="{{ route('match-depedemployees') }}" class="dropdown-item" target="_blank">Match Records - DEPED</a>
+                            <a href="{{ route('records-depedemployeesview') }}" class="dropdown-item" target="_blank">View Records - DEPED</a>
 
                         </div>
                     </li>
@@ -172,6 +173,7 @@
                             <a href="{{ route('pbpcrecords.index') }}" class="dropdown-item" target="_blank">PB/PC Records</a>
                             <a href="{{ route('unsurveyed.index') }}" class="dropdown-item" target="_blank">Unsurveyed</a>
                             <a href="{{ route('match-depedemployees') }}" class="dropdown-item" target="_blank">Match Records - DEPED</a>
+                            <a href="{{ route('records-depedemployeesview') }}" class="dropdown-item" target="_blank">View Records - DEPED</a>
                         </div>
                     </li>
                 @elseif (Auth::user()->role == 'superuser')
@@ -223,6 +225,7 @@
                             {{-- <a href="{{ route('fixhl-member.index') }}" class="dropdown-item" target="_blank">CV Records Fix</a> --}}
                             {{-- <a href="{{ route('fixhl.fixhlindex') }}" class="dropdown-item" target="_blank" >HL Records Fix</a> --}}
                             <a href="{{ route('match-depedemployees') }}" class="dropdown-item" target="_blank">Match Records - DEPED</a>
+                            <a href="{{ route('records-depedemployeesview') }}" class="dropdown-item" target="_blank">View Records - DEPED</a>
                         </div>
                     </li>
                     {{-- <li class="nav-item dropdown">

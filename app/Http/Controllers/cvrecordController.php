@@ -129,6 +129,33 @@ class cvrecordController extends Controller
         return view('forms.depedemployees');
     }
 
+    public function depedemployeesview(Request $request){
+        return view('forms.depedemployeesview');
+    }
+
+    public function loadDistrictDataView(Request $request){
+        // dd($request->all());
+        $cvrecord = DB::table('master_list_nle2022s')->select('id_main','Name','Barangay',
+            'is_depedEmployee','Municipality','survey_stat','district','school','level','HL')
+                ->where('man_add', 0)
+            ->whereIn('is_depedEmployee', [1, 2, 3])
+            ->where('school', $request->selectSchool)  // Use where for exact match
+            ->orderBy('level', 'asc');
+
+        if($request->ajax()){
+            return DataTables::of($cvrecord)
+            ->addColumn('action', function($row){
+                return '<div class="btn-group mt-2" role="group">
+                            <button type="button" class="btn btn-success depEmp" data-id="'.$row->id_main.'" title="Supporter"><i class="fa fa-check" style="font-size: 1.5em;"></i></button>
+                            <button type="button" class="btn btn-warning notSupp" data-id="'.$row->id_main.'" title="Not Supporter"><i class="fa fas fa-times" style="font-size: 1.5em;"></i></button>
+                            <button type="button" class="btn btn-danger depClear" data-id="'.$row->id_main.'" title="Clear"><i class="fa fa-eraser" style="font-size: 1.5em;"></i></button>
+                        </div>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+        }
+    }
+
     public function loadDistrictData(Request $request){
         $cvrecord = DB::table('master_list_nle2022s')->select('id_main','Name','Barangay','is_depedEmployee','Municipality','HL',
             'survey_stat','district','school','level')

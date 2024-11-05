@@ -737,7 +737,6 @@
         });
     }
 
-
     function loadReloadData() {
         const selectSchool = $('#sschool').val();
         if(selectSchool)
