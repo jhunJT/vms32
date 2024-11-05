@@ -921,7 +921,7 @@
         processing: true,
         ordering: true,
         info: true,
-        // dom: 'lrt',
+        dom: 'lrt',
         autoWidth : false,
         deferRender: true,
         data: [],
