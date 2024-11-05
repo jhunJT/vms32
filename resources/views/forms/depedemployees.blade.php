@@ -920,7 +920,7 @@
         processing: true,
         ordering: true,
         info: true,
-        dom: 'lrt',
+        dom: '<"top"lBfr>t',
         autoWidth : false,
         deferRender: true,
         data: [],
