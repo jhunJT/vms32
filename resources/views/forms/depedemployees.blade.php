@@ -252,6 +252,7 @@
                             selectOptions += '<option value="NONE" selected>NONE</option>';
                             selectOptions += '<option value="PRIMARY">PRIMARY</option>';
                             selectOptions += '<option value="SECONDARY">SECONDARY</option>';
+                            selectOptions += '<option value="PRIVATE">PRIVATE</option>';
                             selectOptions += '</select>';
 
                             if (data) {
