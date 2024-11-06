@@ -128,7 +128,7 @@
         "scrollY": true,
         "paging": false,
         "lengthMenu": [[15,25,50, -1], [15,25,50, "All"]],
-        // "dom": 'lrt',
+        "dom": '<"top"lBfr>t',
         "processing": true,
         "data": [],
         "columns": [
@@ -223,10 +223,83 @@
             }
 
             // Refresh the Select2 dropdown
-            schoolSelect.trigger('change');
-        });
+                schoolSelect.trigger('change');
+            });
+        },
+        buttons: [
+            {
+                text: 'Copy to clipboard',
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [0,1,2,3,4,6,7]
+                },
+                className: 'btn btn-success waves-effect waves-light',
+                action: function(e, dt, button, config){
+                    ifschool = $('#sschool').val();
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(this, e, dt, button, config);
+                    if(ifschool)
+                    {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Successfully copied to clipboard!",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                    else{
+                        Swal.fire({
+                            icon: "error",
+                            title: "Please select school!",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    };
+                }
+            },
+            {
+                text: 'Export to Excel',
+                extend: 'excelHtml5',
+                title: $('#sschool option:selected').text(),
+                filename: function() {
+                    return fileExportFileName();
+                },
+                className: 'btn btn-success waves-effect waves-light',
+                exportOptions: {
+                    columns: ':visible:not(.not-export-col)'
+                },
+                action: function(e, dt, button, config) {
+                    var ifschool = $('#sschool').val();
 
+                    if (ifschool) {
+                        // Call the export action
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(this, e, dt, button, config);
 
+                        // Show success message
+                        Swal.fire({
+                            icon: "success",
+                            title: "Successfully exported to Excel!",
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    } else {
+                        // Show error message
+                        Swal.fire({
+                            icon: "error",
+                            title: "Please select a school!",
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    }
+                }
+            }
+        ],
+        language: {
+            'search': '', // Remove the default search label
+            'processing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading..n.</span>'
+        },
+        initComplete: function() {
+            // Add placeholder to the search input
+            $('.dataTables_filter input').attr('placeholder', 'Search...');
         }
     });
 
