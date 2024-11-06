@@ -9,7 +9,7 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item">Data</li>
-                            <li class="breadcrumb-item active"><a href="javascript: void(0);">DEPED Employees Matching</a></li>
+                            <li class="breadcrumb-item active"><a href="javascript: void(0);">DEPED Employees View</a></li>
                         </ol>
                     </div>
                     {{-- <button onclick="printTable()">Print Table</button> --}}
@@ -54,6 +54,7 @@
                                 <th>Tag</th>
                                 <th>Houseleader</th>
                                 <th>District</th>
+                                <th>Status2</th>
                             </tr>
                             </thead>
                         </table>
@@ -180,7 +181,8 @@
             {"data": "school", "className": "align-middle","visible": false, "searchable": true, "orderable": false}, //7
             {"data": "action", "className": "text-center align-middle"}, //8
             {"data": "HL"},//9
-            {"data": "district", "visible": false, "searchable": true}//10
+            {"data": "district", "visible": false, "searchable": true},//10
+            {"data": "is_depedEmployee", "visible": false, "searchable": true}//11
         ],
         "columnDefs": [
             {"className": "text-center", "targets": [0,2,3,4,5]},
@@ -651,6 +653,31 @@
             });
         }
     }
+
+    $('.sstatus').select2({
+        allowClear: true,
+        placeholder: "Filter Status"
+    });
+
+    $('.sstatus').on('change', function(){
+        let selectedStatus = $(this).val();
+        if (selectedStatus && selectedStatus.length) {
+            cvrecview.column(11).search(selectedStatus.join('|'), true, false).draw();
+        } else {
+            cvrecview.column(11).search('').draw();
+        }
+        // cvrecview.column(4).search(flevel).draw();
+
+        var filteredDataCount = cvrecview.rows({ filter: 'applied' }).count();
+
+        Swal.fire({
+        title: 'Total Filtered Data',
+            text: 'Total: ' + filteredDataCount,
+            icon: 'info',
+            confirmButtonText: 'OK'
+        });
+
+    });
 
 
 
